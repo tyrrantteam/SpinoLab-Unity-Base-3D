@@ -16,6 +16,7 @@ public class GameController : SingletonMono<GameController>
 {
     [SerializeField] private GameObject confetiRainWin;
     [SerializeField] private GameObject confetiStartWin;
+    [SerializeField] private GameObject fireWorkEffect;
     [SerializeField] private UIGameController uIGameController;
     [SerializeField] private SpawnCircleEffectUI SpawnCircleEffectUI;
     private MapManager _mapManager;
