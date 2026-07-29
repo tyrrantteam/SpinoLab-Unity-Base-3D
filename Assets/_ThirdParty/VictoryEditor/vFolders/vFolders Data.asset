@@ -1,0 +1,152 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb9c12a8c6c949f7af83a3d238359d0, type: 3}
+  m_Name: vFolders Data
+  m_EditorClassIdentifier: VFolders::VFolders.VFoldersData
+  folderDatas_byGuid:
+    keys:
+    - ca94b0ac03b17e344bbeb67fd8ae3ad2
+    - a0baa5ccfbc1c6644b1332c2656590c0
+    - 4cd90cb00fe4413ba5d53a1bbeee1b12
+    - b4348df7a71b99e4e9d3ee9f7f81e878
+    - ecdb5fa28d0d0b941a28eb887265fcd3
+    - 5e05a6b6fed8a1840be1bfef5ae57c4c
+    - 583db8ee407ce1e4a823d8a1572a6ecf
+    - 692f629552857ea4d8e56cabfe839c62
+    - a7b782c10d0fb4f4fa82578c5bb51c48
+    - 0f6cfcc4e7634454a86c943f58d391c5
+    - 07b84d8d98c005e4fbc2f44c1b3dbf71
+    - 44dee61545a607440ad8b2add7d0489b
+    - bb1947ed1d4002a4fb5c6291f7cee3bf
+    - b608472070f1ac045bb2c0f093ad4245
+    - cb1cecca0672a88459142509054e371d
+    - 23dfe58ae0669fe4a8f6222fa7c0d35c
+    - 49b0c408ebaf6604ebcce4117fcf1501
+    - 23d4b3957a0a78d4e97d94a539c1fac5
+    - cb96e711c9fdd7647b52a07f0b8f50a9
+    - b253edff38440384583e8673a3f3f5f5
+    - e0aea6c00cdd89a4e99a082f88f25dd9
+    - 9d58372f76565e24bb94fd987be1cce7
+    - 69e62f4376b694a928ae341142372855
+    - 6135b507c95344a2da6609e46e41d132
+    values:
+    - iconNameOrGuid: 
+      colorIndex: 7
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 10
+      isIconRecursive: 0
+      isColorRecursive: 1
+    - iconNameOrGuid: 
+      colorIndex: 10
+      isIconRecursive: 0
+      isColorRecursive: 1
+    - iconNameOrGuid: 
+      colorIndex: 4
+      isIconRecursive: 0
+      isColorRecursive: 1
+    - iconNameOrGuid: 
+      colorIndex: 2
+      isIconRecursive: 0
+      isColorRecursive: 1
+    - iconNameOrGuid: 
+      colorIndex: 3
+      isIconRecursive: 0
+      isColorRecursive: 1
+    - iconNameOrGuid: 
+      colorIndex: 1
+      isIconRecursive: 0
+      isColorRecursive: 1
+    - iconNameOrGuid: 
+      colorIndex: 7
+      isIconRecursive: 0
+      isColorRecursive: 1
+    - iconNameOrGuid: 
+      colorIndex: 2
+      isIconRecursive: 0
+      isColorRecursive: 1
+    - iconNameOrGuid: 
+      colorIndex: 3
+      isIconRecursive: 0
+      isColorRecursive: 1
+    - iconNameOrGuid: 
+      colorIndex: 6
+      isIconRecursive: 0
+      isColorRecursive: 1
+    - iconNameOrGuid: 
+      colorIndex: 1
+      isIconRecursive: 0
+      isColorRecursive: 1
+    - iconNameOrGuid: 
+      colorIndex: 2
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 7
+      isIconRecursive: 0
+      isColorRecursive: 1
+    - iconNameOrGuid: 
+      colorIndex: 6
+      isIconRecursive: 0
+      isColorRecursive: 1
+    - iconNameOrGuid: 
+      colorIndex: 4
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 9
+      isIconRecursive: 0
+      isColorRecursive: 1
+    - iconNameOrGuid: 
+      colorIndex: 4
+      isIconRecursive: 0
+      isColorRecursive: 1
+    - iconNameOrGuid: 
+      colorIndex: 4
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 4
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 4
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 5
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 6
+      isIconRecursive: 0
+      isColorRecursive: 1
+    - iconNameOrGuid: 
+      colorIndex: 6
+      isIconRecursive: 0
+      isColorRecursive: 1
+  bookmarks:
+  - guid: 9844d4d1dab9c3141accb0134859a846
+  - guid: ecdb5fa28d0d0b941a28eb887265fcd3
+  - guid: ca94b0ac03b17e344bbeb67fd8ae3ad2
+  - guid: cd702e29406bb8645b5a0d49bf3bf014
+  - guid: b4348df7a71b99e4e9d3ee9f7f81e878
+  - guid: 361282574091dbd4eb934e8614126f69
+  - guid: cb1cecca0672a88459142509054e371d
+  - guid: 69e62f4376b694a928ae341142372855
+  - guid: 44dee61545a607440ad8b2add7d0489b
+  - guid: 9d58372f76565e24bb94fd987be1cce7
+  - guid: 692f629552857ea4d8e56cabfe839c62
+  - guid: bb1947ed1d4002a4fb5c6291f7cee3bf
+  - guid: 49b0c408ebaf6604ebcce4117fcf1501
+  - guid: b608472070f1ac045bb2c0f093ad4245

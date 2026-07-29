@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9b8c7d6e5f403918273645564738291, type: 3}
+  m_Name: SpecialOfferAds
+  m_EditorClassIdentifier: 
+  isActive: 1
+  activeAfterLevel: 3
+  entries:
+  - boosterType: 1
+    value: 3
+    name: break the rules
+    description: manh vkl
+  - boosterType: 2
+    value: 3
+    name: air blade
+    description: tu nay ta chia li
+  - boosterType: 3
+    value: 3
+    name: finger
+    description: point breaker
+  - boosterType: 4
+    value: 3
+    name: BeamMagNum
+    description: beam nay manh vkl

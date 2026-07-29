@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1e2d3c4b5a6978012345678abcdef01, type: 3}
+  m_Name: DataDailyStreak
+  m_EditorClassIdentifier: 
+  isEnabled: 1
+  streakDayCount: 7
+  colorCheckin: {r: 0.27029857, g: 1, b: 0.015686274, a: 1}
+  colorNormal: {r: 1, g: 0.9849738, b: 0.75, a: 1}
+  timeCastCheckinItem: 1
+  timeClose: 1.5
+  finalRewardId: 1
+  finalRewards:
+  - id: 1
+    items:
+    - boosterType: 1
+      boosterCount: 3
+    - boosterType: 2
+      boosterCount: 3
+    - boosterType: 3
+      boosterCount: 5
+    - boosterType: 4
+      boosterCount: 8
+  - id: 2
+    items:
+    - boosterType: 3
+      boosterCount: 2
+    - boosterType: 4
+      boosterCount: 2
+  - id: 3
+    items:
+    - boosterType: 1
+      boosterCount: 1
+    - boosterType: 2
+      boosterCount: 1
+    - boosterType: 4
+      boosterCount: 1

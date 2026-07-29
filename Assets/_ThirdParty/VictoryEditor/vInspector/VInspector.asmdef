@@ -1,0 +1,25 @@
+{
+    "name": "VInspector",
+    "rootNamespace": "",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.modules.terrainphysics",
+            "expression": "",
+            "define": "TERRAIN_PACKAGE_ENABLED"
+        },
+        {
+            "name": "Unity",
+            "expression": "",
+            "define": "VINSPECTOR_ATTRIBUTES_DISABLED"
+        }
+    ],
+    "noEngineReferences": false
+}

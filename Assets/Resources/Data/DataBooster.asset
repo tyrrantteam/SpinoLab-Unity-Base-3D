@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40e397fd27dc2264b8f9ebd2b93f9734, type: 3}
+  m_Name: DataBooster
+  m_EditorClassIdentifier: 
+  listBoooster:
+  - level: 1
+    boosterType: 2
+    imgMechanic: {fileID: 21300000, guid: 7c1b4be6a1a72d14996d7677f3f35927, type: 3}
+    imgIconBooster: {fileID: 21300000, guid: d6523dbf95ec9384face120b1135cdd6, type: 3}
+    description: Icon Hammer
+    nameBooster: booster nay manh vl
+  - level: 20
+    boosterType: 3
+    imgMechanic: {fileID: 21300000, guid: 6d24a88b27df8fa408e8fd33f4582fbd, type: 3}
+    imgIconBooster: {fileID: 21300000, guid: 2d40aba392eaf7141bd366bc716c65c3, type: 3}
+    description: Key finger
+    nameBooster: booster nay cung manh nhung khong bang cai duoi
+  - level: 30
+    boosterType: 3
+    imgMechanic: {fileID: 21300000, guid: eeab766df1dc8b7428f09cbf69400970, type: 3}
+    imgIconBooster: {fileID: 21300000, guid: 60aa2d8d119abe846a554f3810267f18, type: 3}
+    description: Finger GOD#
+    nameBooster: Booster nay cx cx hoi manh manh
+  - level: 40
+    boosterType: 4
+    imgMechanic: {fileID: 21300000, guid: 8bf415661ab31644781ff6ce9874c1e8, type: 3}
+    imgIconBooster: {fileID: 21300000, guid: 1e63bb12ec2ea17479e61b4a4d9c6759, type: 3}
+    description: beam saber
+    nameBooster: boooster nay hoi manh

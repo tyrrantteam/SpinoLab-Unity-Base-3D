@@ -1,0 +1,149 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c28109b0404ba834e95401a1b3808e70, type: 3}
+  m_Name: DataRanking
+  m_EditorClassIdentifier: 
+  foldoutImportGUI: 1
+  documentId: 10OSjY4FrbLSHTL4huHSjy3RI2a-rVVgystge58N54Hw
+  selectedTogglesIds:
+  - rankinglist
+  foldoutSerializationGUI: 1
+  serializationOutputPath: ../../Configs
+  serializationFileName: Configs.v0.1
+  serializationFormat: 0
+  content:
+    rankinglist:
+    - id: 1
+      name: Jin
+      point: 101120
+      nation: Japan
+      avatar: 1
+    - id: 2
+      name: Hanna
+      point: 111120
+      nation: USA
+      avatar: 2
+    - id: 3
+      name: JinPham
+      point: 101120
+      nation: German
+      avatar: 3
+    - id: 4
+      name: Jin
+      point: 101120
+      nation: Korea
+      avatar: 4
+    - id: 5
+      name: Hanna
+      point: 111120
+      nation: Japan
+      avatar: 1
+    - id: 6
+      name: JinPham
+      point: 101120
+      nation: USA
+      avatar: 2
+    - id: 7
+      name: Jin
+      point: 101120
+      nation: German
+      avatar: 3
+    - id: 8
+      name: Hanna
+      point: 111120
+      nation: Korea
+      avatar: 4
+    - id: 9
+      name: JinPham
+      point: 101120
+      nation: Japan
+      avatar: 4
+    - id: 10
+      name: Jin
+      point: 101120
+      nation: USA
+      avatar: 3
+    - id: 11
+      name: Hanna
+      point: 111120
+      nation: German
+      avatar: 2
+    - id: 12
+      name: JinPham
+      point: 101120
+      nation: Korea
+      avatar: 3
+    - id: 13
+      name: Jin
+      point: 101120
+      nation: Japan
+      avatar: 4
+    - id: 14
+      name: Hanna
+      point: 111120
+      nation: USA
+      avatar: 2
+    - id: 15
+      name: JinPham
+      point: 101120
+      nation: German
+      avatar: 1
+    - id: 16
+      name: Jin
+      point: 101120
+      nation: Korea
+      avatar: 3
+    - id: 17
+      name: Hanna
+      point: 111120
+      nation: Japan
+      avatar: 4
+    - id: 18
+      name: JinPham
+      point: 101120
+      nation: USA
+      avatar: 3
+    - id: 19
+      name: Jin
+      point: 101120
+      nation: German
+      avatar: 3
+    - id: 20
+      name: Hanna
+      point: 111120
+      nation: Korea
+      avatar: 2
+    - id: 21
+      name: JinPham
+      point: 101120
+      nation: Japan
+      avatar: 1
+    - id: 22
+      name: Jin
+      point: 101120
+      nation: USA
+      avatar: 1
+    - id: 23
+      name: Hanna
+      point: 111120
+      nation: German
+      avatar: 4
+    - id: 24
+      name: JinPham
+      point: 101120
+      nation: Korea
+      avatar: 2
+    - id: 25
+      name: Jin
+      point: 55967
+      nation: Laos
+      avatar: 3

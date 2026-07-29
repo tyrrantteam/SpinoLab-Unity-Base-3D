@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b292704c265b5b448a6d69b6a1c7d45, type: 3}
+  m_Name: DataPoolFactory
+  m_EditorClassIdentifier: 
+  listFactoryPoolData:
+  - typeObject: {fileID: 0}
+    isPreSpawn: 0
+    valuePreSpawn: 0
+    idObject: 
+  listFactoryPoolDataUI:
+  - typeObject: {fileID: 4733213690693915657, guid: eb55415ddc66a224eb7d5d5737417078, type: 3}
+    isPreSpawn: 0
+    valuePreSpawn: 0
+    idObject: TUTORIAL_HAND
+  - typeObject: {fileID: 6624003410654295047, guid: c130010fe0a346b44ac2ed6c82453a77, type: 3}
+    isPreSpawn: 0
+    valuePreSpawn: 0
+    idObject: TUTORIAL_HAND_SLIDE
+  - typeObject: {fileID: 8209443583692050854, guid: 1577b25f85e991f4facba2e53e21a9d1, type: 3}
+    isPreSpawn: 0
+    valuePreSpawn: 0
+    idObject: BOOSTER_UI

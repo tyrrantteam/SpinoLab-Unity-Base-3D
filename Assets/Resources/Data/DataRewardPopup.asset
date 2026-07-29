@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0997488e405e794d8cc0af5255fb893, type: 3}
+  m_Name: DataRewardPopup
+  m_EditorClassIdentifier: 
+  foldoutImportGUI: 1
+  documentId: 10OSjY4FrbLSHTL4huHSjy3RI2a-rVVgystge58N54Hw
+  selectedTogglesIds:
+  - listBundlePack1
+  - listBundlePack2
+  - popupLevelUp
+  - dailyCheckin
+  foldoutSerializationGUI: 1
+  serializationOutputPath: ../../Configs
+  serializationFileName: Configs.v0.1
+  serializationFormat: 0
+  content:
+    popupLevelUp:
+    - id: 1
+      typeResources: gold
+      value: 200
+    - id: 2
+      typeResources: diamond
+      value: 50
+    - id: 3
+      typeResources: skipAds
+      value: 100
+    listBundlePack2:
+    - id: 1
+      typeResources: gold
+      value: 200
+    - id: 2
+      typeResources: diamond
+      value: 50
+    - id: 3
+      typeResources: skipAds
+      value: 100
+    dailyCheckin:
+    - day: 0
+      id: 1
+      typeResources: gold
+      value: 200
+    - day: 1
+      id: 2
+      typeResources: diamond
+      value: 50
+    - day: 2
+      id: 1
+      typeResources: gold
+      value: 200
+    - day: 3
+      id: 1
+      typeResources: gold
+      value: 400
+    - day: 4
+      id: 2
+      typeResources: diamond
+      value: 100
+    - day: 5
+      id: 1
+      typeResources: gold
+      value: 200
+    - day: 6
+      id: 1
+      typeResources: gold
+      value: 800
+    - day: 6
+      id: 2
+      typeResources: diamond
+      value: 125
+    - day: 6
+      id: 1
+      typeResources: gold
+      value: 200
