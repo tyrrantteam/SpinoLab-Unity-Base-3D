@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/HomeScene.unity
     guid: 5aa9d1407eee0594c91a7955f77593da
   - enabled: 1
-    path: Assets/Scenes/GamePlayScreen1.unity
-    guid: b2512ae2913573f40a74ff5c51cae869
+    path: Assets/Scenes/GamePlayScreen.unity
+    guid: cb3dea07ff2e84349a2c78e59d4cccfa
   m_configObjects: {}
