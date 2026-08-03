@@ -30,6 +30,7 @@ MonoBehaviour:
     serializationDepthLimit: 64
     assemblyNames:
     - Assembly-CSharp-firstpass
+    - Autodesk.Fbx
     - MoreMountains.Tools
     - Kybernetik.InspectorGadgets.Editor
     - SingularityGroup.HotReload.Editor
@@ -39,7 +40,6 @@ MonoBehaviour:
     - Kybernetik.InspectorGadgets
     - PsdPlugin
     - LitMotion
-    - Autodesk.Fbx
     - EasyTextEffects
     - Cinemachine
     - MoreMountains.Tools.Editor
