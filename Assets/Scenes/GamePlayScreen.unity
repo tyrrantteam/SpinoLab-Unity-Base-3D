@@ -4469,6 +4469,7 @@ MonoBehaviour:
     SerializationNodes: []
   confetiRainWin: {fileID: 33873438}
   confetiStartWin: {fileID: 1052657959}
+  fireWorkEffect: {fileID: 0}
   uIGameController: {fileID: 1777120127}
   SpawnCircleEffectUI: {fileID: 1541897402}
 --- !u!4 &1324296023

@@ -39,8 +39,11 @@ MonoBehaviour:
     - Kybernetik.InspectorGadgets
     - PsdPlugin
     - LitMotion
+    - Autodesk.Fbx
     - EasyTextEffects
+    - Cinemachine
     - MoreMountains.Tools.Editor
+    - PPv2URPConverters
     - Sirenix.OdinInspector.CompatibilityLayer.Editor
     - LitMotion.Extensions
     - Lofelt.NiceVibrations
@@ -55,6 +58,8 @@ MonoBehaviour:
     - VFavorites
     - Sirenix.OdinInspector.CompatibilityLayer
     - NorskaLib.Spreadsheets.Editor
+    - Autodesk.Fbx.Editor
+    - FbxBuildTestAssets
     - Sirenix.OdinInspector.Modules.UnityMathematics
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
