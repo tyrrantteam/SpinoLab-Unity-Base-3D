@@ -14,6 +14,7 @@ public enum EventID
     ClaimDailyCheckin,
     UpdateGold,
     UpdateGem,
+    UpdateHeart,
 
     //Tutorial
     FinishTutorialStep,

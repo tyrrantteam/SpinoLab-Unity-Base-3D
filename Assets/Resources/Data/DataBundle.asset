@@ -30,6 +30,7 @@ MonoBehaviour:
       isRemoveAds: 1
       oneTimePurchase: 1
       idBundle: com.bundle1.pack
+      name: Starter Rush
     - id: 2
       typeResources: diamond
       value: 50
@@ -37,6 +38,15 @@ MonoBehaviour:
       isRemoveAds: 0
       oneTimePurchase: 0
       idBundle: 
+      name: 
+    - id: 3
+      typeResources: gold
+      value: 100
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
     listBundlePack2:
     - id: 1
       typeResources: gold
@@ -45,6 +55,7 @@ MonoBehaviour:
       isRemoveAds: 0
       oneTimePurchase: 0
       idBundle: com.bundle2.pack
+      name: Tactician Pack
     - id: 2
       typeResources: diamond
       value: 50
@@ -52,3 +63,5 @@ MonoBehaviour:
       isRemoveAds: 0
       oneTimePurchase: 0
       idBundle: 
+      name: 
+    bundle_packGold: []

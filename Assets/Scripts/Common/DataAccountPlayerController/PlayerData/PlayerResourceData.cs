@@ -4,27 +4,37 @@ using UnityEngine;
 
 namespace DataAccount
 {
-    public class PlayerResourceData 
+    public class PlayerResourceData
     {
         //resource
         public int gold;
         public int diamond;
         public int skipAds;
+
+        public int heart;
+
+        public long heartLastTimeOut;
+
+        public bool isNoAdsPurchase = false;
+        public long isNoAdsPurchase24h;
+        
         //Booster
         public int hammerBooster;
         public int scizorBooster;
         public int fingerGodBooster;
         public int beamBooster;
+        
+        
 
         public int GetBoosterCount(BoosterType type)
         {
             return type switch
             {
-                BoosterType.Hammer => hammerBooster,
-                BoosterType.Scizor => scizorBooster,
+                BoosterType.Hammer    => hammerBooster,
+                BoosterType.Scizor    => scizorBooster,
                 BoosterType.FingerGod => fingerGodBooster,
-                BoosterType.Beam => beamBooster,
-                _ => 0
+                BoosterType.Beam      => beamBooster,
+                _                     => 0
             };
         }
 
@@ -56,13 +66,13 @@ namespace DataAccount
         }
 
         //NoAds
-        public bool isNoAdsPurchase = false;
-        public long isNoAdsPurchase24h;
+       
 
         //1st time data
         public bool isFirstTimeOpen = true;
 
         #region skipAds
+
         public void SetSkipAdsValue(int value)
         {
             skipAds = value;
@@ -78,6 +88,7 @@ namespace DataAccount
         #endregion
 
         #region diamond
+
         public void SetDiamondValue(int value)
         {
             diamond = value;
@@ -89,6 +100,31 @@ namespace DataAccount
         {
             diamond += value;
             GameManager.Instance.PostEvent(EventID.UpdateGem);
+            DataAccountPlayer.SavePlayerResourceData();
+        }
+
+        #endregion
+
+        #region Heart
+
+        public void SetHeartCalculationTime()
+        {
+            var currentTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            heartLastTimeOut = currentTime;
+            DataAccountPlayer.SavePlayerResourceData();
+        }
+
+        public void ChangeHeartValue(int value)
+        {
+            heart += value;
+            GameManager.Instance.PostEvent(EventID.UpdateHeart);
+            DataAccountPlayer.SavePlayerResourceData();
+        }
+
+        public void SetHeartValue(int value)
+        {
+            gold = value;
+            GameManager.Instance.PostEvent(EventID.UpdateHeart);
             DataAccountPlayer.SavePlayerResourceData();
         }
 
@@ -109,15 +145,18 @@ namespace DataAccount
             GameManager.Instance.PostEvent(EventID.UpdateGold);
             DataAccountPlayer.SavePlayerResourceData();
         }
+
         #endregion
 
         #region no Ads
+        
         public void ChangeNoAdsStatus(bool value)
         {
             isNoAdsPurchase = value;
             DataAccountPlayer.SavePlayerResourceData();
         }
-
+        
+      
         public void ChangeNoAds24hStatus(long value)
         {
             isNoAdsPurchase24h = value;
@@ -139,11 +178,13 @@ namespace DataAccount
         #endregion
 
         #region 1stOpen
+
         public void Change1stStatus(bool value)
         {
             isFirstTimeOpen = value;
             DataAccountPlayer.SavePlayerResourceData();
         }
+
         #endregion
     }
 }
