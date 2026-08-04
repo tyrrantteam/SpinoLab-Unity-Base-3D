@@ -44,6 +44,15 @@ public class AnlyticManager : SingletonMono<AnlyticManager>
 
     #endregion
 
+    #region IAP
+
+    public void LogPurchase(string isoCurrencyCode, decimal localPrice)
+    {
+        
+    }
+
+    #endregion
+    
     #region Tutorial event
     public void LogEventTutorialStart()
     {
