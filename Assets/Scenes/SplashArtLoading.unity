@@ -1203,6 +1203,7 @@ MonoBehaviour:
   canCount: 0
   canCountInGameScene: 0
   canShowAds: 0
+  usingMetaSys: 1
   DataAds: {fileID: 11400000, guid: 83696347c62952e4990c31219b06a08f, type: 2}
 --- !u!1 &1260176353
 GameObject:
