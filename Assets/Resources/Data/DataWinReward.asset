@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4deb9f0d022142f7a023e7ff02a08156, type: 3}
+  m_Name: DataWinReward
+  m_EditorClassIdentifier: 
+  foldoutImportGUI: 1
+  documentId: 
+  selectedTogglesIds: []
+  foldoutSerializationGUI: 1
+  serializationOutputPath: ../../Configs
+  serializationFileName: Configs.v0.1
+  serializationFormat: 0
+  content:
+    listBundlePack1:
+    - level: 1
+      id: 1
+      typeResources: gold
+      value: 100
+    - level: 2
+      id: 1
+      typeResources: gold
+      value: 100
+    - level: 3
+      id: 1
+      typeResources: gold
+      value: 100
+    - level: 4
+      id: 1
+      typeResources: gold
+      value: 100
