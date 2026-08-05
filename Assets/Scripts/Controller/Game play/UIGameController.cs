@@ -3,21 +3,21 @@ using JinGroup.UI.Common.Setting;
 using LitMotion;
 using LitMotion.Extensions;
 using Sirenix.OdinInspector;
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UI.LoadingScene;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIGameController : SingletonMono<UIGameController>
 {
-    [SerializeField] private Text levelText;
+    [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private Button retryBtn;
     [SerializeField] private Button settingBtn;
     [SerializeField] private GameObject hardLevel;
     [SerializeField] private GameObject BottomBar;
     [SerializeField] private GameObject BannerAdsBar;
-
+    [SerializeField] private GameObject BgFeeze;
+    public GameObject goldBar;
     [Title("Bottom bar slide")]
     [SerializeField] private float bottomBarSlideDuration = 0.4f;
     [SerializeField] private float bottomBarHideOffsetY = -180f;
@@ -30,6 +30,7 @@ public class UIGameController : SingletonMono<UIGameController>
 
     protected override void Awake()
     {
+        base.Awake();
         ListenerButton();
         _bottomBarRect = BottomBar.GetComponent<RectTransform>();
         _bottomBarRestAnchoredPosition = _bottomBarRect.anchoredPosition;
@@ -61,7 +62,11 @@ public class UIGameController : SingletonMono<UIGameController>
 
     public void SetLevelText(int numberLevel)
     {
-        levelText.text = "LEVEL: " + numberLevel.ToString();
+        levelText.text = "LEVEL " + numberLevel.ToString();
+        if(numberLevel == 5 || numberLevel == 6)
+        {
+            SetWarningHardLevel();
+        }
     }
 
     public void SetWarningHardLevel()
@@ -101,5 +106,9 @@ public class UIGameController : SingletonMono<UIGameController>
         _bottomBarMotion = LMotion.Create(from, to, bottomBarSlideDuration)
             .WithEase(bottomBarSlideEase)
             .BindToAnchoredPosition(_bottomBarRect);
+    }
+    public void ShowFeezeBg(bool isShow)
+    {
+        BgFeeze.SetActive(isShow);
     }
 }
