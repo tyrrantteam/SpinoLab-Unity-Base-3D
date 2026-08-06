@@ -16,7 +16,7 @@ public class UIGameController : SingletonMono<UIGameController>
     [SerializeField] private GameObject hardLevel;
     [SerializeField] private GameObject BottomBar;
     [SerializeField] private GameObject BannerAdsBar;
-    [SerializeField] private GameObject BgFeeze;
+
     public GameObject goldBar;
     [Title("Bottom bar slide")]
     [SerializeField] private float bottomBarSlideDuration = 0.4f;
@@ -106,9 +106,5 @@ public class UIGameController : SingletonMono<UIGameController>
         _bottomBarMotion = LMotion.Create(from, to, bottomBarSlideDuration)
             .WithEase(bottomBarSlideEase)
             .BindToAnchoredPosition(_bottomBarRect);
-    }
-    public void ShowFeezeBg(bool isShow)
-    {
-        BgFeeze.SetActive(isShow);
     }
 }

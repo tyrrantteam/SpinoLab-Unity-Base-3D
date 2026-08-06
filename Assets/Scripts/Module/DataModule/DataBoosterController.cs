@@ -60,5 +60,6 @@ public struct ProcessBoosterData
     public Sprite imgIconBooster;
     public string description;
     public string nameBooster;
+    public int price;
 }
 

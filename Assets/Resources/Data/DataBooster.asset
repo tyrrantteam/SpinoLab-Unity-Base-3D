@@ -19,21 +19,25 @@ MonoBehaviour:
     imgIconBooster: {fileID: 21300000, guid: d6523dbf95ec9384face120b1135cdd6, type: 3}
     description: Icon Hammer
     nameBooster: booster nay manh vl
+    price: 200
   - level: 20
     boosterType: 3
     imgMechanic: {fileID: 21300000, guid: 6d24a88b27df8fa408e8fd33f4582fbd, type: 3}
     imgIconBooster: {fileID: 21300000, guid: 2d40aba392eaf7141bd366bc716c65c3, type: 3}
     description: Key finger
     nameBooster: booster nay cung manh nhung khong bang cai duoi
+    price: 250
   - level: 30
     boosterType: 3
     imgMechanic: {fileID: 21300000, guid: eeab766df1dc8b7428f09cbf69400970, type: 3}
     imgIconBooster: {fileID: 21300000, guid: 60aa2d8d119abe846a554f3810267f18, type: 3}
     description: Finger GOD#
     nameBooster: Booster nay cx cx hoi manh manh
+    price: 350
   - level: 40
     boosterType: 4
     imgMechanic: {fileID: 21300000, guid: 8bf415661ab31644781ff6ce9874c1e8, type: 3}
     imgIconBooster: {fileID: 21300000, guid: 1e63bb12ec2ea17479e61b4a4d9c6759, type: 3}
     description: beam saber
     nameBooster: boooster nay hoi manh
+    price: 500
