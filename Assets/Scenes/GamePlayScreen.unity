@@ -2712,7 +2712,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2676137179144007982, guid: 16948ed1b6f75494f8cd6bed5d4c8b42, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 201.7
+      value: 201.70001
       objectReference: {fileID: 0}
     - target: {fileID: 2676137179144007982, guid: 16948ed1b6f75494f8cd6bed5d4c8b42, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -6558,8 +6558,10 @@ MonoBehaviour:
   BannerAdsBar: {fileID: 3857594}
   goldBar: {fileID: 832164587}
   bottomBarSlideDuration: 0.4
-  bottomBarHideOffsetY: -180
+  bottomBarHideOffsetY: -540
   bottomBarSlideEase: 9
+  _bottomBarRect: {fileID: 1291983365}
+  _bottomBarRestAnchoredPosition: {x: 0, y: 186.2002}
 --- !u!1 &1872853711
 GameObject:
   m_ObjectHideFlags: 0

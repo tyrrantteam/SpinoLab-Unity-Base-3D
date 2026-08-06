@@ -23,8 +23,8 @@ public class UIGameController : SingletonMono<UIGameController>
     [SerializeField] private float bottomBarHideOffsetY = -180f;
     [SerializeField] private Ease bottomBarSlideEase = Ease.InOutCubic;
 
-    private RectTransform _bottomBarRect;
-    private Vector2 _bottomBarRestAnchoredPosition;
+    [SerializeField] RectTransform _bottomBarRect;
+    [SerializeField] Vector2 _bottomBarRestAnchoredPosition;
     private MotionHandle _bottomBarMotion;
     private const float BottomBarRestPositionEpsilon = 1f;
 
@@ -32,7 +32,6 @@ public class UIGameController : SingletonMono<UIGameController>
     {
         base.Awake();
         ListenerButton();
-        _bottomBarRect = BottomBar.GetComponent<RectTransform>();
         _bottomBarRestAnchoredPosition = _bottomBarRect.anchoredPosition;
         var usingBannerAds = GameManager.Instance.DataAds.UsingBannerAds;
         BannerAdsBar.gameObject.SetActive(usingBannerAds);
@@ -42,6 +41,18 @@ public class UIGameController : SingletonMono<UIGameController>
     private void TestWaringLevel()
     {
         SetWarningHardLevel();
+    }
+
+    [Button("TEST SlideUp", ButtonSizes.Large), GUIColor(0, 1, 0)]
+    private void TestSlideUp()
+    {
+        BottomBarSlideUp();
+    }
+
+    [Button("TEST SlideDown", ButtonSizes.Large), GUIColor(0, 1, 0)]
+    private void TestSlideDown()
+    {
+        BottomBarSlideDown();
     }
 
     protected virtual void ListenerButton()

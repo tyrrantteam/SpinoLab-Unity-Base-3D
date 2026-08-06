@@ -177,11 +177,13 @@ public class BoosterManager : SingletonMono<BoosterManager>
             }
             else
             {
-
+                UseBoosterFromGold(boosterType);
+                return;
             }
         }
 
         OnBoosterActivated(boosterType);
+        UIGameController.instance.BottomBarSlideDown();
     }
 
     public void BoosterUsingComplete(BoosterType boosterType)
