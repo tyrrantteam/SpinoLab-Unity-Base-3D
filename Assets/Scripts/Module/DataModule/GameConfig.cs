@@ -8,4 +8,5 @@ public class GameConfig : ScriptableObject
     public int levelMin;
     [Header("UI")]
     public bool isProduction;
+    public bool isIAAprod;
 }

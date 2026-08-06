@@ -13,7 +13,7 @@ public class GoldResourcesHeader : BaseResourcesHeader
     protected override void UpdateValue()
     {
         valueInformation = DataAccountPlayer.PlayerResourceData.gold;
-        base.UpdateValue();
+        ChangeValueWithAnimation();
     }
 
 
