@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using MoreMountains.Feedbacks;
+using Mono.Cecil.Cil;
 
 public class BoosterButtonController : MonoBehaviour
 {
@@ -12,8 +13,10 @@ public class BoosterButtonController : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI unlockTxt;
     [SerializeField] private TextMeshProUGUI valueBoosterTxt;
+    [SerializeField] private TextMeshProUGUI priceTxt;
     [SerializeField] private GameObject valueBooster;
     [SerializeField] private GameObject adsBooster;
+    [SerializeField] private GameObject priceHolder;
     [SerializeField] private Image boosterIcon;
     [SerializeField] private Image lockIcon;
     [SerializeField] private Button boosterBtn;
@@ -30,7 +33,8 @@ public class BoosterButtonController : MonoBehaviour
     private BoosterManager _boosterManager;
     private MotionHandle _countUpHandle;
     private bool _isCountingUp;
-
+    private int _price;
+    private GameConfig _gameConfig;
     public BoosterType BoosterType => _data.boosterType;
     private bool _isBoosterEmpty;
 
@@ -45,12 +49,15 @@ public class BoosterButtonController : MonoBehaviour
         _isCountingUp = false;
     }
 
-    public void Init(BoosterManager boosterManager, ProcessBoosterData data, int currentLevel)
+    public void Init(BoosterManager boosterManager, ProcessBoosterData data, int currentLevel, GameConfig gameConfig)
     {
         _boosterManager = boosterManager;
         _data = data;
+        _gameConfig = gameConfig;
         boosterIcon.sprite = _data.imgIconBooster;
         SetStatus(currentLevel);
+        _price = _data.price;
+        priceTxt.text = _data.price.ToString();
     }
 
     public void PlayValueGainEffect(int remainingMoves)
@@ -170,7 +177,11 @@ public class BoosterButtonController : MonoBehaviour
         bool hasStock = !_isBoosterEmpty;
 
         valueBooster.SetActive(hasStock);
-        adsBooster.SetActive(!hasStock);
+        var isIAA = _gameConfig.isIAAprod;
+
+        adsBooster.SetActive(!hasStock && isIAA);
+        priceHolder.SetActive(!hasStock && !isIAA);
+
         valueBoosterTxt.gameObject.SetActive(hasStock);
 
         if (hasStock)
