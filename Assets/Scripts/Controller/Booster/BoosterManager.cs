@@ -11,7 +11,7 @@ public class BoosterManager : SingletonMono<BoosterManager>
     [SerializeField] private Transform                     parentBoosterBtn;
     [SerializeField] private List<BoosterButtonController> listBoosterBtn = new List<BoosterButtonController>();
     private                  DataBoosterController         dataBooster;
-
+    private GameConfig _gameConfig;
     protected override void Awake()
     {
        base.Awake();
@@ -34,6 +34,11 @@ public class BoosterManager : SingletonMono<BoosterManager>
             dataBooster = LoadResourceController.Instance.DataBoosterController();
         }
 
+        if(_gameConfig == null)
+        {
+            _gameConfig = LoadResourceController.Instance.GameConfig();
+        }
+
         int currentLevel = DataAccountPlayer.PlayerPointProcessData.currentlevelShowScreen;
 
         for (int i = 0; i < dataBooster.listBoooster.Count; i++)
@@ -43,7 +48,7 @@ public class BoosterManager : SingletonMono<BoosterManager>
                 continue;
 
             var button = Instantiate(BoosterButtonControllerPrefab, parentBoosterBtn);
-            button.Init(this, boosterData, currentLevel);
+            button.Init(this, boosterData, currentLevel, _gameConfig);
             listBoosterBtn.Add(button);
         }
 
@@ -165,11 +170,20 @@ public class BoosterManager : SingletonMono<BoosterManager>
         if (IsBoosterEmpty)
         {
             SpecialOfferAdsService.RecordEmptyBoosterAttempt(boosterType);
-            UseBoosterFromAds(boosterType);
-            return;
+            if (_gameConfig.isIAAprod)
+            {
+                UseBoosterFromAds(boosterType);
+                return;
+            }
+            else
+            {
+                UseBoosterFromGold(boosterType);
+                return;
+            }
         }
 
         OnBoosterActivated(boosterType);
+        UIGameController.instance.BottomBarSlideDown();
     }
 
     public void BoosterUsingComplete(BoosterType boosterType)
@@ -201,6 +215,26 @@ public class BoosterManager : SingletonMono<BoosterManager>
     protected virtual void UseBoosterFromAds(BoosterType boosterType)
     {
         AnlyticManager.instance.BoosterClaim(boosterType);
+        DataAccountPlayer.PlayerResourceData.ChangeBoosterCount(boosterType, 1);
+        RefreshBoosterButtons();
+        GameDebug.Log($"BoosterManager: Watch ads to use booster {boosterType}");
+    }
+
+    protected virtual void UseBoosterFromGold(BoosterType boosterType)
+    {
+        AnlyticManager.instance.BoosterClaim(boosterType);
+
+        var price = dataBooster.GetDataBoosterByType(boosterType).price;
+        var playerGold = DataAccountPlayer.PlayerResourceData.gold;
+
+        if(playerGold >= price)
+        {
+            DataAccountPlayer.PlayerResourceData.ChangeGoldValue(-price);
+            DataAccountPlayer.PlayerResourceData.ChangeBoosterCount(boosterType, 1);
+            RefreshBoosterButtons();
+        }
+
+       
         GameDebug.Log($"BoosterManager: Watch ads to use booster {boosterType}");
     }
 

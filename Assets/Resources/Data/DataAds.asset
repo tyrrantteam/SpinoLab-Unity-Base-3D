@@ -18,5 +18,5 @@ MonoBehaviour:
   breakpointLevelShowInterAds1: 20
   breakpointLevelShowInterAds2: 35
   breakpointLevelShowInterAds3: 60
-  UsingBannerAds: 1
+  UsingBannerAds: 0
   UsingInterAds: 0

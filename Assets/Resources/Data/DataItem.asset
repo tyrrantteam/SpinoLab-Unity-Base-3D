@@ -30,3 +30,11 @@ MonoBehaviour:
       typeResources: diamond
       typeRarity: excellent
       description: diamond_description
+    - id: 3
+      typeResources: skipAds
+      typeRarity: better
+      description: skipAds_description
+    - id: 4
+      typeResources: energy
+      typeRarity: good
+      description: energy_description
