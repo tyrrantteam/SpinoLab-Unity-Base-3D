@@ -2,8 +2,6 @@ using Base.Core.Sound;
 using JinGroup.Module.Resources;
 using System.Collections.Generic;
 using System.IO;
-using Unity.Burst.Intrinsics;
-using UnityEditor.UI;
 using UnityEngine;
 
 namespace JinGroup.Base.LoadData
