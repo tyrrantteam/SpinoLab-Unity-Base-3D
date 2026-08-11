@@ -10,8 +10,7 @@
         private static PlayerTutorialData _playerTutorialData;
         private static PlayerSpecialOfferAdsData _playerSpecialOfferAdsData;
         private static PlayerStreakData _playerStreakData;
-        
-        // private static Player
+
 
         #region Getters
 

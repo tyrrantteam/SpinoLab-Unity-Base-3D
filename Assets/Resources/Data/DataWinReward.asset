@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DataWinReward
   m_EditorClassIdentifier: 
   foldoutImportGUI: 1
-  documentId: 10OSjY4FrbLSHTL4huHSjy3RI2a-rVVgystge58N54Hw
+  documentId: 
   selectedTogglesIds: []
   foldoutSerializationGUI: 1
   serializationOutputPath: ../../Configs
