@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "114176945298",
+    "project_id": "snipolab-base",
+    "storage_bucket": "snipolab-base.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:114176945298:android:ee6d57a626b310094a8a4b",
+        "android_client_info": {
+          "package_name": "com.spinolab.basegame"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfTJEyXT_fY_WWmhxBXT7iBB1I50P3Zf4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
