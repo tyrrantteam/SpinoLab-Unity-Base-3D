@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Base.Core.Debug;
+using JinGroup.Base.LoadData;
 using Unity.Services.Core;
 using Unity.Services.Core.Environments;
+using UnityEngine;
 using UnityEngine.Purchasing;
 
 namespace Common.IAP
@@ -85,7 +87,21 @@ namespace Common.IAP
         /// <param name="onPurchaseState">Callback nhận kết quả: Success / Failed / NotAvailable</param>
         public void StartPurchase(string productId, Action<PurchaseState> onPurchaseState)
         {
-            PurchaseManager.Instance.StartPurchase(productId, onPurchaseState);
+            var gameConfig = LoadResourceController.Instance.GameConfig();
+            if (gameConfig == null)
+            {
+                GameDebug.LogError("Game Config not found");
+            }
+
+            if (gameConfig.isProduction)
+            {
+                PurchaseManager.Instance.StartPurchase(productId, onPurchaseState);
+            }
+            else
+            {
+                onPurchaseState?.Invoke(PurchaseState.Success);
+            }
+            
         }
     }
 }

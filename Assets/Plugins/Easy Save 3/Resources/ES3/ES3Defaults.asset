@@ -36,12 +36,15 @@ MonoBehaviour:
     - Assembly-CSharp
     - VTabs
     - NorskaLib.Spreadsheets
+    - UniTask
     - Kybernetik.InspectorGadgets
     - PsdPlugin
     - LitMotion
     - EasyTextEffects
     - MoreMountains.Tools.Editor
+    - IAPResolver
     - Sirenix.OdinInspector.CompatibilityLayer.Editor
+    - UniTask.Linq
     - LitMotion.Extensions
     - Lofelt.NiceVibrations
     - VHierarchy
@@ -54,7 +57,11 @@ MonoBehaviour:
     - Lofelt.NiceVibrations.Editor
     - VFavorites
     - Sirenix.OdinInspector.CompatibilityLayer
+    - UniTask.TextMeshPro
     - NorskaLib.Spreadsheets.Editor
+    - UniTask.Addressables
+    - UniTask.Editor
+    - UniTask.DOTween
     - Sirenix.OdinInspector.Modules.UnityMathematics
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
