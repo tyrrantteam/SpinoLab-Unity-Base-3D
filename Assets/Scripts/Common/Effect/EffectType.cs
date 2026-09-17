@@ -6,9 +6,9 @@ namespace JinGroup.Common.Effect
         Scale,
         Move,
         Shake,
-        Float,
-        ButtonScale,
+        // Float — Deprecated: chuyển sang EffectTypeLoop.Float (FloatingEffectUI)
         Fade,
+        ButtonScale,
         SpawnCircle,
         MoveToTarget,
         Punch,
