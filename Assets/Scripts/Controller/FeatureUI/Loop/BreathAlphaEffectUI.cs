@@ -35,10 +35,16 @@ namespace JinGroup.Controller.Feature
             _canvasGroup = GetComponent<CanvasGroup>();
         }
 
+        protected override void PrepareInitialState()
+        {
+            // Lưu alpha gốc và snap về minAlpha ngay khi enable (trước delay)
+            _initialAlpha = CanvasGroup.alpha;
+            CanvasGroup.alpha = minAlpha;
+        }
+
         public override void Play()
         {
             _handle.TryCancel();
-            _initialAlpha = CanvasGroup.alpha;
             _handle = LMotion.Create(minAlpha, maxAlpha, duration)
                 .WithEase(ease)
                 .WithLoops(LoopCount, LoopType.Yoyo)

@@ -24,10 +24,16 @@ namespace JinGroup.Controller.Feature
         private MotionHandle _handle;
         private Vector3      _initialScale;
 
+        protected override void PrepareInitialState()
+        {
+            // Lưu scale gốc và snap về minScale ngay khi enable (trước delay)
+            _initialScale = transform.localScale;
+            transform.localScale = minScale;
+        }
+
         public override void Play()
         {
             _handle.TryCancel();
-            _initialScale = transform.localScale;
             _handle = LMotion.Create(minScale, maxScale, duration)
                 .WithEase(ease)
                 .WithLoops(LoopCount, LoopType.Yoyo)

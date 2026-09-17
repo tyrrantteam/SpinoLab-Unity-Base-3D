@@ -26,11 +26,16 @@ namespace JinGroup.Controller.Feature
         private MotionHandle _handle;
         private Vector3      _initialRotation;
 
+        protected override void PrepareInitialState()
+        {
+            // Lưu rotation gốc và snap Z về minAngle (điểm bắt đầu) ngay khi enable (trước delay)
+            _initialRotation = transform.localEulerAngles;
+            transform.localEulerAngles = new Vector3(_initialRotation.x, _initialRotation.y, minAngle);
+        }
+
         public override void Play()
         {
             _handle.TryCancel();
-            _initialRotation = transform.localEulerAngles;
-
             _handle = LMotion.Create(minAngle, maxAngle, duration)
                 .WithEase(ease)
                 .WithLoops(LoopCount, LoopType.Yoyo)

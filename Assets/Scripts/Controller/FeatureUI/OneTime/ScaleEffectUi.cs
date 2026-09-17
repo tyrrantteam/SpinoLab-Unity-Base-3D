@@ -21,11 +21,15 @@ namespace JinGroup.Controller.Feature
 
         private MotionHandle _handle;
 
+        protected override void PrepareInitialState()
+        {
+            // Snap về fromScale ngay khi enable (trước delay)
+            transform.localScale = fromScale;
+        }
+
         public override void Play()
         {
             _handle.TryCancel();
-            transform.localScale = fromScale;
-
             _handle = LMotion.Create(0f, 1f, duration)
                 .WithEase(scaleCurve)
                 .Bind(t => transform.localScale = Vector3.LerpUnclamped(fromScale, toScale, t));
