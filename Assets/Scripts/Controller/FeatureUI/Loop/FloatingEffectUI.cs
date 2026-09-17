@@ -6,18 +6,20 @@ using UnityEngine;
 
 namespace JinGroup.Controller.Feature
 {
-    public class FloatingEffectUI : EffectBase
+    public class FloatingEffectUI : EffectBaseLoop
     {
         [LabelText("Float Strength")]
         public float floatStrength = 10f;
 
-        [LabelText("Float Speed")]
-        public float floatSpeed = 1f;
+        [LabelText("Ease")]
+        public Ease ease = Ease.InOutSine;
 
         private RectTransform _rt;
         private Vector2       _initialPos;
         private MotionHandle  _handle;
+
         private RectTransform RT => _rt != null ? _rt : (_rt = GetComponent<RectTransform>());
+
         private void Awake()
         {
             _rt = GetComponent<RectTransform>();
@@ -27,13 +29,12 @@ namespace JinGroup.Controller.Feature
         {
             _handle.TryCancel();
             _initialPos = RT.anchoredPosition;
-            float halfPeriod = Mathf.PI / floatSpeed;
-            _handle = LMotion.Create(_initialPos.y - floatStrength, _initialPos.y + floatStrength, halfPeriod)
-                .WithEase(Ease.InOutSine)
-                .WithLoops(-1, LoopType.Yoyo)
+            _handle = LMotion.Create(_initialPos.y - floatStrength, _initialPos.y + floatStrength, duration)
+                .WithEase(ease)
+                .WithLoops(LoopCount, LoopType.Yoyo)
                 .BindToAnchoredPositionY(RT);
         }
-        
+
         public override void Stop()
         {
             _handle.TryCancel();
