@@ -180,15 +180,6 @@ public class BoosterManager : SingletonMono<BoosterManager>
                 UseBoosterFromGold(boosterType);
                 return;
             }
-            if (_gameConfig.isIAAprod)
-            {
-                UseBoosterFromAds(boosterType);
-                return;
-            }
-            else
-            {
-
-            }
         }
 
         OnBoosterActivated(boosterType);

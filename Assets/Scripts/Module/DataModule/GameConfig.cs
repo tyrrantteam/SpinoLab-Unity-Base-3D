@@ -9,4 +9,5 @@ public class GameConfig : ScriptableObject
     [Header("UI")]
     public bool isProduction;
     public bool isIAAprod;
+    public bool usingResourceInGame;
 }
