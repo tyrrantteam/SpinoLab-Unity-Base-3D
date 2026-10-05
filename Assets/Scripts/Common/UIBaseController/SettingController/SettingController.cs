@@ -84,7 +84,16 @@ namespace JinGroup.UI.Common.Setting
 
         private void Home()
         {
-            GameManager.Instance.LoadScene(SceneName.HomeScene);
+            var isUsingHeart = _gameConfig.usingHeart;
+            if (isUsingHeart)
+            {
+                OnClosePopup();
+                PopupManager.Instance.ShowPopup<PopupAreYourSureController>();
+            }
+            else
+            {
+                GameManager.Instance.LoadScene(SceneName.HomeScene);
+            }
         }
 
         private void Replay()
