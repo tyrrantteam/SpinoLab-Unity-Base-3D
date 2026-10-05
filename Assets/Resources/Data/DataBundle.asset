@@ -13,11 +13,15 @@ MonoBehaviour:
   m_Name: DataBundle
   m_EditorClassIdentifier: 
   foldoutImportGUI: 1
-  documentId: 10OSjY4FrbLSHTL4huHSjy3RI2a-rVVgystge58N54Hw
+  documentId: 1DfD6W3fyWQ_7sOn2Pqnt_RvTFfgKCbjfc21GTNfJ9h8
   selectedTogglesIds:
   - listBundlePack1
   - listBundlePack2
   - bundle_packGold
+  - listBundlePack3
+  - listBundlePack4
+  - listBundlePack5
+  - listBundlePack6
   foldoutSerializationGUI: 0
   serializationOutputPath: ../../Configs
   serializationFileName: Configs.v0.1
@@ -26,23 +30,31 @@ MonoBehaviour:
     listBundlePack1:
     - id: 1
       typeResources: gold
-      value: 200
-      price: 5.99
-      isRemoveAds: 1
-      oneTimePurchase: 1
+      value: 600
+      price: 4.99
+      isRemoveAds: 0
+      oneTimePurchase: 0
       idBundle: com.bundle1.pack
-      name: Starter Rush
+      name: Earlybird Bundle
     - id: 2
-      typeResources: diamond
-      value: 50
+      typeResources: booster1
+      value: 1
       price: 0
       isRemoveAds: 0
       oneTimePurchase: 0
       idBundle: 
       name: 
     - id: 3
-      typeResources: gold
-      value: 100
+      typeResources: booster2
+      value: 1
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+    - id: 4
+      typeResources: booster3
+      value: 1
       price: 0
       isRemoveAds: 0
       oneTimePurchase: 0
@@ -51,15 +63,163 @@ MonoBehaviour:
     listBundlePack2:
     - id: 1
       typeResources: gold
-      value: 200
-      price: 5.99
+      value: 1400
+      price: 9.99
       isRemoveAds: 0
       oneTimePurchase: 0
       idBundle: com.bundle2.pack
-      name: Tactician Pack
+      name: Beginner Bundle
     - id: 2
-      typeResources: diamond
-      value: 50
+      typeResources: booster1
+      value: 2
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+    - id: 3
+      typeResources: booster2
+      value: 2
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+    - id: 4
+      typeResources: booster3
+      value: 2
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+    listBundlePack3:
+    - id: 1
+      typeResources: gold
+      value: 3000
+      price: 19.99
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: com.bundle3.pack
+      name: Master Bundle
+    - id: 2
+      typeResources: booster1
+      value: 5
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+    - id: 3
+      typeResources: booster2
+      value: 5
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+    - id: 4
+      typeResources: booster3
+      value: 5
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+    listBundlePack4:
+    - id: 1
+      typeResources: gold
+      value: 8000
+      price: 39.99
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: com.bundle4.pack
+      name: Mega Bundle
+    - id: 2
+      typeResources: booster1
+      value: 10
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+    - id: 3
+      typeResources: booster2
+      value: 10
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+    - id: 4
+      typeResources: booster3
+      value: 10
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+    listBundlePack5:
+    - id: 1
+      typeResources: gold
+      value: 20000
+      price: 79.99
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: com.bundle5.pack
+      name: Giant Bundle
+    - id: 2
+      typeResources: booster1
+      value: 20
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+    - id: 3
+      typeResources: booster2
+      value: 20
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+    - id: 4
+      typeResources: booster3
+      value: 20
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+    listBundlePack6:
+    - id: 1
+      typeResources: gold
+      value: 28000
+      price: 99.99
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: com.bundle6.pack
+      name: Legendary Bundle
+    - id: 2
+      typeResources: booster1
+      value: 30
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+    - id: 3
+      typeResources: booster2
+      value: 30
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+    - id: 4
+      typeResources: booster3
+      value: 30
       price: 0
       isRemoveAds: 0
       oneTimePurchase: 0
@@ -68,48 +228,48 @@ MonoBehaviour:
     bundle_packGold:
     - id: 1
       typeResources: gold
-      value: 1000
-      price: 0.99
+      value: 300
+      price: 1.99
       isRemoveAds: 0
       oneTimePurchase: 0
       idBundle: com.gold.pack1
       name: Mini Pouch
     - id: 2
       typeResources: gold
-      value: 3500
-      price: 2.99
+      value: 1500
+      price: 7.99
       isRemoveAds: 0
       oneTimePurchase: 0
       idBundle: com.gold.pack2
       name: Small Stack
     - id: 3
       typeResources: gold
-      value: 6500
-      price: 4.99
+      value: 3000
+      price: 14.99
       isRemoveAds: 0
       oneTimePurchase: 0
       idBundle: com.gold.pack3
       name: Medium Bag
     - id: 4
       typeResources: gold
-      value: 14000
-      price: 9.99
+      value: 7500
+      price: 24.99
       isRemoveAds: 0
       oneTimePurchase: 0
       idBundle: com.gold.pack4
       name: Large Chest
     - id: 5
       typeResources: gold
-      value: 30000
-      price: 19.99
+      value: 15000
+      price: 49.99
       isRemoveAds: 0
       oneTimePurchase: 0
       idBundle: com.gold.pack5
       name: Mega Vault
     - id: 6
       typeResources: gold
-      value: 85000
-      price: 49.99
+      value: 30000
+      price: 99.99
       isRemoveAds: 0
       oneTimePurchase: 0
       idBundle: com.gold.pack6

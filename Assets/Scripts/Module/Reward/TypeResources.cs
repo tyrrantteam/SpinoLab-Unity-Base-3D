@@ -10,5 +10,9 @@ namespace JinGroup.Module.Resources
         gold,
         diamond,
         skipAds,
+        heart,
+        booster1,
+        booster2,
+        booster3,
     }
 }

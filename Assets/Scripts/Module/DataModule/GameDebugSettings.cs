@@ -8,6 +8,7 @@ namespace Base.Core.Debug
         public const string ResourcePath = "Data/GameDebugSettings";
 
         [Tooltip("When enabled, GameDebug.Log / LogWarning / LogError / LogException are suppressed.")]
+        [Header("Active debug and Admin Tool")]
         public bool isProduction;
 
         public bool IsLoggingEnabled => !isProduction;

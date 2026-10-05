@@ -24,13 +24,17 @@ namespace JinGroup.Controller.Feature
         private MotionHandle _handle;
         private Vector3      _initialRotation;
 
+        protected override void PrepareInitialState()
+        {
+            // Lưu rotation gốc và reset Z về 0 ngay khi enable (trước delay)
+            _initialRotation = transform.localEulerAngles;
+            transform.localEulerAngles = new Vector3(_initialRotation.x, _initialRotation.y, 0f);
+        }
+
         public override void Play()
         {
             _handle.TryCancel();
-            _initialRotation = transform.localEulerAngles;
-
             float endAngle = direction == RotateDirection.Clockwise ? -360f : 360f;
-
             _handle = LMotion.Create(0f, endAngle, duration)
                 .WithEase(Ease.Linear)
                 .WithLoops(LoopCount, LoopType.Restart)

@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelRandom: 40
   levelMin: 6
-  isProduction: 0
+  usingResourceInGame: 1
+  usingMetaSys: 1
+  levelUnlockMetaSystem: 5

@@ -7,16 +7,23 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "DataAds", menuName = "Data/Ads")]
 public class DataAdsController : ScriptableObject
 {
+    [Header("Inter Ads Config")]
+    public bool UsingInterAds;
+    [Header("Time Show Per MileStone")]
     public float timeShowInterAds1;
     public float timeShowInterAds2;
     public float timeShowInterAds3;
 
+    [Header("Inter Ads Active after breakpointLevelShowInterAds1")]
     public int breakpointLevelShowInterAds1;
     public int breakpointLevelShowInterAds2;
     public int breakpointLevelShowInterAds3;
-
+    [Header("Banner Ads Config")]
     public bool UsingBannerAds;
-    public bool UsingInterAds;
+    [Header("Reward Ads Config")]
+    public bool UsingRewardAds = true;
+    [Header("App Open Ads Config")]
+    public bool UsingAOA = true;
 
     public bool CanShowInterAds()
     {

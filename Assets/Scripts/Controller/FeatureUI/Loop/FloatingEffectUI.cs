@@ -25,10 +25,15 @@ namespace JinGroup.Controller.Feature
             _rt = GetComponent<RectTransform>();
         }
 
+        protected override void PrepareInitialState()
+        {
+            // Ghi nhớ vị trí gốc ngay khi enable (trước delay)
+            _initialPos = RT.anchoredPosition;
+        }
+
         public override void Play()
         {
             _handle.TryCancel();
-            _initialPos = RT.anchoredPosition;
             _handle = LMotion.Create(_initialPos.y - floatStrength, _initialPos.y + floatStrength, duration)
                 .WithEase(ease)
                 .WithLoops(LoopCount, LoopType.Yoyo)

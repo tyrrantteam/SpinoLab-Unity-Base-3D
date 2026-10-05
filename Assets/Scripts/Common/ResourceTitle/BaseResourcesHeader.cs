@@ -11,6 +11,7 @@ namespace JinGroup.Common.ResourcesHeader
     public class BaseResourcesHeader : MonoBehaviour
     {
         public                    Text   valueTxt;
+        public                    Text   timeCountTxt;
         [SerializeField]  private Button claimMore;
         [HideInInspector] public  int    valueInformation;
 

@@ -7,6 +7,12 @@ public class GameConfig : ScriptableObject
     public int levelRandom;
     public int levelMin;
     [Header("UI")]
-    public bool isProduction;
-    public bool isIAAprod;
+    public bool usingResourceInGame;
+    [Header("UsingMetaSys")]
+    public bool usingMetaSys;
+    public int levelUnlockMetaSystem;
+    [Header("UsingHeart")]
+    public bool usingHeart = true;
+    [Header("UsingGem")]
+    public bool usingGem = false;
 }

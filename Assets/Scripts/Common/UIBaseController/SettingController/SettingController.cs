@@ -1,4 +1,6 @@
 using Base.Core;
+using DataAccount;
+using JinGroup.Base.LoadData;
 using JinGroup.Common.UIBaseController;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,19 +20,36 @@ namespace JinGroup.UI.Common.Setting
         [SerializeField] private SettingElement vibrationSetting;
 
         [SerializeField] private Button HomeBtn;
+        [SerializeField] private Button ReplayBtn;
+
+        private GameConfig _gameConfig;
 
         protected override void Awake()
         {
             base.Awake();
+
+            _gameConfig = LoadResourceController.Instance.GameConfig();
+
             soundSetting.SettingPopupController = this;
             musicSetting.SettingPopupController = this;
             vibrationSetting.SettingPopupController = this;
+
+            var isActiveHome = _gameConfig.usingMetaSys;
+            var currentScene = GameManager.Instance.currentScene;
+            var lvUnlockMeta = _gameConfig.levelUnlockMetaSystem;
+            var currentLv = DataAccountPlayer.PlayerPointProcessData.currentlevelShowScreen;
+            bool isHomeScene = (currentScene == SceneName.HomeScene);
+            bool levelUnlockMeta = (currentLv >= lvUnlockMeta);
+
+            HomeBtn.gameObject.SetActive(isActiveHome && !isHomeScene && levelUnlockMeta);
+            ReplayBtn.gameObject.SetActive(!isHomeScene);
         }
 
         protected override void ListenerButton()
         {
             base.ListenerButton();
             HomeBtn.onClick.AddListener(Home);
+            ReplayBtn.onClick.AddListener(Replay);
         }
 
         public void CallLockSettings()
@@ -65,7 +84,21 @@ namespace JinGroup.UI.Common.Setting
 
         private void Home()
         {
-            GameManager.Instance.LoadScene(SceneName.HomeScene);
+            var isUsingHeart = _gameConfig.usingHeart;
+            if (isUsingHeart)
+            {
+                OnClosePopup();
+                PopupManager.Instance.ShowPopup<PopupAreYourSureController>();
+            }
+            else
+            {
+                GameManager.Instance.LoadScene(SceneName.HomeScene);
+            }
+        }
+
+        private void Replay()
+        {
+            GameManager.Instance.LoadScene(SceneName.GamePlayScreen);
         }
     }
 }

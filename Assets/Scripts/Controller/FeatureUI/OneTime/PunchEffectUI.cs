@@ -41,6 +41,23 @@ namespace JinGroup.Controller.Feature
             _rt = GetComponent<RectTransform>();
         }
 
+        protected override void PrepareInitialState()
+        {
+            // Ghi nhớ giá trị gốc trước khi delay để Stop() restore đúng
+            switch (punchType)
+            {
+                case PunchType.Scale:
+                    _initialScale = transform.localScale;
+                    break;
+                case PunchType.Position:
+                    _initialPosition = RT.anchoredPosition;
+                    break;
+                case PunchType.Rotation:
+                    _initialRotation = transform.localEulerAngles;
+                    break;
+            }
+        }
+
         public override void Play()
         {
             _handle.TryCancel();
