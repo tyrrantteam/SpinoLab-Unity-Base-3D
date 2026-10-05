@@ -18,6 +18,10 @@ namespace JinGroup.Common.Effect
         {
             if (!canPlayWhenEnable) return;
 
+            // Snap về giá trị bắt đầu ngay lập tức trước khi delay
+            // → đảm bảo object luôn ở đúng trạng thái khởi đầu khi mở popup
+            PrepareInitialState();
+
             if (delayStart > 0f)
             {
                 _delayHandle.TryCancel();
@@ -36,6 +40,13 @@ namespace JinGroup.Common.Effect
             _delayHandle.TryCancel();
             Stop();
         }
+
+        /// <summary>
+        /// Gọi tự động khi OnEnable và CanPlayWhenEnable = true.
+        /// Override để snap object về trạng thái bắt đầu của hiệu ứng TRƯỚC khi delay.
+        /// Đảm bảo khi hết delay, Play() chạy đúng ngay mà không cần set tay trong Unity.
+        /// </summary>
+        protected virtual void PrepareInitialState() { }
 
         public abstract void Play();
 

@@ -175,6 +175,13 @@ namespace JinGroup.Base.LoadData
             var path = string.Format(ResourcesFolderPath.DataFolder);
             return Load<DataDailyStreak>(path, "DataDailyStreak");
         }
+
+        public DataHeartController DataHeartController()
+        {
+            var path = string.Format(ResourcesFolderPath.DataFolder);
+            return Load<DataHeartController>(path, "DataHeart");
+        }
+
         #endregion
     }
 }

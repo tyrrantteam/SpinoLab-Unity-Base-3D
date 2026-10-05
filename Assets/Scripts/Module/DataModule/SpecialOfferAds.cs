@@ -8,7 +8,7 @@ public class SpecialOfferAds : ScriptableObject
     [Tooltip("Bật/tắt toàn bộ tính năng Special Offer Ads.")]
     public bool isActive;
 
-    [Tooltip("Số level win sau khi unlock booster mới thì hiện popup.")]
+    [Tooltip("Số level win sau khi unlock booster2 mới thì hiện popup.")]
     public int activeAfterLevel = 3;
 
     public List<SpecialOfferAdsEntry> entries = new List<SpecialOfferAdsEntry>();

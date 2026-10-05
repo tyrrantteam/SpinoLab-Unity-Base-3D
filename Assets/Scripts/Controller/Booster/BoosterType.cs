@@ -5,8 +5,8 @@ using UnityEngine;
 public enum BoosterType
 {
    None = 0,
-   Hammer = 1,
-   Scizor = 2,
-   FingerGod = 3,
-   Beam = 4,
+    booster1 = 1,
+    booster2 = 2,
+    booster3 = 3,
+    booster4 = 4,
 }

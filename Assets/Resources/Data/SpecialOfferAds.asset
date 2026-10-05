@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b8c7d6e5f403918273645564738291, type: 3}
   m_Name: SpecialOfferAds
   m_EditorClassIdentifier: 
-  isActive: 1
+  isActive: 0
   activeAfterLevel: 3
   entries:
   - boosterType: 1

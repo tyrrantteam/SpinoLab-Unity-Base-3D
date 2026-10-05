@@ -10,9 +10,10 @@ using UnityEngine.UI;
 
 public class UIGameController : SingletonMono<UIGameController>
 {
+    [SerializeField] private HeaderUIController headerUIController;
     [SerializeField] private TextMeshProUGUI levelText;
-    [SerializeField] private Button retryBtn;
-    [SerializeField] private Button settingBtn;
+
+    [SerializeField] private PopupManager popupManager;
     [SerializeField] private GameObject hardLevel;
     [SerializeField] private GameObject BottomBar;
     [SerializeField] private GameObject BannerAdsBar;
@@ -28,6 +29,9 @@ public class UIGameController : SingletonMono<UIGameController>
     private MotionHandle _bottomBarMotion;
     private const float BottomBarRestPositionEpsilon = 1f;
 
+    // Lưu vị trí sibling gốc của headerUIController để CloseResource khôi phục
+    private int _headerOriginalSiblingIndex;
+
     protected override void Awake()
     {
         base.Awake();
@@ -35,6 +39,9 @@ public class UIGameController : SingletonMono<UIGameController>
         _bottomBarRestAnchoredPosition = _bottomBarRect.anchoredPosition;
         var usingBannerAds = GameManager.Instance.DataAds.UsingBannerAds;
         BannerAdsBar.gameObject.SetActive(usingBannerAds);
+
+        // Ghi nhớ vị trí ban đầu của header trong Canvas
+        _headerOriginalSiblingIndex = headerUIController.transform.GetSiblingIndex();
     }
 
     [Button("TEST WARNING", ButtonSizes.Large), GUIColor(0, 1, 0)]
@@ -57,18 +64,7 @@ public class UIGameController : SingletonMono<UIGameController>
 
     protected virtual void ListenerButton()
     {
-        retryBtn.onClick.AddListener(RetryGame);
-        settingBtn.onClick.AddListener(OpenSetting);
-    }
-
-    public void OpenSetting()
-    {
-        PopupManager.Instance.ShowPopup<SettingController>();
-    }
-
-    public void RetryGame()
-    {
-        GameManager.Instance.LoadScene(SceneName.GamePlayScreen);
+        headerUIController.ListenerButton();
     }
 
     public void SetLevelText(int numberLevel)
@@ -91,6 +87,8 @@ public class UIGameController : SingletonMono<UIGameController>
         this.PostEvent(EventID.ShowWarningHardLevel);
         HapticManager.Instance.PlayHapticWarning();
     }
+
+    #region bottomBar
 
     public void BottomBarSlideDown()
     {
@@ -118,4 +116,20 @@ public class UIGameController : SingletonMono<UIGameController>
             .WithEase(bottomBarSlideEase)
             .BindToAnchoredPosition(_bottomBarRect);
     }
+    #endregion
+
+    #region header
+    public void HighLightResource()
+    {
+        int popupIndex = popupManager.transform.GetSiblingIndex();
+        headerUIController.transform.SetSiblingIndex(popupIndex + 1);
+        headerUIController.HighLightResource();
+    }
+
+    public void CloseResource()
+    {
+        headerUIController.transform.SetSiblingIndex(_headerOriginalSiblingIndex);
+        headerUIController.CloseResource();
+    }
+    #endregion
 }

@@ -33,10 +33,10 @@ public class PopupRewardDailyCheckin
 [Serializable]
 public class listPopup
 {
-    [SpreadsheetPage("PopupLevelUp")]
-    public List<PopupReward> popupLevelUp;
-    [SpreadsheetPage("PopupUnlock")]
-    public List<PopupReward> listBundlePack2;
+    //[SpreadsheetPage("PopupLevelUp")]
+    //public List<PopupReward> popupLevelUp;
+    //[SpreadsheetPage("PopupUnlock")]
+    //public List<PopupReward> listBundlePack2;
     [SpreadsheetPage("DailyCheckin")]
     public List<PopupRewardDailyCheckin> dailyCheckin;
 }

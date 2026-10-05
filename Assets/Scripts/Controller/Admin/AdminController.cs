@@ -122,10 +122,10 @@ public class AdminController : MonoBehaviour
     private void OnAdd10BoosterEachType()
     {
         var res = DataAccountPlayer.PlayerResourceData;
-        res.ChangeBoosterCount(BoosterType.Hammer, 10);
-        res.ChangeBoosterCount(BoosterType.Scizor, 10);
-        res.ChangeBoosterCount(BoosterType.FingerGod, 10);
-        res.ChangeBoosterCount(BoosterType.Beam, 10);
+        res.ChangeBoosterCount(BoosterType.booster1, 10);
+        res.ChangeBoosterCount(BoosterType.booster2, 10);
+        res.ChangeBoosterCount(BoosterType.booster3, 10);
+        res.ChangeBoosterCount(BoosterType.booster4, 10);
         RefreshBoosterUi();
     }
     private void RefreshBoosterUi()

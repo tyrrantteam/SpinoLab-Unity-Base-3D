@@ -1,4 +1,4 @@
-﻿namespace DataAccount
+namespace DataAccount
 {
     public static class DataAccountPlayer
     {
@@ -65,6 +65,8 @@
 
                 var playerResourceData = new PlayerResourceData();
                 _playerResourceData = ES3.Load(DataAccountPlayerConstants.PlayerResourceData, playerResourceData);
+                _playerResourceData.CheckInitHeartFirstTime();
+                _playerResourceData.UpdateHeartRecovery();
                 return _playerResourceData;
             }
         }
@@ -134,6 +136,9 @@
 
         public static void SavePlayerResourceData()
         {
+            if (_playerResourceData == null)
+                _ = PlayerResourceData;
+
             ES3.Save(DataAccountPlayerConstants.PlayerResourceData, _playerResourceData);
         }
 

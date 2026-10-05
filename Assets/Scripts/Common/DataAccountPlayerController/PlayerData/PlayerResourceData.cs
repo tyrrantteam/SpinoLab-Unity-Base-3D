@@ -1,4 +1,5 @@
-﻿using Base.Core;
+using Base.Core;
+using JinGroup.Base.LoadData;
 using System;
 using UnityEngine;
 
@@ -10,20 +11,22 @@ namespace DataAccount
         public int gold;
         public int diamond;
         public int skipAds;
+        public int heart;
+        
         //Booster
-        public int hammerBooster;
-        public int scizorBooster;
-        public int fingerGodBooster;
-        public int beamBooster;
+        public int booster1;
+        public int booster2;
+        public int booster3;
+        public int booster4;
 
         public int GetBoosterCount(BoosterType type)
         {
             return type switch
             {
-                BoosterType.Hammer => hammerBooster,
-                BoosterType.Scizor => scizorBooster,
-                BoosterType.FingerGod => fingerGodBooster,
-                BoosterType.Beam => beamBooster,
+                BoosterType.booster1 => booster1,
+                BoosterType.booster2 => booster2,
+                BoosterType.booster3 => booster3,
+                BoosterType.booster4 => booster4,
                 _ => 0
             };
         }
@@ -33,17 +36,17 @@ namespace DataAccount
             value = Mathf.Max(0, value);
             switch (type)
             {
-                case BoosterType.Hammer:
-                    hammerBooster = value;
+                case BoosterType.booster1:
+                    booster1 = value;
                     break;
-                case BoosterType.Scizor:
-                    scizorBooster = value;
+                case BoosterType.booster2:
+                    booster2 = value;
                     break;
-                case BoosterType.FingerGod:
-                    fingerGodBooster = value;
+                case BoosterType.booster3:
+                    booster3 = value;
                     break;
-                case BoosterType.Beam:
-                    beamBooster = value;
+                case BoosterType.booster4:
+                    booster4 = value;
                     break;
             }
 
@@ -143,6 +146,178 @@ namespace DataAccount
         {
             isFirstTimeOpen = value;
             DataAccountPlayer.SavePlayerResourceData();
+        }
+        #endregion
+
+        #region Heart
+        public long lastHeartRecoveryTime;
+        public bool isHeartInitialized = false;
+
+        public int GetHeartLimit()
+        {
+            var dataHeart = LoadResourceController.Instance != null ? LoadResourceController.Instance.DataHeartController() : null;
+            return dataHeart != null ? dataHeart.Limit : 5;
+        }
+
+        public float GetHeartRecoveryTime()
+        {
+            var dataHeart = LoadResourceController.Instance != null ? LoadResourceController.Instance.DataHeartController() : null;
+            return dataHeart != null ? dataHeart.RecoveryTime : 600f;
+        }
+
+        public void CheckInitHeartFirstTime()
+        {
+            if (isFirstTimeOpen || !isHeartInitialized)
+            {
+                heart = GetHeartLimit();
+                isHeartInitialized = true;
+                lastHeartRecoveryTime = 0;
+                DataAccountPlayer.SavePlayerResourceData();
+            }
+        }
+
+        public void AddHeart(int value)
+        {
+            UpdateHeartRecovery();
+            heart += value;
+            int limit = GetHeartLimit();
+            if (heart >= limit)
+            {
+                lastHeartRecoveryTime = 0;
+            }
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.PostEvent(EventID.UpdateHeart);
+            }
+            DataAccountPlayer.SavePlayerResourceData();
+        }
+
+        public void SubtractHeart(int value)
+        {
+            UpdateHeartRecovery();
+            int limit = GetHeartLimit();
+            heart = Mathf.Max(0, heart - value);
+            if (heart < limit && lastHeartRecoveryTime <= 0)
+            {
+                lastHeartRecoveryTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            }
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.PostEvent(EventID.UpdateHeart);
+            }
+            DataAccountPlayer.SavePlayerResourceData();
+        }
+
+        public void ChangeHeartValue(int value)
+        {
+            if (value >= 0)
+            {
+                AddHeart(value);
+            }
+            else
+            {
+                SubtractHeart(-value);
+            }
+        }
+
+        public void SetHeartValue(int value)
+        {
+            int limit = GetHeartLimit();
+            heart = Mathf.Max(0, value);
+            if (heart >= limit)
+            {
+                lastHeartRecoveryTime = 0;
+            }
+            else if (lastHeartRecoveryTime <= 0)
+            {
+                lastHeartRecoveryTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            }
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.PostEvent(EventID.UpdateHeart);
+            }
+            DataAccountPlayer.SavePlayerResourceData();
+        }
+
+        public bool UpdateHeartRecovery()
+        {
+            int limit = GetHeartLimit();
+            if (heart >= limit)
+            {
+                if (lastHeartRecoveryTime != 0)
+                {
+                    lastHeartRecoveryTime = 0;
+                    DataAccountPlayer.SavePlayerResourceData();
+                }
+                return false;
+            }
+
+            long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            if (lastHeartRecoveryTime <= 0)
+            {
+                lastHeartRecoveryTime = now;
+                DataAccountPlayer.SavePlayerResourceData();
+                return false;
+            }
+
+            // System clock moved backward safeguard
+            if (lastHeartRecoveryTime > now)
+            {
+                lastHeartRecoveryTime = now;
+                DataAccountPlayer.SavePlayerResourceData();
+                return false;
+            }
+
+            long recoveryInterval = (long)Mathf.Max(1, GetHeartRecoveryTime());
+            long elapsed = now - lastHeartRecoveryTime;
+            long heartsToAdd = elapsed / recoveryInterval;
+
+            if (heartsToAdd > 0)
+            {
+                int missingHearts = limit - heart;
+                if (heartsToAdd >= missingHearts)
+                {
+                    heart = limit;
+                    lastHeartRecoveryTime = 0;
+                }
+                else
+                {
+                    heart += (int)heartsToAdd;
+                    lastHeartRecoveryTime += heartsToAdd * recoveryInterval;
+                }
+
+                if (GameManager.Instance != null)
+                {
+                    GameManager.Instance.PostEvent(EventID.UpdateHeart);
+                }
+                DataAccountPlayer.SavePlayerResourceData();
+                return true;
+            }
+
+            return false;
+        }
+
+        public long GetRemainingRecoverySeconds()
+        {
+            UpdateHeartRecovery();
+
+            int limit = GetHeartLimit();
+            if (heart >= limit)
+            {
+                return 0;
+            }
+
+            long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            if (lastHeartRecoveryTime <= 0)
+            {
+                lastHeartRecoveryTime = now;
+                DataAccountPlayer.SavePlayerResourceData();
+            }
+
+            long recoveryInterval = (long)Mathf.Max(1, GetHeartRecoveryTime());
+            long elapsed = now - lastHeartRecoveryTime;
+            long remaining = recoveryInterval - (elapsed % recoveryInterval);
+            return Mathf.Max(0, (int)remaining);
         }
         #endregion
     }

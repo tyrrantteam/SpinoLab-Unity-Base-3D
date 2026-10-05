@@ -615,7 +615,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 300c85da61412524d93f23e700f45374, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canplayWhenEnable: 0
+  canPlayWhenEnable: 1
+  delayStart: 0
   duration: 0.5
   restScale: {x: 1, y: 1, z: 1}
   progressCurve:
@@ -780,7 +781,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67942e716285926488f23944c564ce5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canplayWhenEnable: 0
+  canPlayWhenEnable: 1
+  delayStart: 0
   scaleMultiplier: 1.2
   duration: 0.1
 --- !u!114 &2843347932274412453

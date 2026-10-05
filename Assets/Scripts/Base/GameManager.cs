@@ -12,13 +12,12 @@ namespace Base.Core
         public static bool isTest = false;
         public SceneName currentScene;
         private float timeCount;
-        private float timeCountInGameScene;
-        public bool canCount;
-        public bool canCountInGameScene;
+        private bool canCount;
+        [HideInInspector]
         public bool canShowAds;
-        public bool usingMetaSys;
         private float timeLimit;
         public DataAdsController DataAds;
+        public GameConfig gameConfig;
         private bool hasInternet = true;
 
         private void Start()
@@ -34,7 +33,7 @@ namespace Base.Core
             }
             else
             {
-                if (usingMetaSys)
+                if (gameConfig.usingMetaSys)
                 {
                     LoadScene(SceneName.HomeScene);
                 }

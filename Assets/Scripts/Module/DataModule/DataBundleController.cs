@@ -32,6 +32,14 @@ public class listBundle
     public List<BundleReward> listBundlePack1;
     [SpreadsheetPage("Bundle_pack2")]
     public List<BundleReward> listBundlePack2;
+    [SpreadsheetPage("Bundle_pack3")]
+    public List<BundleReward> listBundlePack3;
+    [SpreadsheetPage("Bundle_pack4")]
+    public List<BundleReward> listBundlePack4;
+    [SpreadsheetPage("Bundle_pack5")]
+    public List<BundleReward> listBundlePack5;
+    [SpreadsheetPage("Bundle_pack6")]
+    public List<BundleReward> listBundlePack6;
     [SpreadsheetPage("Bundle_packGold")]
     public List<BundleReward> bundle_packGold;
 }

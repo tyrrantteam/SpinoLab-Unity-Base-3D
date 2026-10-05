@@ -105,8 +105,6 @@ namespace JinGroup.Common.UIBaseController
                                   .WithOnComplete(() => onComplete?.Invoke())
                                   .Bind(t =>
                                   {
-                                      scaleTarget.localScale = Vector3.LerpUnclamped(fromScale, Vector3.zero, t);
-
                                       if (canvasGroup != null)
                                           canvasGroup.alpha = Mathf.LerpUnclamped(fromAlpha, 0f, t);
                                   });

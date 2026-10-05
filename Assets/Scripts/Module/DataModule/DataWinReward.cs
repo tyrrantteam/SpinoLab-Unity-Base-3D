@@ -27,5 +27,5 @@ public class WinReward
 public class listWinReward
 {
     [SpreadsheetPage("winPopup")]
-    public List<WinReward> listBundlePack1;
+    public List<WinReward> winReward;
 }
