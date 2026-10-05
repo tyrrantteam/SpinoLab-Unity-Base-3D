@@ -1,11 +1,79 @@
-﻿using Base.Core.Debug;
+using Base.Core.Debug;
+using NorskaLib.Spreadsheets;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 [CreateAssetMenu(fileName = "DataProcess", menuName = "DaTa/DataProcess")]
-public class DataProcessMechanic : ScriptableObject
+public class DataProcessMechanic : SpreadsheetsContainerBase
 {
-    public List<ProcessMechanicData> listTut = new List<ProcessMechanicData>();
+    [SpreadsheetContent]
+    [SerializeField] ListProcessMechanic content = new ListProcessMechanic();
+    public ListProcessMechanic ContentContent => content;
+
+    public List<ProcessMechanicData> listTut => content != null ? content.listTut : null;
+
+#if UNITY_EDITOR
+    [ContextMenu("Auto Link Mechanic Icons")]
+    public void AutoLinkMechanicIcons(bool saveAsset = true)
+    {
+        if (content == null)
+            content = new ListProcessMechanic();
+        if (content.listTut == null || content.listTut.Count == 0) return;
+
+        bool changed = false;
+        for (int i = 0; i < content.listTut.Count; i++)
+        {
+            int index = i + 1; // 1-based index (phần tử đầu tiên index 0 -> Mech_1, tiếp theo -> Mech_2, ...)
+            string path = $"Assets/Texture/UI/MechanicUnlock/Mech_{index}.png";
+
+            var sprite = LoadSpriteAtPath(path);
+            if (sprite != null)
+            {
+                var item = content.listTut[i];
+                if (item.imgMechanic != sprite)
+                {
+                    item.imgMechanic = sprite;
+                    content.listTut[i] = item;
+                    changed = true;
+                }
+            }
+        }
+
+        if (changed)
+        {
+            UnityEditor.EditorUtility.SetDirty(this);
+            if (saveAsset)
+            {
+                UnityEditor.AssetDatabase.SaveAssets();
+            }
+            Debug.Log("<color=green>[DataProcessMechanic]</color> Auto linked imgMechanic by order for listTut successfully!");
+        }
+    }
+
+    private static Sprite LoadSpriteAtPath(string path)
+    {
+        if (string.IsNullOrEmpty(path)) return null;
+
+        var sprite = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>(path);
+        if (sprite != null) return sprite;
+
+        var assets = UnityEditor.AssetDatabase.LoadAllAssetsAtPath(path);
+        if (assets != null)
+        {
+            foreach (var a in assets)
+            {
+                if (a is Sprite s)
+                    return s;
+            }
+        }
+        return null;
+    }
+
+    private void OnValidate()
+    {
+        AutoLinkMechanicIcons(false);
+    }
+#endif
 
 
     /// <summary>
@@ -131,6 +199,15 @@ public class DataProcessMechanic : ScriptableObject
         levels.Sort();
         return levels;
     }
+
+    [Serializable]
+    public class ListProcessMechanic
+    {
+        [SpreadsheetPage("ListMechanic")]
+        public List<ProcessMechanicData> listTut = new List<ProcessMechanicData>();
+    }
+
+
 
     [Serializable]
     public struct ProcessMechanicData

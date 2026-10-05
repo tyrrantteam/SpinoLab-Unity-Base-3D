@@ -12,16 +12,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c773cce2ec0805b4691f15eafbe8b819, type: 3}
   m_Name: DataProcess
   m_EditorClassIdentifier: 
-  listTut:
-  - level: 5
-    imgMechanic: {fileID: 21300000, guid: fbb27ddaa7dcb9646b1ebe8a065ba9c5, type: 3}
-    description: mechanic nay hay
-  - level: 10
-    imgMechanic: {fileID: 21300000, guid: f6115fb19a494b84fafa897821890b05, type: 3}
-    description: mechanic nay kho
-  - level: 30
-    imgMechanic: {fileID: 21300000, guid: d9c964a5bc8cb34499902857469bbbb5, type: 3}
-    description: cum cum
-  - level: 40
-    imgMechanic: {fileID: 21300000, guid: ff29f98f3d52bf448a21642af0474d9f, type: 3}
-    description: gundam Frame Unicorn
+  foldoutImportGUI: 1
+  documentId: 1KhLu_PWh6G6ikakSTmgyYFK8cGzeV8rr
+  selectedTogglesIds:
+  - listTut
+  foldoutSerializationGUI: 0
+  serializationOutputPath: ../../Configs
+  serializationFileName: Configs.v0.1
+  serializationFormat: 0
+  content:
+    listTut:
+    - level: 5
+      imgMechanic: {fileID: 21300000, guid: fbb27ddaa7dcb9646b1ebe8a065ba9c5, type: 3}
+      nameMechanic: Hannah1
+      description: mechanic nay hay
+    - level: 10
+      imgMechanic: {fileID: 21300000, guid: f6115fb19a494b84fafa897821890b05, type: 3}
+      nameMechanic: Hannah2
+      description: mechanic nay kho
+    - level: 30
+      imgMechanic: {fileID: 21300000, guid: d9c964a5bc8cb34499902857469bbbb5, type: 3}
+      nameMechanic: Hannah3
+      description: cum cum
+    - level: 40
+      imgMechanic: {fileID: 21300000, guid: ff29f98f3d52bf448a21642af0474d9f, type: 3}
+      nameMechanic: Hannah4
+      description: gundam Frame Unicorn
