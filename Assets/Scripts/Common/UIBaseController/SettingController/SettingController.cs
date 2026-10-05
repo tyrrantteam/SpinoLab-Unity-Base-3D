@@ -1,4 +1,5 @@
 using Base.Core;
+using JinGroup.Base.LoadData;
 using JinGroup.Common.UIBaseController;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,19 +19,32 @@ namespace JinGroup.UI.Common.Setting
         [SerializeField] private SettingElement vibrationSetting;
 
         [SerializeField] private Button HomeBtn;
+        [SerializeField] private Button ReplayBtn;
+
+        private GameConfig _gameConfig;
 
         protected override void Awake()
         {
             base.Awake();
+
+            _gameConfig = LoadResourceController.Instance.GameConfig();
+
             soundSetting.SettingPopupController = this;
             musicSetting.SettingPopupController = this;
             vibrationSetting.SettingPopupController = this;
+
+            var isActiveHome = _gameConfig.usingMetaSys;
+            var currentScene = GameManager.Instance.currentScene;
+            bool isHomeScene = currentScene == SceneName.HomeScene;
+            HomeBtn.gameObject.SetActive(isActiveHome && !isHomeScene);
+            ReplayBtn.gameObject.SetActive(!isHomeScene);
         }
 
         protected override void ListenerButton()
         {
             base.ListenerButton();
             HomeBtn.onClick.AddListener(Home);
+            ReplayBtn.onClick.AddListener(Replay);
         }
 
         public void CallLockSettings()
@@ -66,6 +80,11 @@ namespace JinGroup.UI.Common.Setting
         private void Home()
         {
             GameManager.Instance.LoadScene(SceneName.HomeScene);
+        }
+
+        private void Replay()
+        {
+            GameManager.Instance.LoadScene(SceneName.GamePlayScreen);
         }
     }
 }

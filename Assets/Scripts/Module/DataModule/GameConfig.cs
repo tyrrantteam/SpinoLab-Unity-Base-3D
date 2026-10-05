@@ -10,4 +10,5 @@ public class GameConfig : ScriptableObject
     public bool usingResourceInGame;
     [Header("UsingMetaSys")]
     public bool usingMetaSys;
+    public int levelUnlockMetaSystem;
 }
