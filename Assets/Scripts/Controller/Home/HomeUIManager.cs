@@ -1,6 +1,7 @@
 ﻿using Base.Core;
 using Base.Core.Debug;
 using DataAccount;
+using JinGroup.Base.LoadData;
 using JinGroup.Controller.PiggyBank;
 using JinGroup.UI.Common.Setting;
 using UI.LoadingScene;
@@ -24,6 +25,11 @@ namespace JinGroup.Common
         [SerializeField] private Button rankingBtn;
         [SerializeField] private Button piggyGemBtn;
         [SerializeField] private Button piggyGoldBtn;
+        [Header("Header")]
+        private GameConfig _gameConfig;
+        [SerializeField] private GoldResourcesHeader GoldResourcesHeader;
+        [SerializeField] private GemResourcesHeader GemResourcesHeader;
+        [SerializeField] private HeartResourcesHeader HeartResourcesHeader;
 
         protected override void Awake()
         {
@@ -38,6 +44,7 @@ namespace JinGroup.Common
             rankingBtn.onClick.AddListener(OnClickranking);
             piggyGemBtn.onClick.AddListener(OnClickPiggyGem);
             piggyGoldBtn.onClick.AddListener(OnClickPiggyGold);
+            settings.onClick.AddListener(OnClickSettings);
         }
 
         private void OnClickDailyCheckin()
@@ -65,6 +72,11 @@ namespace JinGroup.Common
             GameManager.instance.LoadScene(SceneName.GamePlayScreen);
         }
 
+        private void OnClickSettings()
+        {
+            PopupManager.Instance.ShowPopup<SettingController>();
+        }
+
         private void InitData()
         {
             if (DataAccountPlayer.PlayerResourceData.isNoAdsPurchase)
@@ -77,6 +89,13 @@ namespace JinGroup.Common
                 GameDebug.Log("is no ads");
                 footerArea.anchoredPosition = new Vector2(footerArea.anchoredPosition.x, offsetY);
             }
+
+            _gameConfig = LoadResourceController.instance.GameConfig();
+            var usingGem = _gameConfig.usingGem;
+            var usingHeart = _gameConfig.usingHeart;
+
+            GemResourcesHeader.gameObject.SetActive(usingGem);
+            HeartResourcesHeader.gameObject.SetActive(usingHeart);
         }
 
     }
