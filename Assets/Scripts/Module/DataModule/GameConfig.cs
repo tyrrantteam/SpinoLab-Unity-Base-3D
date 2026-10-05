@@ -8,4 +8,6 @@ public class GameConfig : ScriptableObject
     public int levelMin;
     [Header("UI")]
     public bool usingResourceInGame;
+    [Header("UsingMetaSys")]
+    public bool usingMetaSys;
 }
