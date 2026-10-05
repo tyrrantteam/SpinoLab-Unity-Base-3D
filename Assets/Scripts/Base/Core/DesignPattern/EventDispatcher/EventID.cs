@@ -13,6 +13,7 @@ public enum EventID
     //UI
     ClaimDailyCheckin,
     UpdateGold,
+    UpdateHeart,
     UpdateGem,
 
     //Tutorial
