@@ -98,7 +98,7 @@ public class PopUpWinController : PopupBaseController
             rewardLevel = 0;
         }
 
-        return winReward.ContentContent.listBundlePack1[rewardLevel].value;
+        return winReward.ContentContent.winReward[rewardLevel].value;
     }
     
     private void ActiveBtnNextDecor()
