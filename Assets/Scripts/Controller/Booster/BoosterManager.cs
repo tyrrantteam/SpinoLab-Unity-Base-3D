@@ -41,9 +41,9 @@ public class BoosterManager : SingletonMono<BoosterManager>
 
         int currentLevel = DataAccountPlayer.PlayerPointProcessData.currentlevelShowScreen;
 
-        for (int i = 0; i < dataBooster.listBoooster.Count; i++)
+        for (int i = 0; i < dataBooster.ContentContent.listBoooster.Count; i++)
         {
-            var boosterData = dataBooster.listBoooster[i];
+            var boosterData = dataBooster.ContentContent.listBoooster[i];
             if (boosterData.boosterType == BoosterType.None)
                 continue;
 
@@ -71,7 +71,7 @@ public class BoosterManager : SingletonMono<BoosterManager>
 
     private void CheckShowPopUpBooster(int currentLevel)
     {
-        foreach (var data in dataBooster.listBoooster)
+        foreach (var data in dataBooster.ContentContent.listBoooster)
         {
             var typeBooster = data.boosterType;
             var countBooster = DataAccountPlayer.PlayerResourceData.GetBoosterCount(typeBooster);
@@ -209,7 +209,7 @@ public class BoosterManager : SingletonMono<BoosterManager>
     protected virtual void OnBoosterActivated(BoosterType boosterType)
     {
         AnlyticManager.instance.BoosterUsing(boosterType);
-        GameDebug.Log($"BoosterManager: Activated booster {boosterType}");
+        GameDebug.Log($"BoosterManager: Activated booster2 {boosterType}");
     }
 
     protected virtual void UseBoosterFromAds(BoosterType boosterType)
@@ -217,7 +217,7 @@ public class BoosterManager : SingletonMono<BoosterManager>
         AnlyticManager.instance.BoosterClaim(boosterType);
         DataAccountPlayer.PlayerResourceData.ChangeBoosterCount(boosterType, 1);
         RefreshBoosterButtons();
-        GameDebug.Log($"BoosterManager: Watch ads to use booster {boosterType}");
+        GameDebug.Log($"BoosterManager: Watch ads to use booster2 {boosterType}");
     }
 
     protected virtual void UseBoosterFromGold(BoosterType boosterType)
@@ -235,7 +235,7 @@ public class BoosterManager : SingletonMono<BoosterManager>
         }
 
        
-        GameDebug.Log($"BoosterManager: Watch ads to use booster {boosterType}");
+        GameDebug.Log($"BoosterManager: Watch ads to use booster2 {boosterType}");
     }
 
     #endregion

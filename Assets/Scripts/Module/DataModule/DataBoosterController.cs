@@ -1,18 +1,22 @@
+using NorskaLib.Spreadsheets;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static DataProcessMechanic;
 [CreateAssetMenu(fileName = "DataBooster", menuName = "DaTa/DataBooster")]
-public class DataBoosterController : ScriptableObject
+public class DataBoosterController : SpreadsheetsContainerBase
 {
-    public List<ProcessBoosterData> listBoooster = new List<ProcessBoosterData>();
+    [SpreadsheetContent]
+    [SerializeField] ListBooster content;
+    public ListBooster ContentContent => content;
 
-    public int BoosterCount => listBoooster?.Count ?? 0;
+  
+    public int BoosterCount => content.listBoooster?.Count ?? 0;
 
     public bool TryGetBoosterByLevel(int level, out ProcessBoosterData data)
     {
-        foreach (var t in listBoooster)
+        foreach (var t in content.listBoooster)
         {
             if (t.level == level)
             {
@@ -26,7 +30,7 @@ public class DataBoosterController : ScriptableObject
 
     public ProcessBoosterData GetDataBoosterByType(BoosterType boosterType)
     {
-        foreach (var t in listBoooster)
+        foreach (var t in content.listBoooster)
         {
             if (t.boosterType == boosterType)
             {
@@ -38,7 +42,7 @@ public class DataBoosterController : ScriptableObject
 
     public ProcessBoosterData GetDataBoosterByLevel(int level)
     {
-        foreach (var t in listBoooster)
+        foreach (var t in content.listBoooster)
         {
             if (t.level == level)
             {
@@ -47,6 +51,13 @@ public class DataBoosterController : ScriptableObject
         }
         return default;
     }
+}
+
+[Serializable]
+public class ListBooster
+{
+    [SpreadsheetPage("ListBooster")]
+    public List<ProcessBoosterData> listBoooster = new List<ProcessBoosterData>();
 }
 
 [Serializable]
