@@ -1,4 +1,4 @@
-﻿using JinGroup.Common.UIBaseController;
+using JinGroup.Common.UIBaseController;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
@@ -16,7 +16,13 @@ public class PopupManager : SingletonMono<PopupManager>
     private List<PopupBaseController> popupPrefabs;
 
     [SerializeField] private PopupShowReward popupShowReward;
-    
+
+    protected override void Awake()
+    {
+        base.Awake();
+        GetOrSpawnPopupShowReward();
+    }
+
     [Button]
     public T ShowPopup<T>(Action onShown = null) where T : PopupBaseController
     {
@@ -34,8 +40,53 @@ public class PopupManager : SingletonMono<PopupManager>
 
     public PopupShowReward ModuleShowReward(Action onShown = null)
     {
-        EnqueuePopup(popupShowReward.gameObject, onShown);
-        return popupShowReward;
+        var instance = GetOrSpawnPopupShowReward();
+        if (instance != null)
+        {
+            instance.transform.SetAsLastSibling();
+            instance.gameObject.SetActive(true);
+            isPopupActive = true;
+            onShown?.Invoke();
+        }
+        return instance;
+    }
+
+    private PopupShowReward GetOrSpawnPopupShowReward()
+    {
+        // 1. Đã là GameObject instance hợp lệ trong scene
+        if (popupShowReward != null && popupShowReward.gameObject.scene.IsValid())
+        {
+            return popupShowReward;
+        }
+
+        // 2. popupShowReward là Prefab Asset (chưa instantiate vào scene)
+        if (popupShowReward != null)
+        {
+            var instance = Instantiate(popupShowReward, transform);
+            instance.gameObject.SetActive(false);
+            popupShowReward = instance;
+            return popupShowReward;
+        }
+
+        // 3. Thử tìm trong children
+        popupShowReward = GetComponentInChildren<PopupShowReward>(true);
+        if (popupShowReward != null)
+        {
+            return popupShowReward;
+        }
+
+        // 4. Fallback: Load prefab từ Resources
+        var prefab = Resources.Load<PopupShowReward>("Prefabs/UI/Popup/PopupClaimReward");
+        if (prefab != null)
+        {
+            var instance = Instantiate(prefab, transform);
+            instance.gameObject.SetActive(false);
+            popupShowReward = instance;
+            return popupShowReward;
+        }
+
+        Debug.LogError("[PopupManager] PopupShowReward prefab not found!");
+        return null;
     }
 
     public void CloseCurrentPopup()

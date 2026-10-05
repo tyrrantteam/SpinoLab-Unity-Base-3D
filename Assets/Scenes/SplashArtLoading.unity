@@ -1206,7 +1206,6 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   currentScene: 0
-  canCount: 0
   canShowAds: 0
   DataAds: {fileID: 11400000, guid: 83696347c62952e4990c31219b06a08f, type: 2}
   gameConfig: {fileID: 11400000, guid: 3c7d9e1f2a4b5680c9de0f1a2b3c4d5e, type: 2}
@@ -1805,19 +1804,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3879319512237232732, guid: 454a693025706d2498ad88217c425848, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3879319512237232732, guid: 454a693025706d2498ad88217c425848, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3879319512237232732, guid: 454a693025706d2498ad88217c425848, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 95
       objectReference: {fileID: 0}
     - target: {fileID: 3879319512237232732, guid: 454a693025706d2498ad88217c425848, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -100
       objectReference: {fileID: 0}
     - target: {fileID: 5575183559059611470, guid: 454a693025706d2498ad88217c425848, type: 3}
       propertyPath: m_Pivot.x

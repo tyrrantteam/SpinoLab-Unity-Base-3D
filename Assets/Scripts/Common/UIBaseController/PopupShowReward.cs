@@ -1,4 +1,4 @@
-﻿using Base.Core.Sound;
+using Base.Core.Sound;
 using JinGroup.Base.LoadData;
 using JinGroup.Module.Resources;
 using JinGroup.Module.Reward;
@@ -22,19 +22,45 @@ public class PopupShowReward : SingletonMono<PopupShowReward>
     protected override void Awake()
     {
         base.Awake();
-        closeBtn.onClick.AddListener(Close);
+        if (closeBtn != null)
+        {
+            closeBtn.onClick.RemoveListener(Close);
+            closeBtn.onClick.AddListener(Close);
+        }
         InitData();
     }
 
-
     private void InitData()
     {
-        _listitemData = LoadResourceController.Instance.DataItemController().ContentContent.ListitemData;
+        if (LoadResourceController.Instance != null && LoadResourceController.Instance.DataItemController() != null)
+        {
+            var dataItemCtrl = LoadResourceController.Instance.DataItemController();
+            if (dataItemCtrl.ContentContent != null)
+            {
+                _listitemData = dataItemCtrl.ContentContent.ListitemData;
+            }
+        }
     }
 
     public void OpenPopup(List<PopupReward> listBundlePackData)
     {
+        if (listBundlePackData == null || listBundlePackData.Count == 0) return;
+
+        transform.SetAsLastSibling();
         gameObject.SetActive(true);
+
+        if (!gameObject.activeInHierarchy && transform.parent != null && !transform.parent.gameObject.activeInHierarchy)
+        {
+            transform.parent.gameObject.SetActive(true);
+        }
+
+        if (!gameObject.activeInHierarchy)
+        {
+            Debug.LogError("[PopupShowReward] Cannot start Coroutine because PopupShowReward or its parent is inactive in hierarchy!");
+            return;
+        }
+
+        StopAllCoroutines();
 
         if (!isInitialized)
         {
@@ -43,7 +69,7 @@ public class PopupShowReward : SingletonMono<PopupShowReward>
         }
         else
         {
-           StartCoroutine(UpdateRewards(listBundlePackData));
+            StartCoroutine(UpdateRewards(listBundlePackData));
         }
     }
 
@@ -89,11 +115,28 @@ public class PopupShowReward : SingletonMono<PopupShowReward>
 
     private dataItem CreateDataItem(PopupReward popupReward)
     {
-        var matchedItem = _listitemData.Find(item => item.typeResources == popupReward.typeResources);
+        if (_listitemData == null)
+        {
+            InitData();
+        }
+
+        var matchedItem = _listitemData?.Find(item => item.typeResources == popupReward.typeResources);
+        TypeRarity rarity = TypeRarity.normal;
+        if (matchedItem != null && !string.IsNullOrEmpty(matchedItem.typeRarity))
+        {
+            Enum.TryParse(matchedItem.typeRarity, true, out rarity);
+        }
+
+        TypeResources resources = TypeResources.none;
+        if (!string.IsNullOrEmpty(popupReward.typeResources))
+        {
+            Enum.TryParse(popupReward.typeResources, true, out resources);
+        }
+
         return new dataItem
         {
-            typeRarity = (TypeRarity)Enum.Parse(typeof(TypeRarity), matchedItem.typeRarity, true),
-            typeReward = (TypeResources)Enum.Parse(typeof(TypeResources), popupReward.typeResources, true),
+            typeRarity = rarity,
+            typeReward = resources,
             value = popupReward.value
         };
     }
