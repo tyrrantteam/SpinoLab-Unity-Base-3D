@@ -1,4 +1,5 @@
 using Base.Core;
+using DataAccount;
 using JinGroup.Base.LoadData;
 using JinGroup.Common.UIBaseController;
 using System.Collections;
@@ -35,8 +36,12 @@ namespace JinGroup.UI.Common.Setting
 
             var isActiveHome = _gameConfig.usingMetaSys;
             var currentScene = GameManager.Instance.currentScene;
-            bool isHomeScene = currentScene == SceneName.HomeScene;
-            HomeBtn.gameObject.SetActive(isActiveHome && !isHomeScene);
+            var lvUnlockMeta = _gameConfig.levelUnlockMetaSystem;
+            var currentLv = DataAccountPlayer.PlayerPointProcessData.currentlevelShowScreen;
+            bool isHomeScene = (currentScene == SceneName.HomeScene);
+            bool levelUnlockMeta = (currentLv >= lvUnlockMeta);
+
+            HomeBtn.gameObject.SetActive(isActiveHome && !isHomeScene && levelUnlockMeta);
             ReplayBtn.gameObject.SetActive(!isHomeScene);
         }
 

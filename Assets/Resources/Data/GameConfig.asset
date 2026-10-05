@@ -15,4 +15,5 @@ MonoBehaviour:
   levelRandom: 40
   levelMin: 6
   usingResourceInGame: 1
-  usingMetaSys: 0
+  usingMetaSys: 1
+  levelUnlockMetaSystem: 5

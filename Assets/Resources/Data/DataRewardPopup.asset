@@ -24,26 +24,6 @@ MonoBehaviour:
   serializationFileName: Configs.v0.1
   serializationFormat: 0
   content:
-    popupLevelUp:
-    - id: 1
-      typeResources: gold
-      value: 200
-    - id: 2
-      typeResources: diamond
-      value: 50
-    - id: 3
-      typeResources: skipAds
-      value: 100
-    listBundlePack2:
-    - id: 1
-      typeResources: gold
-      value: 200
-    - id: 2
-      typeResources: diamond
-      value: 50
-    - id: 3
-      typeResources: skipAds
-      value: 100
     dailyCheckin:
     - day: 0
       id: 1
