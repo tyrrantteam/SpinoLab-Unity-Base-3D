@@ -7,7 +7,5 @@ public class GameConfig : ScriptableObject
     public int levelRandom;
     public int levelMin;
     [Header("UI")]
-    public bool isProduction;
-    public bool isIAAprod;
     public bool usingResourceInGame;
 }

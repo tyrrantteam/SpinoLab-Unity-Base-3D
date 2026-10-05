@@ -170,7 +170,7 @@ public class BoosterManager : SingletonMono<BoosterManager>
         if (IsBoosterEmpty)
         {
             SpecialOfferAdsService.RecordEmptyBoosterAttempt(boosterType);
-            if (_gameConfig.isIAAprod)
+            if (!_gameConfig.usingResourceInGame)
             {
                 UseBoosterFromAds(boosterType);
                 return;

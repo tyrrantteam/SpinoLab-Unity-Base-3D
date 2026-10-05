@@ -177,7 +177,7 @@ public class BoosterButtonController : MonoBehaviour
         bool hasStock = !_isBoosterEmpty;
 
         valueBooster.SetActive(hasStock);
-        var isIAA = _gameConfig.isIAAprod;
+        var isIAA = !_gameConfig.usingResourceInGame;
 
         adsBooster.SetActive(!hasStock && isIAA);
         priceHolder.SetActive(!hasStock && !isIAA);
