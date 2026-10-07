@@ -39,7 +39,7 @@ public class PopUpLoseController : PopupBaseController
     private void OnTryAgain()
     {
         //GameManager.Instance.LoadScene(SceneName.GamePlayScreen);
-        AnlyticManager.Instance.LogEventLevelTryAgain();
+        AnalyticManager.Instance.LogEventLevelTryAgain();
         GameManager.Instance.LoadScene(SceneName.GamePlayScreen);
         OnClosePopup();
     }

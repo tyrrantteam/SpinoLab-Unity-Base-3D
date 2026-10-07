@@ -208,13 +208,13 @@ public class BoosterManager : SingletonMono<BoosterManager>
 
     protected virtual void OnBoosterActivated(BoosterType boosterType)
     {
-        AnlyticManager.instance.BoosterUsing(boosterType);
+        AnalyticManager.instance.BoosterUsing(boosterType);
         GameDebug.Log($"BoosterManager: Activated booster2 {boosterType}");
     }
 
     protected virtual void UseBoosterFromAds(BoosterType boosterType)
     {
-        AnlyticManager.instance.BoosterClaim(boosterType);
+        AnalyticManager.instance.BoosterClaim(boosterType);
         DataAccountPlayer.PlayerResourceData.ChangeBoosterCount(boosterType, 1);
         RefreshBoosterButtons();
         GameDebug.Log($"BoosterManager: Watch ads to use booster2 {boosterType}");
@@ -222,7 +222,7 @@ public class BoosterManager : SingletonMono<BoosterManager>
 
     protected virtual void UseBoosterFromGold(BoosterType boosterType)
     {
-        AnlyticManager.instance.BoosterClaim(boosterType);
+        AnalyticManager.instance.BoosterClaim(boosterType);
 
         var price = dataBooster.GetDataBoosterByType(boosterType).price;
         var playerGold = DataAccountPlayer.PlayerResourceData.gold;

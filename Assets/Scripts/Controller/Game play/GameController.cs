@@ -61,7 +61,7 @@ public class GameController : SingletonMono<GameController>
 
         var sampleLv = LoadResourceController.Instance.LevelGame(_currentLevel);
         //_mapManager = Instantiate(sampleLv, sampleLv.transform.position, sampleLv.transform.rotation);
-        AnlyticManager.instance.LogEventLevelStart();
+        AnalyticManager.instance.LogEventLevelStart();
         StartCoroutine(RunGameplayEntryPopupFlow());
     }
 
@@ -148,7 +148,7 @@ public class GameController : SingletonMono<GameController>
 
     public void SetWinGame()
     {
-        AnlyticManager.instance.LogEventLevelComplete();
+        AnalyticManager.instance.LogEventLevelComplete();
         HapticManager.Instance.PlayHapticSuccess();
         confetiStartWin.SetActive(true);
 
@@ -164,7 +164,7 @@ public class GameController : SingletonMono<GameController>
 
     public void SetLoseGame()
     {
-        AnlyticManager.instance.LogEventLevelFailed();
+        AnalyticManager.instance.LogEventLevelFailed();
         HapticManager.Instance.PlayHapticFailure();
         SoundManager.Instance.PlaySound(SoundType.LevelFail);
         PopupManager.Instance.ShowPopup<PopUpLoseController>();
