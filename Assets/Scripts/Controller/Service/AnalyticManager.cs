@@ -1,7 +1,7 @@
 using Base.Core.Debug;
 using DataAccount;
 
-public class AnlyticManager : SingletonMono<AnlyticManager>
+public class AnalyticManager : SingletonMono<AnalyticManager>
 {
     #region In game event
     public void LogEventLevelStart()
@@ -63,6 +63,10 @@ public class AnlyticManager : SingletonMono<AnlyticManager>
         GameDebug.Log("Tutorial completed: " + levelInfor);
     }
 
-    
+
+    #endregion
+
+    #region MetaSystem
+
     #endregion
 }
