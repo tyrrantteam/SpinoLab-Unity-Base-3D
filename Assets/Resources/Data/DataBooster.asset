@@ -22,7 +22,14 @@ MonoBehaviour:
   serializationFormat: 0
   content:
     listBoooster:
-    - level: 1
+    - level: 5
+      boosterType: 3
+      imgMechanic: {fileID: 21300000, guid: eeab766df1dc8b7428f09cbf69400970, type: 3}
+      imgIconBooster: {fileID: 21300000, guid: 60aa2d8d119abe846a554f3810267f18, type: 3}
+      description: Booster nay cx cx hoi manh manh
+      nameBooster: Finger GOD
+      price: 850
+    - level: 8
       boosterType: 1
       imgMechanic: {fileID: 21300000, guid: 7c1b4be6a1a72d14996d7677f3f35927, type: 3}
       imgIconBooster: {fileID: 21300000, guid: d6523dbf95ec9384face120b1135cdd6, type: 3}
@@ -36,10 +43,3 @@ MonoBehaviour:
       description: booster nay cung manh nhung khong bang cai duoi
       nameBooster: Key finger
       price: 500
-    - level: 32
-      boosterType: 3
-      imgMechanic: {fileID: 21300000, guid: eeab766df1dc8b7428f09cbf69400970, type: 3}
-      imgIconBooster: {fileID: 21300000, guid: 60aa2d8d119abe846a554f3810267f18, type: 3}
-      description: Booster nay cx cx hoi manh manh
-      nameBooster: Finger GOD
-      price: 850
