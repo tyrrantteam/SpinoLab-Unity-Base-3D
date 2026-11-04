@@ -1,4 +1,5 @@
-﻿using Base.Core.Sound;
+using Base.Core.Debug;
+using Base.Core.Sound;
 using DataAccount;
 using DG.Tweening;
 using JinGroup.Base.LoadData;
@@ -22,6 +23,7 @@ public class GameController : SingletonMono<GameController>
     private MapManager _mapManager;
     private DataProcessMechanic dataTut;
     private GameConfig _gameConfig;
+    private DataLoopLevelController _dataLoopLevelController;
     private int _currentLevel;
     protected override void Awake()
     {
@@ -33,6 +35,11 @@ public class GameController : SingletonMono<GameController>
         if (_gameConfig == null)
         {
             _gameConfig = LoadResourceController.Instance.GameConfig();
+        }
+
+        if (_dataLoopLevelController == null)
+        {
+            _dataLoopLevelController = LoadResourceController.Instance.DataLoopLevelController();
         }
     }
     void Start()
@@ -119,30 +126,14 @@ public class GameController : SingletonMono<GameController>
         playerPointProcessData.WinLevel();
         DailyStreakService.OnLevelWon();
         var levelNumber = playerPointProcessData.currentlevelShowScreen;
-        if (levelNumber >= _gameConfig.levelRandom)
+
+
+        if (levelNumber >= _dataLoopLevelController.levelStartRandom)
         {
-            int id = -1;
-            int attempts = 0;
-            int min = _gameConfig.levelMin;
-            int max = _gameConfig.levelRandom; // exclusive trong Random.Range cho int
-                          // nếu tất cả đều trùng thì sẽ clear
-            if (playerPointProcessData.listLvLoop.Count >= (max - min))
-            {
-                playerPointProcessData.listLvLoop.Clear();
-            }
-
-            // random đến khi nào ra số chưa trùng
-            do
-            {
-                id = Random.Range(min, max);
-                attempts++;
-            } while (DataAccountPlayer.PlayerPointProcessData.listLvLoop.Contains(id) && attempts < 1000);
-
-            // add vào list
-            playerPointProcessData.listLvLoop.Add(id);
-            playerPointProcessData.SetCurrentLevel(id);
+            var newID = _dataLoopLevelController.levelRandom(levelNumber);
+            GameDebug.Log($"Level {levelNumber} is greater than or equal to levelStartRandom {_dataLoopLevelController.levelStartRandom}. New level ID: {newID}");
+            playerPointProcessData.SetCurrentLevel(newID);
             playerPointProcessData.ChangeprogressConfigId();
-
         }
     }
 

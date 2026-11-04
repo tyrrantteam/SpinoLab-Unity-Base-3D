@@ -198,7 +198,7 @@ MonoBehaviour:
           isColorRecursive: 0
   bookmarks: []
   bookmarkedScenePaths:
-  - Assets/Scenes/GamePlayScreen.unity
   - Assets/Scenes/SplashArtLoading.unity
+  - Assets/Scenes/GamePlayScreen.unity
   - Assets/Scenes/LoadingScene.unity
   - Assets/Scenes/HomeScene.unity

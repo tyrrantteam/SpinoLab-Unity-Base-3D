@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: DataPoolFactory
   m_EditorClassIdentifier: 
   listFactoryPoolData:
-  - typeObject: {fileID: 0}
+  - typeObject: {fileID: 3191631677320263001, guid: 4e91d04247c90df45b2814cefcc2ea7f, type: 3}
     isPreSpawn: 0
     valuePreSpawn: 0
-    idObject: 
+    idObject: 13
   listFactoryPoolDataUI:
   - typeObject: {fileID: 4733213690693915657, guid: eb55415ddc66a224eb7d5d5737417078, type: 3}
     isPreSpawn: 0
