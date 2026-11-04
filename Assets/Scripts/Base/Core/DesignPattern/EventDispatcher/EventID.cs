@@ -24,4 +24,7 @@ public enum EventID
 
     //Booster
     OnUnlockBooster,
+
+    //ContinueGame,
+    ContinueGame,
 }
