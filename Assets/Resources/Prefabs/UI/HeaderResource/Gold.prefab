@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: 1351
 --- !u!1 &1387728674993742672
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,6 +366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   valueTxt: {fileID: 9024046208273330028}
+  timeCountTxt: {fileID: 0}
   claimMore: {fileID: 1948089470360313299}
-  valueInformation: 0
+  valueInformation: 8000
   countUpDuration: 0.5

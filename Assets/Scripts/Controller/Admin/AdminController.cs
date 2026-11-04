@@ -40,6 +40,7 @@ public class AdminController : MonoBehaviour
     [Header("ADS in Game")]
     [SerializeField] private Button btnShowInter;
     [SerializeField] private Button btnShowBanner;
+    [SerializeField] private Button btnRemoveAds;
     [SerializeField] private Text timeToNextInter;
     public int defaultValue = 1;
 
@@ -76,6 +77,7 @@ public class AdminController : MonoBehaviour
 
         if (btnShowInter != null) btnShowInter.onClick.AddListener(OnShowInter);
         if (btnShowBanner != null) btnShowBanner.onClick.AddListener(OnShowBanner);
+        if (btnRemoveAds != null) btnRemoveAds.onClick.AddListener(OnRemoveAds);
     }
 
     private void Start()
@@ -226,7 +228,7 @@ public class AdminController : MonoBehaviour
 
     private void OnActiveInfiniteHeart1h()
     {
-        //DataAccountPlayer.PlayerResourceData.SetInfiniteHeart(true, 3600);
+        DataAccountPlayer.PlayerResourceData.AddInfiniteHeartHours(1);
     }
 
     #endregion

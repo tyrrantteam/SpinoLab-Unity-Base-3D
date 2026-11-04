@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class HeartResourcesHeader : BaseResourcesHeader
 {
+    [SerializeField] private GameObject iconHeartInfinite;
     private Coroutine _countdownCoroutine;
 
     protected override void Awake()
@@ -49,8 +50,12 @@ public class HeartResourcesHeader : BaseResourcesHeader
 
     protected override void UpdateValue()
     {
-        valueInformation = DataAccountPlayer.PlayerResourceData.heart;
-        ChangeValueWithAnimation();
+        var resourceData = DataAccountPlayer.PlayerResourceData;
+        if (resourceData != null)
+        {
+            valueInformation = resourceData.heart;
+            ChangeValueWithAnimation();
+        }
         UpdateCountdownDisplay();
     }
 
@@ -87,6 +92,24 @@ public class HeartResourcesHeader : BaseResourcesHeader
         if (timeCountTxt == null) return;
 
         var resourceData = DataAccountPlayer.PlayerResourceData;
+        if (resourceData == null) return;
+
+        bool isInfinite = resourceData.IsInfiniteHeartActive();
+
+        // 1: Bật/tắt icon vô hạn tim
+        if (iconHeartInfinite != null && iconHeartInfinite.activeSelf != isInfinite)
+        {
+            iconHeartInfinite.SetActive(isInfinite);
+        }
+
+        // 2: Cập nhật timeCountTxt
+        if (isInfinite)
+        {
+            timeCountTxt.text = FormatInfiniteHeartTime(resourceData.GetRemainingInfiniteHeartSeconds());
+            return;
+        }
+
+        // Luồng hồi heart bình thường
         int limit = resourceData.GetHeartLimit();
 
         if (resourceData.heart >= limit)
@@ -117,5 +140,33 @@ public class HeartResourcesHeader : BaseResourcesHeader
             long seconds = remaining % 60;
             timeCountTxt.text = $"{minutes:D2}:{seconds:D2}";
         }
+    }
+
+    /// <summary>
+    /// Định dạng thời gian đếm ngược vô hạn tim:
+    /// - 00days : 00h : 00m (khi còn ngày)
+    /// - 00h : 00m : 00s (khi ngày = 0, còn giờ)
+    /// - 00m : 00s (khi ngày = 0, giờ = 0)
+    /// </summary>
+    private string FormatInfiniteHeartTime(long remainingSeconds)
+    {
+        if (remainingSeconds <= 0) return "00m : 00s";
+
+        long days = remainingSeconds / 86400;
+        long hours = (remainingSeconds % 86400) / 3600;
+        long minutes = (remainingSeconds % 3600) / 60;
+        long seconds = remainingSeconds % 60;
+
+        if (days > 0)
+        {
+            return $"{days:D2}days : {hours:D2}h : {minutes:D2}m";
+        }
+
+        if (hours > 0)
+        {
+            return $"{hours:D2}h : {minutes:D2}m : {seconds:D2}s";
+        }
+
+        return $"{minutes:D2}m : {seconds:D2}s";
     }
 }

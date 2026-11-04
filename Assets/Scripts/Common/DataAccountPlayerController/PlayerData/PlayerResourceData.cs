@@ -97,7 +97,7 @@ namespace DataAccount
 
         #endregion
 
-        # region Gold
+        #region Gold
 
         public void ChangeGoldValue(int value)
         {
@@ -153,6 +153,132 @@ namespace DataAccount
         public long lastHeartRecoveryTime;
         public bool isHeartInitialized = false;
 
+        #region Infinite Heart
+        public long infiniteHeartExpireTime; // Unix timestamp (giây) thời điểm hết hạn vô hạn tim
+
+        /// <summary>
+        /// Kiểm tra hiện tại có đang trong thời gian Vô Hạn Tim hay không.
+        /// </summary>
+        public bool IsInfiniteHeartActive()
+        {
+            if (infiniteHeartExpireTime <= 0) return false;
+            long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            return now < infiniteHeartExpireTime;
+        }
+
+        public bool isInfiniteHeartActive => IsInfiniteHeartActive();
+
+        /// <summary>
+        /// Logic 1: Kích hoạt hoặc cộng dồn thời gian Vô Hạn Tim theo số ngày (1 ngày = 86400 giây).
+        /// Trong quãng thời gian này, ChangeHeartValue(-1) sẽ không trừ vào tim thực.
+        /// Sau khi hết số ngày active sẽ tự động trả về luồng tim bình thường.
+        /// </summary>
+        /// <param name="days">Số ngày vô hạn tim (ví dụ: 1, 3, 7...)</param>
+        public void AddInfiniteHeartDays(int days)
+        {
+            if (days <= 0) return;
+            AddInfiniteHeartSeconds((long)days * 86400);
+        }
+
+        public void AddInfiniteHeartDays(float days)
+        {
+            if (days <= 0f) return;
+            AddInfiniteHeartSeconds((long)(days * 86400f));
+        }
+
+        /// <summary>
+        /// Logic 2: Kích hoạt hoặc cộng dồn thời gian Vô Hạn Tim theo số giờ (1 giờ = 3600 giây).
+        /// Trong X tiếng đó, ChangeHeartValue(-1) sẽ không có tác dụng. Khi hết giờ sẽ hoạt động lại bình thường.
+        /// </summary>
+        /// <param name="hours">Số giờ vô hạn tim (ví dụ: 1 tiếng, 2 tiếng, 0.5 tiếng...)</param>
+        public void AddInfiniteHeartHours(int hours)
+        {
+            if (hours <= 0) return;
+            AddInfiniteHeartSeconds((long)hours * 3600);
+        }
+
+        public void AddInfiniteHeartHours(float hours)
+        {
+            if (hours <= 0f) return;
+            AddInfiniteHeartSeconds((long)(hours * 3600f));
+        }
+
+        /// <summary>
+        /// Kích hoạt hoặc cộng dồn thời gian Vô Hạn Tim theo số giây.
+        /// </summary>
+        public void AddInfiniteHeartSeconds(long seconds)
+        {
+            if (seconds <= 0) return;
+            long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            long baseTime = Math.Max(now, infiniteHeartExpireTime);
+            infiniteHeartExpireTime = baseTime + seconds;
+
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.PostEvent(EventID.UpdateHeart);
+            }
+            DataAccountPlayer.SavePlayerResourceData();
+        }
+
+        /// <summary>
+        /// Thiết lập trạng thái Vô Hạn Tim (hỗ trợ bật/tắt hoặc đặt thời lượng cụ thể theo giây).
+        /// </summary>
+        public void SetInfiniteHeart(bool active, long durationSeconds = 0)
+        {
+            if (active)
+            {
+                long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                infiniteHeartExpireTime = now + Math.Max(0, durationSeconds);
+            }
+            else
+            {
+                infiniteHeartExpireTime = 0;
+            }
+
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.PostEvent(EventID.UpdateHeart);
+            }
+            DataAccountPlayer.SavePlayerResourceData();
+        }
+
+        /// <summary>
+        /// Lấy số giây còn lại của Vô Hạn Tim. Trả về 0 nếu đã hết hạn hoặc không kích hoạt.
+        /// </summary>
+        public long GetRemainingInfiniteHeartSeconds()
+        {
+            if (infiniteHeartExpireTime <= 0) return 0;
+            long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            return Math.Max(0, infiniteHeartExpireTime - now);
+        }
+
+        /// <summary>
+        /// Lấy chuỗi định dạng thời gian còn lại của Vô Hạn Tim (vd: "01:23:45", "2d 05h").
+        /// </summary>
+        public string GetRemainingInfiniteHeartTimeString()
+        {
+            long remaining = GetRemainingInfiniteHeartSeconds();
+            if (remaining <= 0) return "00m : 00s";
+
+            long days = remaining / 86400;
+            long hours = (remaining % 86400) / 3600;
+            long minutes = (remaining % 3600) / 60;
+            long seconds = remaining % 60;
+
+            if (days > 0)
+            {
+                return $"{days:D2}days : {hours:D2}h : {minutes:D2}m";
+            }
+
+            if (hours > 0)
+            {
+                return $"{hours:D2}h : {minutes:D2}m : {seconds:D2}s";
+            }
+
+            return $"{minutes:D2}m : {seconds:D2}s";
+        }
+        #endregion
+
         public int GetHeartLimit()
         {
             var dataHeart = LoadResourceController.Instance != null ? LoadResourceController.Instance.DataHeartController() : null;
@@ -194,6 +320,12 @@ namespace DataAccount
 
         public void SubtractHeart(int value)
         {
+            if (IsInfiniteHeartActive())
+            {
+                // Khi đang trong thời gian Vô Hạn Tim: không trừ tim thực
+                return;
+            }
+
             UpdateHeartRecovery();
             int limit = GetHeartLimit();
             heart = Mathf.Max(0, heart - value);
@@ -216,6 +348,11 @@ namespace DataAccount
             }
             else
             {
+                if (IsInfiniteHeartActive())
+                {
+                    // Khi đang trong thời gian Vô Hạn Tim: không trừ tim thực
+                    return;
+                }
                 SubtractHeart(-value);
             }
         }
