@@ -1,4 +1,5 @@
 using Base.Core;
+using DataAccount;
 using JinGroup.Base.LoadData;
 using System;
 
@@ -14,6 +15,7 @@ public class AdsManager : SingletonMono<AdsManager>
     {
         if (dataAdsController.UsingInterAds && GameManager.Instance.canShowAds)
         {
+            GameManager.instance.ReSetValueAdsIntern();
             //AdMobManager.Instance.ShowInterstitial(onClosed);
             //MaxManager.Instance.ShowInterAds("", onClosed);
         }
@@ -25,8 +27,18 @@ public class AdsManager : SingletonMono<AdsManager>
 
     public void ShowRewarded(Action onRewardEarned)
     {
+        var skipAds = DataAccountPlayer.PlayerResourceData.skipAds;
+
+        if(skipAds > 0)
+        {
+            DataAccountPlayer.PlayerResourceData.ChangeSkipAdsValue(-1);
+            onRewardEarned?.Invoke();
+            return;
+        }
+
         if (dataAdsController.UsingRewardAds)
         {
+            GameManager.instance.ReSetValueAdsIntern();
             //AdMobManager.Instance.ShowRewarded(onRewardEarned);
             //MaxManager.Instance.ShowRewardAds("", onRewardEarned);
         }

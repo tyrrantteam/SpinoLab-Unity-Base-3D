@@ -1,6 +1,7 @@
-﻿using Base.Core;
+using Base.Core;
 using Base.Core.Debug;
 using DataAccount;
+using System.Collections;
 using UI.LoadingScene;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,6 +20,11 @@ public class AdminController : MonoBehaviour
     [Header("Booster")]
     [SerializeField] private Button UnlockAllBooster;
     [SerializeField] private Button Add10BoosterEachType;
+    [Header("Resource")]
+    [SerializeField] private Button add1000Gold;
+    [SerializeField] private Button add1000Heart;
+    [SerializeField] private Button add10SkipAds;
+    [SerializeField] private Button activeInfiniteHeart1h;
     [Header("StreakUI")]
     [SerializeField] private Button btnFinishStreak;
     [SerializeField] private InputField inputDayStreak;
@@ -31,7 +37,13 @@ public class AdminController : MonoBehaviour
     [SerializeField] private GameObject hand;
     [SerializeField] private GameObject UIGameHeader;
     [SerializeField] private GameObject UIGameBottomBar;
+    [Header("ADS in Game")]
+    [SerializeField] private Button btnShowInter;
+    [SerializeField] private Button btnShowBanner;
+    [SerializeField] private Text timeToNextInter;
     public int defaultValue = 1;
+
+    private Coroutine _updateTimeCoroutine;
 
     private void Awake()
     {
@@ -56,12 +68,25 @@ public class AdminController : MonoBehaviour
 
         btnMoveToDayStreak.onClick.AddListener(OnMoveToDayStreak);
         btnFinishStreak.onClick.AddListener(OnFinishStreak);
+
+        add1000Gold.onClick.AddListener(OnAdd1000Gold);
+        add1000Heart.onClick.AddListener(OnAdd1000Heart);
+        add10SkipAds.onClick.AddListener(OnAdd10SkipAds);
+        activeInfiniteHeart1h.onClick.AddListener(OnActiveInfiniteHeart1h);
+
+        if (btnShowInter != null) btnShowInter.onClick.AddListener(OnShowInter);
+        if (btnShowBanner != null) btnShowBanner.onClick.AddListener(OnShowBanner);
     }
 
     private void Start()
     {
         panelAdmin.gameObject.SetActive(false);
         openAdmin.interactable = !GameDebug.IsProduction;
+    }
+
+    private void OnDisable()
+    {
+        StopUpdateTimeCoroutine();
     }
 
     #region GameServices
@@ -73,10 +98,12 @@ public class AdminController : MonoBehaviour
             return;
         }
         panelAdmin.gameObject.SetActive(true);
+        StartUpdateTimeCoroutine();
     }
 
     public void CloseAdmin()
     {
+        StopUpdateTimeCoroutine();
         panelAdmin.gameObject.SetActive(false);
     }
 
@@ -179,5 +206,86 @@ public class AdminController : MonoBehaviour
         GameDebug.Log("DEActive hand");
         hand.SetActive(false);
     }
-    #endregion  
+    #endregion
+
+    #region Resource
+    private void OnAdd1000Gold()
+    {
+        DataAccountPlayer.PlayerResourceData.ChangeGoldValue(1000);
+    }
+
+    private void OnAdd1000Heart()
+    {
+        DataAccountPlayer.PlayerResourceData.ChangeHeartValue(1000);
+    }
+
+    private void OnAdd10SkipAds()
+    {
+        DataAccountPlayer.PlayerResourceData.SetSkipAdsValue(10);
+    }
+
+    private void OnActiveInfiniteHeart1h()
+    {
+        //DataAccountPlayer.PlayerResourceData.SetInfiniteHeart(true, 3600);
+    }
+
+    #endregion
+
+    #region Ads
+
+    private void OnShowInter()
+    {
+        AdsManager.Instance.ShowInter();
+    }
+
+    private void OnShowBanner()
+    {
+        AdsManager.Instance.ShowBanner();
+    }
+
+    private void OnRemoveAds()
+    {
+        DataAccountPlayer.PlayerResourceData.ChangeNoAdsStatus(true);
+    }
+
+    private void StartUpdateTimeCoroutine()
+    {
+        StopUpdateTimeCoroutine();
+        if (gameObject.activeInHierarchy)
+        {
+            _updateTimeCoroutine = StartCoroutine(UpdateTimeRoutine());
+        }
+    }
+
+    private void StopUpdateTimeCoroutine()
+    {
+        if (_updateTimeCoroutine != null)
+        {
+            StopCoroutine(_updateTimeCoroutine);
+            _updateTimeCoroutine = null;
+        }
+    }
+
+    private IEnumerator UpdateTimeRoutine()
+    {
+        var wait = new WaitForSecondsRealtime(0.5f);
+
+        while (panelAdmin != null && panelAdmin.gameObject.activeInHierarchy)
+        {
+            UpdateTimeText();
+            yield return wait;
+        }
+
+        _updateTimeCoroutine = null;
+    }
+
+    private void UpdateTimeText()
+    {
+        if (timeToNextInter != null && GameManager.Instance != null)
+        {
+            timeToNextInter.text = $"Time to next inter: {GameManager.Instance.timeCountAds:F1}s";
+        }
+    }
+
+    #endregion
 }
