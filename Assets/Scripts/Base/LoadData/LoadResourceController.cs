@@ -182,6 +182,12 @@ namespace JinGroup.Base.LoadData
             return Load<DataHeartController>(path, "DataHeart");
         }
 
+        public DataLoopLevelController DataLoopLevelController()
+        {
+            var path = string.Format(ResourcesFolderPath.DataFolder);
+            return Load<DataLoopLevelController>(path, "DataCurveLevel");
+        }
+
         #endregion
     }
 }
