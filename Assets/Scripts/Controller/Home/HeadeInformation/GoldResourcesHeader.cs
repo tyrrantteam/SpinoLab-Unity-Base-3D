@@ -24,12 +24,13 @@ public class GoldResourcesHeader : BaseResourcesHeader
         _lastValue       = DataAccountPlayer.PlayerResourceData.gold;
         valueInformation = _lastValue;
         base.UpdateValue();
-        this.RegisterListener(EventID.UpdateGold, (sender, param) => UpdateValueTween());
+
 
         addMoreGold.onClick.AddListener(OnCLickMoreGold);
 
         if (scaleEffectSquashAndStretch == null)
             scaleEffectSquashAndStretch = GetComponent<ScaleEffectSquashAndStretch>();
+        this.RegisterListener(EventID.UpdateGold, (sender, param) => UpdateValueTween());
     }
 
     private void UpdateValueTween()
