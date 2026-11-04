@@ -32,8 +32,8 @@ MonoBehaviour:
     - Assembly-CSharp-firstpass
     - MoreMountains.Tools
     - Kybernetik.InspectorGadgets.Editor
-    - SingularityGroup.HotReload.Editor
     - Assembly-CSharp
+    - SingularityGroup.HotReload.Editor
     - VTabs
     - NorskaLib.Spreadsheets
     - Kybernetik.InspectorGadgets

@@ -2,8 +2,6 @@ using Base.Core;
 using DataAccount;
 using JinGroup.Base.LoadData;
 using JinGroup.Common.UIBaseController;
-using System.Collections;
-using System.Collections.Generic;
 using UI.LoadingScene;
 using UnityEngine;
 using UnityEngine.UI;
@@ -98,7 +96,16 @@ namespace JinGroup.UI.Common.Setting
 
         private void Replay()
         {
-            GameManager.Instance.LoadScene(SceneName.GamePlayScreen);
+            var isUsingHeart = _gameConfig.usingHeart;
+            if (isUsingHeart)
+            {
+                OnClosePopup();
+                PopupManager.Instance.ShowPopup<PopupAreYouSureResetController>();
+            }
+            else
+            {
+                GameManager.Instance.LoadScene(SceneName.GamePlayScreen);
+            }
         }
     }
 }
