@@ -3,8 +3,8 @@ using Base.Core.Sound;
 using DataAccount;
 using JinGroup.Common.ResourcesHeader;
 using JinGroup.Controller.Feature;
+using JinGroup.UI.SwipeHub;
 using LitMotion;
-using UI.LoadingScene;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -61,15 +61,13 @@ public class GoldResourcesHeader : BaseResourcesHeader
 
     private void OnCLickMoreGold()
     {
-        var scene = GameManager.Instance.currentScene;
-        if (scene == SceneName.HomeScene)
+        if (SwipePageHub.Instance != null)
         {
-            BottomTabController.Instance.SetPanelActive(TabType.Shop);
+            SwipePageHub.Instance.SelectPage(SwipePageKind.Shop);
+            return;
         }
-        else
-        {
-            // PopupManager.Instance.ShowPopup<PopupShopController>();
-        }
+
+        // PopupManager.Instance.ShowPopup<PopupShopController>();
     }
 
     private void OnDestroy()

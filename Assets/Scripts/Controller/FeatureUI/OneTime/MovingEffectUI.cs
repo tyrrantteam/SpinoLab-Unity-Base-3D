@@ -37,7 +37,8 @@ namespace JinGroup.Controller.Feature
             // Snap ra ngoài màn hình ngay (trước delay) để object không nhìn thấy ở sai vị trí
             RT.anchoredPosition = GetOffScreenPosition(entryDirection);
         }
-
+        
+        [Button]
         public override void Play()
         {
             _handle.TryCancel();
