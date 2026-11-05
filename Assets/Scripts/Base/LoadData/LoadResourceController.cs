@@ -2,8 +2,6 @@ using Base.Core.Sound;
 using JinGroup.Module.Resources;
 using System.Collections.Generic;
 using System.IO;
-using Unity.Burst.Intrinsics;
-using UnityEditor.UI;
 using UnityEngine;
 
 namespace JinGroup.Base.LoadData
@@ -13,6 +11,7 @@ namespace JinGroup.Base.LoadData
         private Dictionary<string, Object> _resourceCache = new Dictionary<string, Object>();
 
         #region LoadMethod
+
         public MapManager LevelGame(int level)
         {
             var path = string.Format(ResourcesFolderPath.Level);
@@ -41,24 +40,31 @@ namespace JinGroup.Base.LoadData
 
         #region Public Load Method
 
-        public Sprite LoadItemIcon( TypeResources moneyType)
+        public Sprite LoadItemIcon(TypeResources moneyType)
         {
             var path = string.Format(ResourcesFolderPath.SpriteFolder, ResourcesFolderPath.MONEYTYPE);
             return Load<Sprite>(path, moneyType.ToString());
         }
+        
+        public Sprite LoadItemIcon(string moneyType)
+        {
+            var path = string.Format(ResourcesFolderPath.SpriteFolder, ResourcesFolderPath.MONEYTYPE);
+            return Load<Sprite>(path, moneyType);
+        }
 
-        public TypeRarity loadRarityStaticByType( TypeResources rarityType)
+        public TypeRarity loadRarityStaticByType(TypeResources rarityType)
         {
             switch (rarityType)
             {
                 case TypeResources.gold:
                     return TypeRarity.good;
-               case TypeResources.diamond:
-                   return TypeRarity.excellent;
+                case TypeResources.diamond:
+                    return TypeRarity.excellent;
                 default:
                     return TypeRarity.normal;
             }
         }
+
         public DataProcessMechanic LoadDataProcessMechanic()
         {
             var path = string.Format(ResourcesFolderPath.DataFolder);
@@ -100,11 +106,9 @@ namespace JinGroup.Base.LoadData
         //    return (path + skin.tostring());
         //}
 
-
         #endregion
 
         #region LoadDataAsset
-
 
         //public StatUpgradeDataAsset LoadStatUpgradeData()
         //{
@@ -117,6 +121,7 @@ namespace JinGroup.Base.LoadData
             var path = string.Format(ResourcesFolderPath.DataFolder);
             return Load<DataItemController>(path, "DataItem");
         }
+
         public DataImageHand DataImageHand()
         {
             var path = string.Format(ResourcesFolderPath.DataFolder);
@@ -146,6 +151,7 @@ namespace JinGroup.Base.LoadData
             var path = string.Format(ResourcesFolderPath.DataFolder);
             return Load<DataRankingController>(path, "DataRanking");
         }
+
         public DataBoosterController DataBoosterController()
         {
             var path = string.Format(ResourcesFolderPath.DataFolder);

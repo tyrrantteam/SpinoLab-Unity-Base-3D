@@ -36,6 +36,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: com.bundle1.pack
       name: Earlybird Bundle
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 1
     - id: 2
       typeResources: booster1
       value: 1
@@ -44,6 +50,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: 
       name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
     - id: 3
       typeResources: booster2
       value: 1
@@ -52,6 +64,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: 
       name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
     - id: 4
       typeResources: booster3
       value: 1
@@ -60,6 +78,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: 
       name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
     listBundlePack2:
     - id: 1
       typeResources: gold
@@ -69,6 +93,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: com.bundle2.pack
       name: Beginner Bundle
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 1
     - id: 2
       typeResources: booster1
       value: 2
@@ -77,6 +107,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: 
       name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
     - id: 3
       typeResources: booster2
       value: 2
@@ -85,6 +121,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: 
       name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
     - id: 4
       typeResources: booster3
       value: 2
@@ -93,6 +135,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: 
       name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
     listBundlePack3:
     - id: 1
       typeResources: gold
@@ -102,6 +150,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: com.bundle3.pack
       name: Master Bundle
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 1
     - id: 2
       typeResources: booster1
       value: 5
@@ -110,6 +164,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: 
       name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
     - id: 3
       typeResources: booster2
       value: 5
@@ -118,6 +178,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: 
       name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
     - id: 4
       typeResources: booster3
       value: 5
@@ -126,6 +192,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: 
       name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
     listBundlePack4:
     - id: 1
       typeResources: gold
@@ -135,6 +207,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: com.bundle4.pack
       name: Mega Bundle
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 1
     - id: 2
       typeResources: booster1
       value: 10
@@ -143,6 +221,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: 
       name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
     - id: 3
       typeResources: booster2
       value: 10
@@ -151,6 +235,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: 
       name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
     - id: 4
       typeResources: booster3
       value: 10
@@ -159,6 +249,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: 
       name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
     listBundlePack5:
     - id: 1
       typeResources: gold
@@ -168,6 +264,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: com.bundle5.pack
       name: Giant Bundle
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 1
     - id: 2
       typeResources: booster1
       value: 20
@@ -176,6 +278,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: 
       name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
     - id: 3
       typeResources: booster2
       value: 20
@@ -184,6 +292,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: 
       name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
     - id: 4
       typeResources: booster3
       value: 20
@@ -192,6 +306,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: 
       name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
     listBundlePack6:
     - id: 1
       typeResources: gold
@@ -201,6 +321,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: com.bundle6.pack
       name: Legendary Bundle
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 1
     - id: 2
       typeResources: booster1
       value: 30
@@ -209,6 +335,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: 
       name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
     - id: 3
       typeResources: booster2
       value: 30
@@ -217,6 +349,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: 
       name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
     - id: 4
       typeResources: booster3
       value: 30
@@ -225,6 +363,19 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: 
       name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
+    specialBundle: []
+    noAdsBundle1: []
+    noAdsBundle2: []
+    noAdsBundle3: []
+    vipBundle1: []
+    vipBundle2: []
+    vipBundle3: []
     bundle_packGold:
     - id: 1
       typeResources: gold
@@ -234,6 +385,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: com.gold.pack1
       name: Mini Pouch
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 1
     - id: 2
       typeResources: gold
       value: 1500
@@ -242,6 +399,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: com.gold.pack2
       name: Small Stack
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 1
     - id: 3
       typeResources: gold
       value: 3000
@@ -250,6 +413,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: com.gold.pack3
       name: Medium Bag
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 1
     - id: 4
       typeResources: gold
       value: 7500
@@ -258,6 +427,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: com.gold.pack4
       name: Large Chest
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 1
     - id: 5
       typeResources: gold
       value: 15000
@@ -266,6 +441,12 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: com.gold.pack5
       name: Mega Vault
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 1
     - id: 6
       typeResources: gold
       value: 30000
@@ -274,3 +455,9 @@ MonoBehaviour:
       oneTimePurchase: 0
       idBundle: com.gold.pack6
       name: Ultra Hoard
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 1

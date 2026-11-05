@@ -5,7 +5,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using MoreMountains.Feedbacks;
-using Mono.Cecil.Cil;
 
 public class BoosterButtonController : MonoBehaviour
 {
@@ -174,7 +173,7 @@ public class BoosterButtonController : MonoBehaviour
 
         _isBoosterEmpty = currentValueBooster <= 0;
         bool hasStock = !_isBoosterEmpty;
-
+ 
         valueBooster.SetActive(hasStock);
         var isIAA = !_gameConfig.usingResourceInGame;
         var showPrice = _gameConfig.showPriceUnderBoosterButton;
