@@ -27,7 +27,7 @@ public enum EventID
     
     //Shop
     ActiveVip,
-    ActiveNoAds
+    ActiveNoAds,
 
     //ContinueGame,
     ContinueGame,
