@@ -37,9 +37,9 @@ namespace JinGroup.Common.UIBaseController
 
             _openScale = scaleTarget.localScale;
             _openAlpha = canvasGroup != null ? canvasGroup.alpha : 1f;
-
-            ListenerButton();
             InitData();
+            ListenerButton();
+           
         }
 
         protected virtual void OnEnable()

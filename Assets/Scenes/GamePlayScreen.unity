@@ -1638,6 +1638,7 @@ MonoBehaviour:
   confetiStartWin: {fileID: 1052657959}
   fireWorkEffect: {fileID: 0}
   uIGameController: {fileID: 1777120127}
+  boosterManager: {fileID: 7278077524512507876}
   SpawnCircleEffectUI: {fileID: 1541897402}
 --- !u!4 &1324296023
 Transform:
@@ -2790,7 +2791,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6742378393955829124, guid: 8df6608482cca3f489fc320b8f68e81a, type: 3}
       propertyPath: popupPrefabs.Array.size
-      value: 10
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 6742378393955829124, guid: 8df6608482cca3f489fc320b8f68e81a, type: 3}
       propertyPath: serializationData.Prefab
@@ -2804,6 +2805,18 @@ PrefabInstance:
       propertyPath: popupPrefabs.Array.data[9]
       value: 
       objectReference: {fileID: 2552279623103493898, guid: f0e8d0282f4ca5a4284a101eb07c7257, type: 3}
+    - target: {fileID: 6742378393955829124, guid: 8df6608482cca3f489fc320b8f68e81a, type: 3}
+      propertyPath: popupPrefabs.Array.data[10]
+      value: 
+      objectReference: {fileID: 6256569931176010922, guid: 8f0f573e8c884ac4eb0394101093fe74, type: 3}
+    - target: {fileID: 6742378393955829124, guid: 8df6608482cca3f489fc320b8f68e81a, type: 3}
+      propertyPath: popupPrefabs.Array.data[11]
+      value: 
+      objectReference: {fileID: 8214081930915664064, guid: 23ec1c8c45b730940a48fd6151f082af, type: 3}
+    - target: {fileID: 6742378393955829124, guid: 8df6608482cca3f489fc320b8f68e81a, type: 3}
+      propertyPath: popupPrefabs.Array.data[12]
+      value: 
+      objectReference: {fileID: 1203236079052884787, guid: bed4bdf300bc6104baeaa1a9d5c92b60, type: 3}
     - target: {fileID: 7936344057419671452, guid: 8df6608482cca3f489fc320b8f68e81a, type: 3}
       propertyPath: m_Name
       value: Popup
@@ -2954,6 +2967,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7288414173960418854, guid: b05c2ac2400f50a438e6dcc1df76bc5c, type: 3}
   m_PrefabInstance: {fileID: 7278077524512507874}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7278077524512507876 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1510548120523696906, guid: b05c2ac2400f50a438e6dcc1df76bc5c, type: 3}
+  m_PrefabInstance: {fileID: 7278077524512507874}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826193675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a138e33f9240f9b4db93784397169540, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -19,6 +19,7 @@ public class GameController : SingletonMono<GameController>
     [SerializeField] private GameObject confetiStartWin;
     [SerializeField] private GameObject fireWorkEffect;
     [SerializeField] private UIGameController uIGameController;
+    [SerializeField] private BoosterManager boosterManager;
     [SerializeField] private SpawnCircleEffectUI SpawnCircleEffectUI;
     private MapManager _mapManager;
     private DataProcessMechanic dataTut;
@@ -65,7 +66,7 @@ public class GameController : SingletonMono<GameController>
         var levelNumber = playerPointProcessData.currentlevelShowScreen;
         _currentLevel = playerPointProcessData.currentlevel;
         uIGameController.SetLevelText(levelNumber);
-
+        boosterManager.gameObject.SetActive(_gameConfig.usingBooster);
         var sampleLv = LoadResourceController.Instance.LevelGame(_currentLevel);
         //_mapManager = Instantiate(sampleLv, sampleLv.transform.position, sampleLv.transform.rotation);
         AnalyticManager.instance.LogEventLevelStart();

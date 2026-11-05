@@ -12,4 +12,10 @@ public class GameConfig : ScriptableObject
     public bool usingHeart = true;
     [Header("UsingGem")]
     public bool usingGem = false;
+    [Header("UsingContinuePopup")]
+    public bool usingContinuePopup = true;
+    public int priceContinuePopup = 190;
+    [Header("UsingBooster")]
+    public bool usingBooster = true;
+    public bool showPriceUnderBoosterButton = false;
 }
