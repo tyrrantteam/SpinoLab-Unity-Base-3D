@@ -15,7 +15,8 @@ public class BoosterButtonController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI valueBoosterTxt;
     [SerializeField] private TextMeshProUGUI priceTxt;
     [SerializeField] private GameObject valueBooster;
-    [SerializeField] private GameObject adsBooster;
+
+    [SerializeField] private GameObject getMore;
     [SerializeField] private GameObject priceHolder;
     [SerializeField] private Image boosterIcon;
     [SerializeField] private Image lockIcon;
@@ -56,8 +57,8 @@ public class BoosterButtonController : MonoBehaviour
         _gameConfig = gameConfig;
         boosterIcon.sprite = _data.imgIconBooster;
         SetStatus(currentLevel);
-        _price = _data.price;
-        priceTxt.text = _data.price.ToString();
+        _price = _data.price * data.mutipleValueGold;
+        priceTxt.text = _price.ToString();
     }
 
     public void PlayValueGainEffect(int remainingMoves)
@@ -106,7 +107,6 @@ public class BoosterButtonController : MonoBehaviour
         boosterIcon.gameObject.SetActive(true);
 
         valueBooster.SetActive(true);
-        adsBooster.SetActive(false);
         valueBoosterTxt.gameObject.SetActive(true);
         valueBoosterTxt.text = fromValue.ToString();
         currentValueBooster = fromValue;
@@ -164,7 +164,6 @@ public class BoosterButtonController : MonoBehaviour
 
             _isBoosterEmpty = false;
             valueBooster.SetActive(false);
-            adsBooster.SetActive(false);
             valueBoosterTxt.gameObject.SetActive(false);
             return;
         }
@@ -178,9 +177,10 @@ public class BoosterButtonController : MonoBehaviour
 
         valueBooster.SetActive(hasStock);
         var isIAA = !_gameConfig.usingResourceInGame;
+        var showPrice = _gameConfig.showPriceUnderBoosterButton;
 
-        adsBooster.SetActive(!hasStock && isIAA);
-        priceHolder.SetActive(!hasStock && !isIAA);
+        priceHolder.SetActive(!hasStock && !isIAA && showPrice);
+        getMore.SetActive(!hasStock);
 
         valueBoosterTxt.gameObject.SetActive(hasStock);
 

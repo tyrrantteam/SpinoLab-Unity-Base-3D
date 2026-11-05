@@ -188,6 +188,12 @@ namespace JinGroup.Base.LoadData
             return Load<DataLoopLevelController>(path, "DataCurveLevel");
         }
 
+        public DataAdsController DataAdsController()
+        {
+            var path = string.Format(ResourcesFolderPath.DataFolder);
+            return Load<DataAdsController>(path, "DataAds");
+        }
+
         #endregion
     }
 }

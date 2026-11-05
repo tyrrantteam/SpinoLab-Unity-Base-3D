@@ -170,16 +170,12 @@ public class BoosterManager : SingletonMono<BoosterManager>
         if (IsBoosterEmpty)
         {
             SpecialOfferAdsService.RecordEmptyBoosterAttempt(boosterType);
-            if (!_gameConfig.usingResourceInGame)
+            var popup = PopupManager.Instance.ShowPopup<PopupBuyBoosterController>(p => p.Setup(boosterType));
+            if (popup != null)
             {
-                UseBoosterFromAds(boosterType);
-                return;
+                popup.Setup(boosterType);
             }
-            else
-            {
-                UseBoosterFromGold(boosterType);
-                return;
-            }
+            return;
         }
 
         OnBoosterActivated(boosterType);
@@ -210,32 +206,6 @@ public class BoosterManager : SingletonMono<BoosterManager>
     {
         AnalyticManager.instance.BoosterUsing(boosterType);
         GameDebug.Log($"BoosterManager: Activated booster2 {boosterType}");
-    }
-
-    protected virtual void UseBoosterFromAds(BoosterType boosterType)
-    {
-        AnalyticManager.instance.BoosterClaim(boosterType);
-        DataAccountPlayer.PlayerResourceData.ChangeBoosterCount(boosterType, 1);
-        RefreshBoosterButtons();
-        GameDebug.Log($"BoosterManager: Watch ads to use booster2 {boosterType}");
-    }
-
-    protected virtual void UseBoosterFromGold(BoosterType boosterType)
-    {
-        AnalyticManager.instance.BoosterClaim(boosterType);
-
-        var price = dataBooster.GetDataBoosterByType(boosterType).price;
-        var playerGold = DataAccountPlayer.PlayerResourceData.gold;
-
-        if(playerGold >= price)
-        {
-            DataAccountPlayer.PlayerResourceData.ChangeGoldValue(-price);
-            DataAccountPlayer.PlayerResourceData.ChangeBoosterCount(boosterType, 1);
-            RefreshBoosterButtons();
-        }
-
-       
-        GameDebug.Log($"BoosterManager: Watch ads to use booster2 {boosterType}");
     }
 
     #endregion
