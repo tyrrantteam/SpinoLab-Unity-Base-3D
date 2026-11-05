@@ -4,37 +4,37 @@ using UnityEngine;
 using UnityEngine.UI;
 using JinGroup.Module.Resources;
 using JinGroup.Base.LoadData;
+using TMPro;
+
 namespace JinGroup.Module.Reward
 {
     public class ModuleRewardController : MonoBehaviour
     {
-
-        [SerializeField] private Image rewardIcon;
-        [SerializeField] private Image backgroundIcon;
-        [SerializeField] private Text valueTxt;
+        [SerializeField] private Image    rewardIcon;
+        [SerializeField] private Image    backgroundIcon;
+        [SerializeField] private TMP_Text valueTxt;
 
         public void InitData(dataItem dataItem)
         {
-            rewardIcon.sprite = LoadResourceController.Instance.LoadItemIcon(dataItem.typeReward);
+            rewardIcon.sprite     = LoadResourceController.Instance.LoadItemIcon(dataItem.typeReward);
             backgroundIcon.sprite = LoadResourceController.Instance.LoadBackGroundIcon(dataItem.typeRarity);
-            valueTxt.text = dataItem.value.ToString();
+            valueTxt.text         = dataItem.value.ToString();
         }
 
 
         public void DisableLayer()
         {
-            rewardIcon.raycastTarget = false;
+            rewardIcon.raycastTarget     = false;
             backgroundIcon.raycastTarget = false;
-            valueTxt.raycastTarget = false;
+            valueTxt.raycastTarget       = false;
         }
-
     }
 
     public struct dataItem
     {
         public TypeResources typeReward;
-        public TypeRarity typeRarity;
-        public int value;
-        public int level;
+        public TypeRarity    typeRarity;
+        public int           value;
+        public int           level;
     }
 }

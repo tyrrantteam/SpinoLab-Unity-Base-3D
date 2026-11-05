@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8e3a2b1c4d5678901234567890abcde, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: 
-  levelRandom: 40
-  levelMin: 6
   usingResourceInGame: 1
   usingMetaSys: 1
-  levelUnlockMetaSystem: 5
+  levelUnlockMetaSystem: 0
+  usingHeart: 1
+  usingGem: 0

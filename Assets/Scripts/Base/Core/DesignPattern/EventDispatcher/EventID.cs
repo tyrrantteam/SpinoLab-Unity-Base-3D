@@ -24,4 +24,8 @@ public enum EventID
 
     //Booster
     OnUnlockBooster,
+    
+    //Shop
+    ActiveVip,
+    ActiveNoAds
 }
