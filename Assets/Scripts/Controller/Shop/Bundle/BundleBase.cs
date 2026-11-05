@@ -43,7 +43,7 @@ public abstract class BundleBase : MonoBehaviour
         }
         else
         {
-            GameDebug.LogError($"[BundleBase] Không tìm thấy icon bundle: {reward[0].iconBundle}");
+            GameDebug.LogWarning($"[BundleBase] Không tìm thấy icon bundle: {reward[0].iconBundle}");
         }
     }
 
@@ -54,7 +54,7 @@ public abstract class BundleBase : MonoBehaviour
 
     protected abstract void OnGrantProducts();
 
-    protected void ShowClaimRewardPopup()
+    protected void ShowClaimRewardPopup() 
     {
         if (_bundleRewards == null || _bundleRewards.Count == 0)
         {

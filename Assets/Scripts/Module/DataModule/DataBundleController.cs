@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Base.Core.Debug;
+using Unity.VisualScripting;
 
 [CreateAssetMenu(fileName = "DataBundle", menuName = "DataBundle")]
 public class DataBundleController : SpreadsheetsContainerBase
@@ -51,9 +52,10 @@ public class DataBundleController : SpreadsheetsContainerBase
     }
 
     public void BuildCacheData() => BuildCache();
-    
+
     private void BuildCache()
     {
+        GameDebug.Log("start cached");
         _cachedBundleRewards = new Dictionary<BundleType, List<List<BundleReward>>>();
 
         if (content == null)
@@ -70,6 +72,7 @@ public class DataBundleController : SpreadsheetsContainerBase
         AddPackIfActive(normalBundles, content.listBundlePack5);
         AddPackIfActive(normalBundles, content.listBundlePack6);
         _cachedBundleRewards[BundleType.Bundle] = normalBundles;
+        Debug.Log($"Bundle count: {normalBundles.Count} -- {BundleType.Bundle}");
 
         // 2. Special Offer
         var specialList = new List<List<BundleReward>>(1);
@@ -79,24 +82,22 @@ public class DataBundleController : SpreadsheetsContainerBase
         }
 
         _cachedBundleRewards[BundleType.SpecialOffer] = specialList;
+        Debug.Log($"Bundle count: {specialList.Count} -- {BundleType.SpecialOffer}");
 
         // 3. No Ads
-        var noAdsList = new List<List<BundleReward>>(1);
-        if (content.noAdsBundle1 != null && content.noAdsBundle1.Count > 0)
-        {
-            noAdsList.Add(content.noAdsBundle1);
-        }
-
+        var noAdsList = new List<List<BundleReward>>();
+        AddPackIfActive(noAdsList, content.noAdsBundle1);
+        AddPackIfActive(noAdsList, content.noAdsBundle2);
+        AddPackIfActive(noAdsList, content.noAdsBundle3);
         _cachedBundleRewards[BundleType.NoAds] = noAdsList;
-
+        Debug.Log($"Bundle count: {noAdsList.Count} -- {BundleType.NoAds}");
         // 4. VIP
-        var vipList = new List<List<BundleReward>>(1);
-        if (content.vipBundle3 != null && content.vipBundle3.Count > 0)
-        {
-            vipList.Add(content.vipBundle3);
-        }
-
+        var vipList = new List<List<BundleReward>>();
+        AddPackIfActive(vipList, content.vipBundle1);
+        AddPackIfActive(vipList, content.vipBundle2);
+        AddPackIfActive(vipList, content.vipBundle3);
         _cachedBundleRewards[BundleType.VIP] = vipList;
+        Debug.Log($"Bundle count: {vipList.Count} -- {BundleType.VIP}");
 
         // 5. Coins: Mỗi row trong Bundle_packGold là 1 coin pack riêng
         var coinsList = new List<List<BundleReward>>();
@@ -105,7 +106,7 @@ public class DataBundleController : SpreadsheetsContainerBase
             for (int i = 0; i < content.bundle_packGold.Count; i++)
             {
                 var reward = content.bundle_packGold[i];
-                if (reward != null)
+                if (reward.isActive)
                 {
                     coinsList.Add(new List<BundleReward>(1) { reward });
                 }
@@ -113,13 +114,19 @@ public class DataBundleController : SpreadsheetsContainerBase
         }
 
         _cachedBundleRewards[BundleType.Coins] = coinsList;
+        Debug.Log($"Bundle count: {coinsList.Count} -- {BundleType.Coins}");
     }
 
-    private static void AddPackIfActive(List<List<BundleReward>> targetList, List<BundleReward> pack)
+    private void AddPackIfActive(List<List<BundleReward>> targetList, List<BundleReward> pack)
     {
+        GameDebug.Log(pack[0].isActive);
         if (pack != null && pack.Count > 0 && pack[0].isActive)
         {
             targetList.Add(pack);
+        }
+        else
+        {
+            GameDebug.Log($"pack {pack[0].idBundle} was not active");
         }
     }
 }

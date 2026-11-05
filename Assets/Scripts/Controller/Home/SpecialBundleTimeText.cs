@@ -1,4 +1,5 @@
 using System;
+using Base.Core.Debug;
 using DataAccount;
 using JinGroup.Base.LoadData;
 using TMPro;
@@ -75,6 +76,7 @@ public class SpecialBundleTimeText : MonoBehaviour
             return;
 
         var data = DataAccountPlayer.PlayerResourceData;
+        var shopData = DataAccountPlayer.PlayerShopData;
 
         if (data == null)
             return;
@@ -88,70 +90,71 @@ public class SpecialBundleTimeText : MonoBehaviour
         // 1. ĐẢM BẢO ĐÃ CÓ THỜI ĐIỂM BẮT ĐẦU
         // ==========================================
 
-        // data.EnsureStarterPackUnlockTimestamp(
-        //     cfg.levelUnlock,
-        //     currentLv);
+        shopData.EnsureStarterPackUnlockTimestamp(
+            cfg.levelUnlock,
+            currentLv);
 
         // ==========================================
         // 2. LẤY THỜI GIAN CÒN LẠI
         // ==========================================
 
-        // TimeSpan remaining =
-        //     data.GetStarterPackRemaining(hours);
+        TimeSpan remaining =
+            shopData.GetStarterPackRemaining(hours);
 
         // ==========================================
         // 3. KIỂM TRA PACK CÒN ACTIVE
         // ==========================================
 
-        // bool stillOpen =
-        //     remaining.TotalSeconds > 0 &&
-        //     data.IsStarterPackActive(
-        //         cfg.levelUnlock,
-        //         hours,
-        //         cfg.limitPurchase,
-        //         currentLv);
+        bool stillOpen =
+            remaining.TotalSeconds > 0 &&
+            shopData.IsStarterPackActive(
+                cfg.levelUnlock,
+                hours,
+                cfg.limitPurchase,
+                currentLv);
 
-        // if (!stillOpen)
-        // {
-        //     if (_shownTotalSecs != 0)
-        //     {
-        //         _shownTotalSecs = 0;
-        //         timeTxt.text    = "00:00:00";
-        //     }
-        //
-        //     HidePack();
-        //
-        //     return;
-        // }
-        //
-        // _didHidePack = false;
+        if (!stillOpen)
+        {
+            if (_shownTotalSecs != 0)
+            {
+                _shownTotalSecs = 0;
+                timeTxt.text    = "00:00:00";
+            }
+
+            HidePack();
+
+            return;
+        }
+
+        _didHidePack = false;
 
         // ==========================================
         // 4. HIỂN THỊ COUNTDOWN
         // ==========================================
 
-        // int displayHours =
-        //     remaining.Days * 24 +
-        //     remaining.Hours;
-        //
-        // int totalSecs =
-        //     displayHours * 3600 +
-        //     remaining.Minutes * 60 +
-        //     remaining.Seconds;
+        int displayHours =
+            remaining.Days * 24 +
+            remaining.Hours;
 
-        // if (totalSecs == _shownTotalSecs)
-        //     return;
-        //
-        // _shownTotalSecs = totalSecs;
+        int totalSecs =
+            displayHours * 3600 +
+            remaining.Minutes * 60 +
+            remaining.Seconds;
 
-        // timeTxt.text =
-        //     $"{displayHours:D2}:" +
-        //     $"{remaining.Minutes:D2}:" +
-        //     $"{remaining.Seconds:D2}";
+        if (totalSecs == _shownTotalSecs)
+            return;
+
+        _shownTotalSecs = totalSecs;
+
+        timeTxt.text =
+            $"{displayHours:D2}:" +
+            $"{remaining.Minutes:D2}:" +
+            $"{remaining.Seconds:D2}";
     }
 
     private void HidePack()
     {
+        GameDebug.Log("Hide Pack");
         if (_didHidePack)
             return;
 
@@ -159,7 +162,7 @@ public class SpecialBundleTimeText : MonoBehaviour
 
         if (gameObject.activeSelf)
             gameObject.SetActive(false);
-
+        this.PostEvent(EventID.BuySpecialBundle);
         // JinGroup.Common.HomeUIManager
         //         .Instance?
         //         .RefreshStarterPackButton();

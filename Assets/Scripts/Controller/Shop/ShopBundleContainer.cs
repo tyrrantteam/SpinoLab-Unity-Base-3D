@@ -18,7 +18,6 @@ public class ShopBundleContainer : MonoBehaviour
             GameDebug.LogError($"[ShopBundle] data is NULL for bundleType={bundleType} on {gameObject.name}");
             return;
         }
-
         for (int i = 0; i < data.Count; i++)
         {
             SpawnBundle(data[i], i);
