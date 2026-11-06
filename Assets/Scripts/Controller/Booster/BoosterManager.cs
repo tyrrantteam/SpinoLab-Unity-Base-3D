@@ -4,6 +4,7 @@ using JinGroup.Base.LoadData;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using JinGroup.Controller.BoosterFlow;
 
 public class BoosterManager : SingletonMono<BoosterManager>
 {
