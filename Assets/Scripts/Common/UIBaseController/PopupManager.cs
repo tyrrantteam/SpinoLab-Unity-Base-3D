@@ -121,7 +121,23 @@ public class PopupManager : SingletonMono<PopupManager>
         Debug.LogWarning($"[PopupManager] Prefab of type {typeof(T).Name} not found in popupPrefabs list.");
         return null;
     }
+    
+    /// <summary>Đóng riêng PopupShowReward (overlay) — giữ popup dưới nếu còn.</summary>
+    public void CloseShowReward()
+    {
+        if (popupShowReward != null && popupShowReward.gameObject.activeSelf)
+            popupShowReward.gameObject.SetActive(false);
 
+        if (AnyPopupVisible())
+        {
+            isPopupActive = true;
+            return;
+        }
+
+        isPopupActive = false;
+        FeatureButtonController.RefreshAllNoti();
+    }
+    
     private void EnqueuePopup(GameObject popup, Action onShown = null)
     {
         Action showAction = () =>
