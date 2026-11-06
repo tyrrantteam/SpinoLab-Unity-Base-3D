@@ -6,18 +6,21 @@ using Base.Core.Debug;
 
 public class ShopBundleContainer : MonoBehaviour
 {
-    public BundleType bundleType;
-    public BundleBase prefab;
+    public  BundleType        bundleType;
+    public  BundleBase        prefab;
+    private GameDebugSettings debugSettings;
 
     [Button]
-    public virtual void InitData(DataBundleController dataBundle)
+    public virtual void InitData(DataBundleController dataBundle, GameDebugSettings setting)
     {
+        debugSettings = setting;
         var data = dataBundle.GetBundleRewardsByType(bundleType);
         if (data == null)
         {
             GameDebug.LogError($"[ShopBundle] data is NULL for bundleType={bundleType} on {gameObject.name}");
             return;
         }
+
         for (int i = 0; i < data.Count; i++)
         {
             SpawnBundle(data[i], i);
@@ -41,7 +44,7 @@ public class ShopBundleContainer : MonoBehaviour
 
         var bundle = Instantiate(selectedPrefab, transform);
         ShopLayout.PrepareSpawnedItem(bundle.transform as RectTransform);
-        bundle.LoadBundle(rewards, index);
+        bundle.LoadBundle(rewards, index, debugSettings.isProduction);
     }
 
     protected virtual BundleBase SelectPrefab(List<BundleReward> rewards)

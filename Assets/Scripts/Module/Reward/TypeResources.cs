@@ -11,6 +11,8 @@ namespace JinGroup.Module.Resources
         diamond,
         skipAds,
         heart,
+        heartHour,
+        heartDay,
         booster1,
         booster2,
         booster3,

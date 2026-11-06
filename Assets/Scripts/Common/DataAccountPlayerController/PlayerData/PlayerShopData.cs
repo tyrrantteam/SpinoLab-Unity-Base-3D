@@ -9,7 +9,9 @@ namespace DataAccount
 
         /// <summary>Unix ms lúc lần đầu đạt levelUnlock starter pack. 0 = chưa unlock.</summary>
         public long starterPackUnlockTimestamp;
-
+        
+        
+        
         #region Special Bundle
 
         /// <summary>Ghi timestamp lần đầu đạt levelUnlock (chỉ set 1 lần).</summary>

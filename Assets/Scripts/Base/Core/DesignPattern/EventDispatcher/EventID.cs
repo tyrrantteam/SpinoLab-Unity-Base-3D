@@ -29,7 +29,11 @@ public enum EventID
     ActiveVip,
     ActiveNoAds,
     BuySpecialBundle,
-
+    
+    // VIP
+    UpdateVipStatus,
     //ContinueGame,
     ContinueGame,
+
+    OnPurchaseIAP
 }

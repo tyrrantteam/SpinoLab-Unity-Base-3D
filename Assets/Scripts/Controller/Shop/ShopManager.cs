@@ -9,17 +9,17 @@ using Base.Core.Debug;
 public class ShopManager : MonoBehaviour
 {
     public DataBundleController      dataBundle;
+    public GameDebugSettings         settings;
     public List<ShopBundleContainer> shopBundles;
-
+    
     [SerializeField] private float spawnDelay;
 
     private bool spawnComplete;
 
     private bool hasNoAds;
     private bool specialAdsAvailable;
-    private bool hasVip;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         InitBundles();
     }
@@ -37,7 +37,6 @@ public class ShopManager : MonoBehaviour
             StartCoroutine(DelayLayout());
         }
 
-        this.RegisterListener(EventID.ActiveVip, (component, o) => DisableBundleType(BundleType.VIP));
         this.RegisterListener(EventID.ActiveNoAds, (component, o) => DisableBundleType(BundleType.NoAds));
         this.RegisterListener(EventID.BuySpecialBundle, (component, o) => DisableBundleType(BundleType.SpecialOffer));
     }
@@ -52,8 +51,7 @@ public class ShopManager : MonoBehaviour
     {
         var playerData = DataAccountPlayer.PlayerResourceData;
         var playerShopData = DataAccountPlayer.PlayerShopData;
-        hasNoAds            = playerData.CheckNoAdsAvailable();
-      
+        hasNoAds = playerData.CheckNoAdsAvailable();
     }
 
     private void InitBundles()
@@ -84,13 +82,7 @@ public class ShopManager : MonoBehaviour
 
             // check special offer de hien bundle special offer
 
-            // check vip de hien bundle vip
-            if (bundle.bundleType == BundleType.VIP && hasVip)
-            {
-                bundle.gameObject.SetActive(false);
-            }
-
-            bundle.InitData(dataBundle);
+            bundle.InitData(dataBundle, settings);
         }
 
         spawnComplete = true;

@@ -241,6 +241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataBundle: {fileID: 11400000, guid: eb2af06684396a04fa501ab5927dd043, type: 2}
+  settings: {fileID: 11400000, guid: 75501b5fa62823446b34c997264981f0, type: 2}
   shopBundles:
   - {fileID: 4848180228722453563}
   - {fileID: 1615928404474002935}

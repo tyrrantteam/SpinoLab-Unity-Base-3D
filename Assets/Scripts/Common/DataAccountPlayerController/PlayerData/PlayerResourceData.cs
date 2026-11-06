@@ -104,7 +104,15 @@ namespace DataAccount
 
         public void ChangeGoldValue(int value)
         {
-            gold += value;
+            if (value > 0)
+            {
+                gold += (value * DataAccountPlayer.PlayerResourceData.GetMultiplyIncome());
+            }
+            else
+            {
+                gold += value;
+            }
+
             GameManager.Instance.PostEvent(EventID.UpdateGold);
             DataAccountPlayer.SavePlayerResourceData();
         }
@@ -482,6 +490,118 @@ namespace DataAccount
             long elapsed = now - lastHeartRecoveryTime;
             long remaining = recoveryInterval - (elapsed % recoveryInterval);
             return Mathf.Max(0, (int)remaining);
+        }
+
+        #endregion
+
+        #region Income
+
+        public int GetMultiplyIncome()
+        {
+            if (!IsVipActive() || vipIncomeMultiplier < 2)
+            {
+                return 1;
+            }
+
+            return vipIncomeMultiplier;
+        }
+
+        #endregion
+
+        #region Vip
+
+        public bool isVipPurchase;
+        public int  dayActive;
+        public long vipTimestamp;
+        public int  vipIncomeMultiplier;
+
+        private const long VipDayMs = 24L * 60L * 60L * 1000L;
+
+        public bool IsVipActive()
+        {
+            if (dayActive <= 0 || vipTimestamp <= 0)
+            {
+                return false;
+            }
+
+            long now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            if (now < vipTimestamp)
+            {
+                return true;
+            }
+
+            return now < vipTimestamp + dayActive * VipDayMs;
+        }
+
+        public void SaveTimeLineUnlock(int dayActiveData, int incomeMultiplier)
+        {
+            if (dayActiveData <= 0)
+            {
+                return;
+            }
+
+            incomeMultiplier = Mathf.Clamp(incomeMultiplier, 1, 4);
+
+            if (IsVipActive())
+            {
+                dayActive += dayActiveData;
+                if (incomeMultiplier > vipIncomeMultiplier)
+                {
+                    vipIncomeMultiplier = incomeMultiplier;
+                }
+            }
+            else
+            {
+                dayActive           = dayActiveData;
+                vipTimestamp        = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                vipIncomeMultiplier = incomeMultiplier;
+            }
+
+            isVipPurchase = true;
+            DataAccountPlayer.SavePlayerResourceData();
+
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.PostEvent(EventID.UpdateVipStatus);
+            }
+        }
+
+        public long GetRemainingVipSeconds()
+        {
+            if (!IsVipActive())
+            {
+                return 0;
+            }
+
+            long now      = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            long remainMs = vipTimestamp + dayActive * VipDayMs - now;
+            return Math.Max(0, remainMs / 1000L);
+        }
+
+        public string GetRemainingVipTimeString()
+        {
+            long remaining = GetRemainingVipSeconds();
+            if (remaining <= 0)
+            {
+                return "00m : 00s";
+            }
+
+            long days    = remaining / 86400;
+            long hours   = (remaining % 86400) / 3600;
+            long minutes = (remaining % 3600) / 60;
+            long seconds = remaining % 60;
+
+            if (days > 0)
+            {
+                return $"{days:D2}days : {hours:D2}h : {minutes:D2}m";
+            }
+
+            if (hours > 0)
+            {
+                return $"{hours:D2}h : {minutes:D2}m : {seconds:D2}s";
+            }
+
+            return $"{minutes:D2}m : {seconds:D2}s";
         }
 
         #endregion

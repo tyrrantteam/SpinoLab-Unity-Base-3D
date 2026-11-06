@@ -385,7 +385,7 @@ MonoBehaviour:
       idBundle: com.specialbundle.pack
       name: Starter Bundle
       iconBundle: chest_1
-      levelUnlock: 1
+      levelUnlock: 3
       hourActive: 24
       limitPurchase: 2
       timeActive: 0
@@ -490,7 +490,7 @@ MonoBehaviour:
       hourActive: 0
       limitPurchase: 0
       timeActive: 0
-      isActive: 1
+      isActive: 0
     - id: 2
       typeResources: booster1
       value: 1
@@ -547,7 +547,7 @@ MonoBehaviour:
       hourActive: 0
       limitPurchase: 0
       timeActive: 1
-      isActive: 0
+      isActive: 1
     - id: 2
       typeResources: booster1
       value: 1
