@@ -25,7 +25,7 @@ namespace JinGroup.Controller.Feature
             _rt = GetComponent<RectTransform>();
         }
 
-        protected override void PrepareInitialState()
+        public override void PrepareInitialState()
         {
             // Ghi nhớ vị trí gốc ngay khi enable (trước delay)
             _initialPos = RT.anchoredPosition;

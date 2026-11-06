@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Base.Core.Sound;
 using JinGroup.Common.Effect;
 using LitMotion;
@@ -24,7 +24,10 @@ namespace JinGroup.Controller.Feature
         public override void Play()
         {
             _handle.TryCancel();
-           SoundManager.Instance.PlaySound(SoundType.ClickButton);
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySound(SoundType.ClickButton);
+            }
             var strength = new Vector3(scaleMultiplier - 1f, scaleMultiplier - 1f, scaleMultiplier - 1f);
             _handle = LMotion.Punch.Create(Vector3.one, strength, duration * 2f)
                 .BindToLocalScale(transform);

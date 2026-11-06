@@ -12,6 +12,7 @@ namespace JinGroup.Common.Effect
         SpawnCircle,
         MoveToTarget,
         Punch,
-        ScaleSquashAndStretch
+        ScaleSquashAndStretch,
+        ScaleBounce
     }
 }

@@ -3,6 +3,7 @@ using LitMotion;
 using LitMotion.Extensions;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace JinGroup.Controller.Feature
 {
@@ -28,17 +29,23 @@ namespace JinGroup.Controller.Feature
             _rt = GetComponent<RectTransform>();
         }
 
-        protected override void PrepareInitialState()
+        public override void PrepareInitialState()
         {
-            // Lưu vị trí on-screen hiện tại làm target TRƯỚC khi snap ra ngoài màn hình
-            _targetPosition  = RT.anchoredPosition;
-            _targetCaptured  = true;
+            if (!_targetCaptured)
+            {
+                if (transform.parent is RectTransform parentRT)
+                {
+                    LayoutRebuilder.ForceRebuildLayoutImmediate(parentRT);
+                }
 
-            // Snap ra ngoài màn hình ngay (trước delay) để object không nhìn thấy ở sai vị trí
+                _targetPosition  = RT.anchoredPosition;
+                _targetCaptured  = true;
+            }
+
+            // Snap ra ngoài màn hình ngay lập tức để object không bị nhìn thấy trên màn hình
             RT.anchoredPosition = GetOffScreenPosition(entryDirection);
         }
-        
-        [Button]
+
         public override void Play()
         {
             _handle.TryCancel();
@@ -47,6 +54,11 @@ namespace JinGroup.Controller.Feature
             // capture target và snap off-screen như bình thường
             if (!_targetCaptured)
             {
+                if (transform.parent is RectTransform parentRT)
+                {
+                    LayoutRebuilder.ForceRebuildLayoutImmediate(parentRT);
+                }
+
                 _targetPosition = RT.anchoredPosition;
                 RT.anchoredPosition = GetOffScreenPosition(entryDirection);
             }
@@ -60,11 +72,14 @@ namespace JinGroup.Controller.Feature
         public override void Stop()
         {
             _handle.TryCancel();
+            RT.anchoredPosition = _targetPosition;
+            _targetCaptured = false;
         }
 
         private Vector2 GetOffScreenPosition(EntryDirection direction)
         {
-            Vector2 screenSize = ((RectTransform)_rt.parent).rect.size;
+            RectTransform parent = _rt.parent as RectTransform;
+            Vector2 screenSize = parent != null ? parent.rect.size : new Vector2(Screen.width, Screen.height);
             return direction switch
             {
                 EntryDirection.FromLeft   => new Vector2(-screenSize.x, _targetPosition.y),

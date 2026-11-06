@@ -44,15 +44,16 @@ namespace JinGroup.Controller.Feature
 
         private MotionHandle _handle;
 
-        protected override void PrepareInitialState()
+        public override void PrepareInitialState()
         {
-            // Snap về frame đầu tiên của animation (t=0) ngay khi enable (trước delay)
+            // Snap về frame đầu tiên của animation (t=0) ngay lập tức
             ApplyScale(0f);
         }
 
         public override void Play()
         {
             _handle.TryCancel();
+            ApplyScale(0f);
             _handle = LMotion.Create(0f, 1f, duration)
                 .Bind(ApplyScale);
         }
