@@ -78,12 +78,16 @@ public abstract class BundleWithRewards : BundleBase
     /// <summary>
     /// Hook: Xử lý trước khi parse rewards (vd: set header text).
     /// </summary>
-    protected virtual void OnBeforeParseRewards(List<BundleReward> reward) { }
+    protected virtual void OnBeforeParseRewards(List<BundleReward> reward)
+    {
+    }
 
     /// <summary>
     /// Hook: Xử lý các TypeResources không nằm trong switch mặc định.
     /// </summary>
-    protected virtual void OnHandleCustomReward(BundleReward reward, TypeResources type) { }
+    protected virtual void OnHandleCustomReward(BundleReward reward, TypeResources type)
+    {
+    }
 
     public void InitDataForReward(List<BundleReward> rewardList)
     {

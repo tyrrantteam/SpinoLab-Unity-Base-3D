@@ -2,18 +2,33 @@ namespace DataAccount
 {
     public static class DataAccountPlayer
     {
-        private static PlayerSettings _playerSettings;
-        private static PlayerResourceData _playerResourceData;
-        private static PlayerDailyCheckinData _playerDailyCheckinData;
-        private static PlayerPiggyBank _playerPiggyBank;
-        private static PlayerPointProcessData _playerPointProcessData;
-        private static PlayerTutorialData _playerTutorialData;
+        private static PlayerSettings            _playerSettings;
+        private static PlayerResourceData        _playerResourceData;
+        private static PlayerDailyCheckinData    _playerDailyCheckinData;
+        private static PlayerPiggyBank           _playerPiggyBank;
+        private static PlayerPointProcessData    _playerPointProcessData;
+        private static PlayerTutorialData        _playerTutorialData;
         private static PlayerSpecialOfferAdsData _playerSpecialOfferAdsData;
-        private static PlayerStreakData _playerStreakData;
-        
-        
+        private static PlayerStreakData          _playerStreakData;
+        private static PlayerShopData            _playerShopData;
+
 
         #region Getters
+
+        public static PlayerShopData PlayerShopData
+        {
+            get
+            {
+                if (_playerTutorialData != null)
+                {
+                    return _playerShopData;
+                }
+
+                var playerShopData = new PlayerShopData();
+                _playerShopData = ES3.Load(DataAccountPlayerConstants.PlayerShopData, playerShopData);
+                return _playerShopData;
+            }
+        }
 
         public static PlayerTutorialData PlayerTutorialData
         {
@@ -23,6 +38,7 @@ namespace DataAccount
                 {
                     return _playerTutorialData;
                 }
+
                 var playerTutorialData = new PlayerTutorialData();
                 _playerTutorialData = ES3.Load(DataAccountPlayerConstants.PlayerTutorialData, playerTutorialData);
                 return _playerTutorialData;
@@ -50,11 +66,13 @@ namespace DataAccount
                 {
                     return _playerPointProcessData;
                 }
-                var playerPointProcessData = new PlayerPointProcessData(); 
+
+                var playerPointProcessData = new PlayerPointProcessData();
                 _playerPointProcessData = ES3.Load(DataAccountPlayerConstants.PlayerPointProcessData, playerPointProcessData);
                 return _playerPointProcessData;
             }
         }
+
         public static PlayerResourceData PlayerResourceData
         {
             get
@@ -142,7 +160,13 @@ namespace DataAccount
 
             ES3.Save(DataAccountPlayerConstants.PlayerResourceData, _playerResourceData);
         }
+        public static void SaveShopData()
+        {
+            if (_playerShopData == null)
+                _ = _playerShopData;
 
+            ES3.Save(DataAccountPlayerConstants.PlayerShopData, _playerShopData);
+        }
         public static void SavePlayerDailyCheckinData()
         {
             ES3.Save(DataAccountPlayerConstants.PlayerDailyCheckinData, _playerDailyCheckinData);
@@ -152,10 +176,12 @@ namespace DataAccount
         {
             ES3.Save(DataAccountPlayerConstants.PlayerPiggyBank, _playerPiggyBank);
         }
+
         public static void SavePlayerPointProcessData()
         {
             ES3.Save(DataAccountPlayerConstants.PlayerPointProcessData, _playerPointProcessData);
         }
+
         public static void SavePlayerTutorialData()
         {
             ES3.Save(DataAccountPlayerConstants.PlayerTutorialData, _playerTutorialData);

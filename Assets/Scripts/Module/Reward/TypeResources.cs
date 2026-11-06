@@ -14,5 +14,11 @@ namespace JinGroup.Module.Resources
         booster1,
         booster2,
         booster3,
+        noads,
+        noads7d,
+        incomex2,
+        incomex3,
+        incomex4
+        
     }
 }

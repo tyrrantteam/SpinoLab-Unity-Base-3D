@@ -8,14 +8,14 @@ using Base.Core.Debug;
 
 public class ShopManager : MonoBehaviour
 {
-    public DataBundleController dataBundle;
-    public List<ShopBundleContainer>     shopBundles;
+    public DataBundleController      dataBundle;
+    public List<ShopBundleContainer> shopBundles;
 
     [SerializeField] private float spawnDelay;
 
     private bool spawnComplete;
 
-    // private bool hasNoAds;
+    private bool hasNoAds;
     private bool specialAdsAvailable;
     private bool hasVip;
 
@@ -39,6 +39,7 @@ public class ShopManager : MonoBehaviour
 
         this.RegisterListener(EventID.ActiveVip, (component, o) => DisableBundleType(BundleType.VIP));
         this.RegisterListener(EventID.ActiveNoAds, (component, o) => DisableBundleType(BundleType.NoAds));
+        this.RegisterListener(EventID.BuySpecialBundle, (component, o) => DisableBundleType(BundleType.SpecialOffer));
     }
 
     private IEnumerator DelayLayout()
@@ -50,8 +51,9 @@ public class ShopManager : MonoBehaviour
     private void CheckBundleStatus()
     {
         var playerData = DataAccountPlayer.PlayerResourceData;
-        // hasVip              = playerData.IsVipActive();
-        // specialAdsAvailable = playerData.IsSpecialBundleStillAvailable();
+        var playerShopData = DataAccountPlayer.PlayerShopData;
+        hasNoAds            = playerData.CheckNoAdsAvailable();
+      
     }
 
     private void InitBundles()
@@ -65,24 +67,24 @@ public class ShopManager : MonoBehaviour
                 continue;
             }
 
+            // check bundle co available
             var isBundleAvailable = dataBundle.IsBundleAvailable(bundle.bundleType);
             if (!isBundleAvailable)
             {
                 bundle.gameObject.SetActive(false);
                 continue;
             }
-            // if (bundle.bundleType == BundleType.NoAds && hasNoAds)
-            // {
-            //     bundle.gameObject.SetActive(false);
-            //     continue;
-            // }
 
-            // if (bundle.bundleType == BundleType.SpecialOffer && !specialAdsAvailable)
-            // {
-            //     bundle.gameObject.SetActive(false);
-            //     continue;
-            // }
+            // check noads de hien bundle nodads
+            if (bundle.bundleType == BundleType.NoAds && hasNoAds)
+            {
+                bundle.gameObject.SetActive(false);
+                continue;
+            }
 
+            // check special offer de hien bundle special offer
+
+            // check vip de hien bundle vip
             if (bundle.bundleType == BundleType.VIP && hasVip)
             {
                 bundle.gameObject.SetActive(false);
@@ -97,6 +99,7 @@ public class ShopManager : MonoBehaviour
 
     public void DisableBundleType(BundleType type)
     {
+        GameDebug.Log("Disable pack");
         foreach (var bundle in shopBundles)
         {
             if (bundle.bundleType == type)
@@ -112,7 +115,6 @@ public class ShopManager : MonoBehaviour
     [Button]
     private void RebuildAllLayouts()
     {
-        GameDebug.Log("rebuild");
         Canvas.ForceUpdateCanvases();
         LayoutRebuilder.ForceRebuildLayoutImmediate(transform as RectTransform);
         ShopLayout.RebuildSections(GetActiveSections());

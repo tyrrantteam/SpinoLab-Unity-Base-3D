@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace DataAccount
 {
-    public class PlayerResourceData 
+    public class PlayerResourceData
     {
         //resource
         public int gold;
         public int diamond;
         public int skipAds;
         public int heart;
-        
+
         //Booster
         public int booster1;
         public int booster2;
@@ -27,7 +27,7 @@ namespace DataAccount
                 BoosterType.booster2 => booster2,
                 BoosterType.booster3 => booster3,
                 BoosterType.booster4 => booster4,
-                _ => 0
+                _                    => 0
             };
         }
 
@@ -64,8 +64,10 @@ namespace DataAccount
 
         //1st time data
         public bool isFirstTimeOpen = true;
+        public long firstOpenTime;
 
         #region skipAds
+
         public void SetSkipAdsValue(int value)
         {
             skipAds = value;
@@ -81,6 +83,7 @@ namespace DataAccount
         #endregion
 
         #region diamond
+
         public void SetDiamondValue(int value)
         {
             diamond = value;
@@ -112,9 +115,11 @@ namespace DataAccount
             GameManager.Instance.PostEvent(EventID.UpdateGold);
             DataAccountPlayer.SavePlayerResourceData();
         }
+
         #endregion
 
         #region no Ads
+
         public void ChangeNoAdsStatus(bool value)
         {
             isNoAdsPurchase = value;
@@ -139,21 +144,31 @@ namespace DataAccount
             return (currentTime - isNoAdsPurchase24h) < twentyFourHoursInMillis;
         }
 
+        public bool CheckNoAdsAvailable()
+        {
+            return IsNoAds24StillActive() || isNoAdsPurchase;
+        }
+
         #endregion
 
         #region 1stOpen
+
         public void Change1stStatus(bool value)
         {
             isFirstTimeOpen = value;
+            firstOpenTime   = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
             DataAccountPlayer.SavePlayerResourceData();
         }
+
         #endregion
 
         #region Heart
+
         public long lastHeartRecoveryTime;
         public bool isHeartInitialized = false;
 
         #region Infinite Heart
+
         public long infiniteHeartExpireTime; // Unix timestamp (giây) thời điểm hết hạn vô hạn tim
 
         /// <summary>
@@ -217,6 +232,7 @@ namespace DataAccount
             {
                 GameManager.Instance.PostEvent(EventID.UpdateHeart);
             }
+
             DataAccountPlayer.SavePlayerResourceData();
         }
 
@@ -239,6 +255,7 @@ namespace DataAccount
             {
                 GameManager.Instance.PostEvent(EventID.UpdateHeart);
             }
+
             DataAccountPlayer.SavePlayerResourceData();
         }
 
@@ -277,6 +294,7 @@ namespace DataAccount
 
             return $"{minutes:D2}m : {seconds:D2}s";
         }
+
         #endregion
 
         public int GetHeartLimit()
@@ -295,8 +313,8 @@ namespace DataAccount
         {
             if (isFirstTimeOpen || !isHeartInitialized)
             {
-                heart = GetHeartLimit();
-                isHeartInitialized = true;
+                heart                 = GetHeartLimit();
+                isHeartInitialized    = true;
                 lastHeartRecoveryTime = 0;
                 DataAccountPlayer.SavePlayerResourceData();
             }
@@ -311,10 +329,12 @@ namespace DataAccount
             {
                 lastHeartRecoveryTime = 0;
             }
+
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.PostEvent(EventID.UpdateHeart);
             }
+
             DataAccountPlayer.SavePlayerResourceData();
         }
 
@@ -333,10 +353,12 @@ namespace DataAccount
             {
                 lastHeartRecoveryTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             }
+
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.PostEvent(EventID.UpdateHeart);
             }
+
             DataAccountPlayer.SavePlayerResourceData();
         }
 
@@ -353,6 +375,7 @@ namespace DataAccount
                     // Khi đang trong thời gian Vô Hạn Tim: không trừ tim thực
                     return;
                 }
+
                 SubtractHeart(-value);
             }
         }
@@ -369,10 +392,12 @@ namespace DataAccount
             {
                 lastHeartRecoveryTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             }
+
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.PostEvent(EventID.UpdateHeart);
             }
+
             DataAccountPlayer.SavePlayerResourceData();
         }
 
@@ -386,6 +411,7 @@ namespace DataAccount
                     lastHeartRecoveryTime = 0;
                     DataAccountPlayer.SavePlayerResourceData();
                 }
+
                 return false;
             }
 
@@ -414,12 +440,12 @@ namespace DataAccount
                 int missingHearts = limit - heart;
                 if (heartsToAdd >= missingHearts)
                 {
-                    heart = limit;
+                    heart                 = limit;
                     lastHeartRecoveryTime = 0;
                 }
                 else
                 {
-                    heart += (int)heartsToAdd;
+                    heart                 += (int)heartsToAdd;
                     lastHeartRecoveryTime += heartsToAdd * recoveryInterval;
                 }
 
@@ -427,6 +453,7 @@ namespace DataAccount
                 {
                     GameManager.Instance.PostEvent(EventID.UpdateHeart);
                 }
+
                 DataAccountPlayer.SavePlayerResourceData();
                 return true;
             }
@@ -456,6 +483,7 @@ namespace DataAccount
             long remaining = recoveryInterval - (elapsed % recoveryInterval);
             return Mathf.Max(0, (int)remaining);
         }
+
         #endregion
     }
 }

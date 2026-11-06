@@ -28,6 +28,7 @@ public enum EventID
     //Shop
     ActiveVip,
     ActiveNoAds,
+    BuySpecialBundle,
 
     //ContinueGame,
     ContinueGame,

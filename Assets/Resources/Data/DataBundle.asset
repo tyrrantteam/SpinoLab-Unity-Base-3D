@@ -22,6 +22,12 @@ MonoBehaviour:
   - listBundlePack4
   - listBundlePack5
   - listBundlePack6
+  - noAdsBundle1
+  - noAdsBundle2
+  - specialBundle
+  - vipBundle1
+  - vipBundle2
+  - vipBundle3
   foldoutSerializationGUI: 0
   serializationOutputPath: ../../Configs
   serializationFileName: Configs.v0.1
@@ -212,7 +218,7 @@ MonoBehaviour:
       hourActive: 0
       limitPurchase: 0
       timeActive: 0
-      isActive: 1
+      isActive: 0
     - id: 2
       typeResources: booster1
       value: 10
@@ -269,7 +275,7 @@ MonoBehaviour:
       hourActive: 0
       limitPurchase: 0
       timeActive: 0
-      isActive: 1
+      isActive: 0
     - id: 2
       typeResources: booster1
       value: 20
@@ -326,7 +332,7 @@ MonoBehaviour:
       hourActive: 0
       limitPurchase: 0
       timeActive: 0
-      isActive: 1
+      isActive: 0
     - id: 2
       typeResources: booster1
       value: 30
@@ -369,13 +375,377 @@ MonoBehaviour:
       limitPurchase: 0
       timeActive: 0
       isActive: 0
-    specialBundle: []
-    noAdsBundle1: []
-    noAdsBundle2: []
-    noAdsBundle3: []
-    vipBundle1: []
-    vipBundle2: []
-    vipBundle3: []
+    specialBundle:
+    - id: 1
+      typeResources: gold
+      value: 1500
+      price: 0.99
+      isRemoveAds: 0
+      oneTimePurchase: 1
+      idBundle: com.specialbundle.pack
+      name: Starter Bundle
+      iconBundle: chest_1
+      levelUnlock: 1
+      hourActive: 24
+      limitPurchase: 2
+      timeActive: 0
+      isActive: 1
+    noAdsBundle1:
+    - id: 1
+      typeResources: gold
+      value: 1500
+      price: 9.99
+      isRemoveAds: 1
+      oneTimePurchase: 1
+      idBundle: com.noads1.pack
+      name: No ads bundle
+      iconBundle: chest_NoADs
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 1
+    - id: 2
+      typeResources: booster1
+      value: 4
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
+    - id: 3
+      typeResources: booster2
+      value: 4
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
+    - id: 4
+      typeResources: booster3
+      value: 4
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
+    - id: 5
+      typeResources: noads
+      value: 0
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
+    noAdsBundle2:
+    - id: 1
+      typeResources: noads7d
+      value: 0
+      price: 7.99
+      isRemoveAds: 1
+      oneTimePurchase: 1
+      idBundle: com.noads2.pack
+      name: No ads bundle(7D)
+      iconBundle: noads
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 1
+    noAdsBundle3:
+    - id: 1
+      typeResources: gold
+      value: 600
+      price: 4.99
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: com.bundle1.pack
+      name: Earlybird Bundle
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 1
+    - id: 2
+      typeResources: booster1
+      value: 1
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
+    - id: 3
+      typeResources: booster2
+      value: 1
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
+    - id: 4
+      typeResources: booster3
+      value: 1
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
+    vipBundle1:
+    - id: 1
+      typeResources: gold
+      value: 500
+      price: 1.99
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: com.vipbundle1.pack
+      name: VIP PASS (1 day)
+      iconBundle: vip_2
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 1
+      isActive: 0
+    - id: 2
+      typeResources: booster1
+      value: 1
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
+    - id: 3
+      typeResources: booster2
+      value: 1
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
+    - id: 4
+      typeResources: booster3
+      value: 1
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
+    - id: 5
+      typeResources: incomex2
+      value: 1
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
+    vipBundle2:
+    - id: 1
+      typeResources: gold
+      value: 4000
+      price: 9.99
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: com.vipbundle2.pack
+      name: VIP PASS (7 day)
+      iconBundle: vip_2
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 7
+      isActive: 0
+    - id: 2
+      typeResources: booster1
+      value: 5
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
+    - id: 3
+      typeResources: booster2
+      value: 5
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
+    - id: 4
+      typeResources: booster3
+      value: 5
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
+    - id: 5
+      typeResources: incomex3
+      value: 1
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
+    vipBundle3:
+    - id: 1
+      typeResources: gold
+      value: 20000
+      price: 29.99
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: com.vipbundle3.pack
+      name: VIP Pass
+      iconBundle: vip_3
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 1000
+      isActive: 0
+    - id: 2
+      typeResources: booster1
+      value: 20
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
+    - id: 3
+      typeResources: booster2
+      value: 20
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
+    - id: 4
+      typeResources: booster3
+      value: 20
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
+    - id: 5
+      typeResources: incomex4
+      value: 1
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: 
+      name: 
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 0
+      timeActive: 0
+      isActive: 0
     bundle_packGold:
     - id: 1
       typeResources: gold
@@ -432,7 +802,7 @@ MonoBehaviour:
       hourActive: 0
       limitPurchase: 0
       timeActive: 0
-      isActive: 1
+      isActive: 0
     - id: 5
       typeResources: gold
       value: 15000
@@ -446,7 +816,7 @@ MonoBehaviour:
       hourActive: 0
       limitPurchase: 0
       timeActive: 0
-      isActive: 1
+      isActive: 0
     - id: 6
       typeResources: gold
       value: 30000
@@ -460,4 +830,4 @@ MonoBehaviour:
       hourActive: 0
       limitPurchase: 0
       timeActive: 0
-      isActive: 1
+      isActive: 0
