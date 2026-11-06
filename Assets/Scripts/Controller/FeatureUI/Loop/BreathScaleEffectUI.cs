@@ -24,7 +24,7 @@ namespace JinGroup.Controller.Feature
         private MotionHandle _handle;
         private Vector3      _initialScale;
 
-        protected override void PrepareInitialState()
+        public override void PrepareInitialState()
         {
             // Lưu scale gốc và snap về minScale ngay khi enable (trước delay)
             _initialScale = transform.localScale;

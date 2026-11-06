@@ -26,7 +26,7 @@ namespace JinGroup.Controller.Feature
         private MotionHandle _handle;
         private Vector3      _initialRotation;
 
-        protected override void PrepareInitialState()
+        public override void PrepareInitialState()
         {
             // Lưu rotation gốc và snap Z về minAngle (điểm bắt đầu) ngay khi enable (trước delay)
             _initialRotation = transform.localEulerAngles;

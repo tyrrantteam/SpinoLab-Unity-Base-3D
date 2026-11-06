@@ -91,7 +91,7 @@ namespace JinGroup.Controller.Feature
                              .WithOnComplete(() =>
                              {
                                  onComplete?.Invoke();
-                                 if (disableOnComplete && this != null)
+                                 if (disableOnComplete && this != null && Application.isPlaying && SmartPool.Instance != null)
                                      SmartPool.Instance.Despawn(gameObject);
                              })
                              .Bind(t =>

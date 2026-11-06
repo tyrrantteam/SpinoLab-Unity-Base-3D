@@ -25,5 +25,9 @@ namespace JinGroup.Common.Effect
         /// Số vòng lặp truyền vào LitMotion: -1 nếu infinite, ngược lại là loopCount.
         /// </summary>
         protected int LoopCount => infiniteLoop ? -1 : loopCount;
+
+#if UNITY_EDITOR
+        protected override float GetPreviewDuration() => 3600f; // Preview liên tục cho loop effect cho đến khi bấm Stop
+#endif
     }
 }

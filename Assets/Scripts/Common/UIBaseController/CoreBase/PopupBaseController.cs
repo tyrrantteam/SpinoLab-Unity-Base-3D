@@ -1,4 +1,5 @@
 using System;
+using JinGroup.Controller.Feature;
 using LitMotion;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ namespace JinGroup.Common.UIBaseController
     {
         [SerializeField] private Button closeBtn;
         [SerializeField] private Button closePanelBtn;
+        [SerializeField] private ScaleEffectUi scaleEffectUi;
 
         [Header("Close Animation")]
 
@@ -39,7 +41,6 @@ namespace JinGroup.Common.UIBaseController
             _openAlpha = canvasGroup != null ? canvasGroup.alpha : 1f;
             InitData();
             ListenerButton();
-           
         }
 
         protected virtual void OnEnable()
@@ -86,10 +87,25 @@ namespace JinGroup.Common.UIBaseController
         {
             _closeHandle.TryCancel();
             _isClosing = false;
-            scaleTarget.localScale = _openScale;
 
-            if (canvasGroup != null)
+            // Nếu có Scale effect tự quản lý, không ghi đè lại scale về 1 để tránh nháy
+            bool hasScaleEffect = (scaleEffectUi != null && scaleEffectUi.enabled) ||
+                                  (TryGetComponent<ScaleEffectUi>(out var se) && se.enabled) ||
+                                  (TryGetComponent<ScaleEffectBounceUI>(out var seb) && seb.enabled) ||
+                                  (TryGetComponent<ScaleEffectSquashAndStretch>(out var ses) && ses.enabled);
+
+            if (!hasScaleEffect)
+            {
+                scaleTarget.localScale = _openScale;
+            }
+
+            // Nếu có FadeEffectUI tự quản lý, không ghi đè lại alpha về 1 để tránh nháy
+            bool hasFadeEffect = TryGetComponent<FadeEffectUI>(out var fe) && fe.enabled;
+
+            if (!hasFadeEffect && canvasGroup != null)
+            {
                 canvasGroup.alpha = _openAlpha;
+            }
         }
 
         /// <summary>Scales <see cref="scaleTarget"/> to zero and fades <see cref="canvasGroup"/> to zero.</summary>
@@ -100,6 +116,9 @@ namespace JinGroup.Common.UIBaseController
             Vector3 fromScale = scaleTarget.localScale;
             float fromAlpha = canvasGroup != null ? canvasGroup.alpha : 1f;
 
+            if (scaleEffectUi != null)
+                scaleEffectUi.Play();
+
             _closeHandle = LMotion.Create(0f, 1f, closeDuration)
                                   .WithEase(closeEase)
                                   .WithOnComplete(() => onComplete?.Invoke())
@@ -107,6 +126,7 @@ namespace JinGroup.Common.UIBaseController
                                   {
                                       if (canvasGroup != null)
                                           canvasGroup.alpha = Mathf.LerpUnclamped(fromAlpha, 0f, t);
+                                    
                                   });
 
         }

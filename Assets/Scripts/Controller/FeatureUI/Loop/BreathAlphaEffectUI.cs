@@ -35,7 +35,7 @@ namespace JinGroup.Controller.Feature
             _canvasGroup = GetComponent<CanvasGroup>();
         }
 
-        protected override void PrepareInitialState()
+        public override void PrepareInitialState()
         {
             // Lưu alpha gốc và snap về minAlpha ngay khi enable (trước delay)
             _initialAlpha = CanvasGroup.alpha;

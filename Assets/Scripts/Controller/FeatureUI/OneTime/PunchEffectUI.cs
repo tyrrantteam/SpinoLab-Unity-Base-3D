@@ -41,7 +41,7 @@ namespace JinGroup.Controller.Feature
             _rt = GetComponent<RectTransform>();
         }
 
-        protected override void PrepareInitialState()
+        public override void PrepareInitialState()
         {
             // Ghi nhớ giá trị gốc trước khi delay để Stop() restore đúng
             switch (punchType)
