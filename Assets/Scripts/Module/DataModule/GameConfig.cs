@@ -15,4 +15,7 @@ public class GameConfig : ScriptableObject
     [Header("UsingContinuePopup")]
     public bool usingContinuePopup = true;
     public int priceContinuePopup = 190;
+    [Header("UsingBooster")]
+    public bool usingBooster = true;
+    public bool showPriceUnderBoosterButton = false;
 }

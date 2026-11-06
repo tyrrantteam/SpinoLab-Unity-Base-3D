@@ -1,3 +1,4 @@
+using System.Collections;
 using Sirenix.OdinInspector;
 using LitMotion;
 using UnityEngine;
@@ -8,9 +9,8 @@ namespace JinGroup.Common.Effect
     {
         [SerializeField] private bool canPlayWhenEnable = true;
 
-        [ShowIf("canPlayWhenEnable")]
-        [LabelText("Delay Start")]
-        [SerializeField] private float delayStart = 0f;
+        [ShowIf("canPlayWhenEnable")] [LabelText("Delay Start")] [SerializeField]
+        private float delayStart = 0f;
 
         private MotionHandle _delayHandle;
 
@@ -20,14 +20,21 @@ namespace JinGroup.Common.Effect
 
             // Snap về giá trị bắt đầu ngay lập tức trước khi delay
             // → đảm bảo object luôn ở đúng trạng thái khởi đầu khi mở popup
+            StartCoroutine(DelayToCacheLocation());
+            // PrepareInitialState();
+        }
+        
+        // Delay để vertical Layout có thời gian cache lại position. 
+        private IEnumerator DelayToCacheLocation()
+        {
+            yield return new WaitForSeconds(0.2f);
             PrepareInitialState();
-
             if (delayStart > 0f)
             {
                 _delayHandle.TryCancel();
                 _delayHandle = LMotion.Create(0f, 1f, delayStart)
-                    .WithOnComplete(Play)
-                    .RunWithoutBinding();
+                                      .WithOnComplete(Play)
+                                      .RunWithoutBinding();
             }
             else
             {
@@ -46,7 +53,9 @@ namespace JinGroup.Common.Effect
         /// Override để snap object về trạng thái bắt đầu của hiệu ứng TRƯỚC khi delay.
         /// Đảm bảo khi hết delay, Play() chạy đúng ngay mà không cần set tay trong Unity.
         /// </summary>
-        protected virtual void PrepareInitialState() { }
+        protected virtual void PrepareInitialState()
+        {
+        }
 
         public abstract void Play();
 

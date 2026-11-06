@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum BoosterType
 {
-   None = 0,
+    None     = 0,
     booster1 = 1,
     booster2 = 2,
     booster3 = 3,

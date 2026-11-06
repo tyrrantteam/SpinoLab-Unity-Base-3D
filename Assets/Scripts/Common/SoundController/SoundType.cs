@@ -7,5 +7,6 @@
         RewardShowItem,
         LevelCompleted,
         LevelFail,
+        button_click
     }
 }

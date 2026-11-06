@@ -79,16 +79,16 @@ namespace JinGroup.Common
 
         private void InitData()
         {
-            if (DataAccountPlayer.PlayerResourceData.isNoAdsPurchase)
-            {
-                GameDebug.Log("is remove no ads");
-                footerArea.anchoredPosition = new Vector2(footerArea.anchoredPosition.x, 0);
-            }
-            else
-            {
-                GameDebug.Log("is no ads");
-                footerArea.anchoredPosition = new Vector2(footerArea.anchoredPosition.x, offsetY);
-            }
+            // if (DataAccountPlayer.PlayerResourceData.isNoAdsPurchase)
+            // {
+            //     GameDebug.Log("is remove no ads");
+            //     footerArea.anchoredPosition = new Vector2(footerArea.anchoredPosition.x, 0);
+            // }
+            // else
+            // {
+            //     GameDebug.Log("is no ads");
+            //     footerArea.anchoredPosition = new Vector2(footerArea.anchoredPosition.x, offsetY);
+            // }
 
             _gameConfig = LoadResourceController.instance.GameConfig();
             var usingGem = _gameConfig.usingGem;
