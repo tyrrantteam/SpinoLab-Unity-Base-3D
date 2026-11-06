@@ -20,7 +20,7 @@ namespace JinGroup.Module.Resources
         noads7d,
         incomex2,
         incomex3,
-        incomex4
-        
+        incomex4,
+        noads24h
     }
 }

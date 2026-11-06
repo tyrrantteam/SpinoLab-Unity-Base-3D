@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using JinGroup.Module.Resources;
 using JinGroup.Base.LoadData;
 using Base.Core.Debug;
+using TMPro;
 
 namespace JinGroup.Module.Reward
 {
@@ -13,7 +14,7 @@ namespace JinGroup.Module.Reward
         public TypeResources typeResources;
         [SerializeField] protected Image rewardIcon;
         //[SerializeField] protected Image backgroundIcon;
-        [SerializeField] protected Text valueTxt;
+        [SerializeField] protected TMP_Text valueTxt;
 
         public virtual void InitData(dataItem dataItem)
         {

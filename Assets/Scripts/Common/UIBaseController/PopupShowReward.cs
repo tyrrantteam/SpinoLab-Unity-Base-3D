@@ -281,8 +281,6 @@ public class PopupShowReward : SingletonMono<PopupShowReward>
 
         HideAllRewards();
         gameObject.SetActive(false);
-        if (PopupManager.Instance != null)
-            PopupManager.Instance.CloseShowReward();
         OnPopupClosed?.Invoke();
     }
 

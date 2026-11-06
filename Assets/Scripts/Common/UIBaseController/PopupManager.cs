@@ -34,7 +34,10 @@ public class PopupManager : SingletonMono<PopupManager>
         var instance = GetOrSpawnInstance<T>();
         if (instance == null) return null;
         configure?.Invoke(instance);
-        EnqueuePopup(instance.gameObject, onShown);
+        if (instance.KeepOtherPopupsOnClose)
+            ShowWithoutHidingOthers(instance.gameObject, onShown);
+        else
+            EnqueuePopup(instance.gameObject, onShown);
         return instance;
     }
 
@@ -100,6 +103,18 @@ public class PopupManager : SingletonMono<PopupManager>
         }
     }
 
+    /// <summary>Đóng popup lớp phủ — giữ popup đang mở phía dưới và không lấy hàng đợi.</summary>
+    public void ClosePopupKeepOthers()
+    {
+        if (AnyPopupVisible())
+        {
+            isPopupActive = true;
+            return;
+        }
+
+        CloseCurrentPopup();
+    }
+
     private T GetOrSpawnInstance<T>() where T : PopupBaseController
     {
         var type = typeof(T);
@@ -122,22 +137,41 @@ public class PopupManager : SingletonMono<PopupManager>
         return null;
     }
     
-    /// <summary>Đóng riêng PopupShowReward (overlay) — giữ popup dưới nếu còn.</summary>
-    public void CloseShowReward()
+    // /// <summary>Đóng riêng PopupShowReward (overlay) — giữ popup dưới nếu còn.</summary>
+    // public void CloseShowReward()
+    // {
+    //     if (popupShowReward != null && popupShowReward.gameObject.activeSelf)
+    //         popupShowReward.gameObject.SetActive(false);
+    //
+    //     if (AnyPopupVisible())
+    //     {
+    //         isPopupActive = true;
+    //         return;
+    //     }
+    //
+    //     isPopupActive = false;
+    //     FeatureButtonController.RefreshAllNoti();
+    // }
+    
+    private bool AnyPopupVisible()
     {
-        if (popupShowReward != null && popupShowReward.gameObject.activeSelf)
-            popupShowReward.gameObject.SetActive(false);
-
-        if (AnyPopupVisible())
+        foreach (var popup in instanceCache.Values)
         {
-            isPopupActive = true;
-            return;
+            if (popup != null && popup.gameObject.activeSelf)
+                return true;
         }
 
-        isPopupActive = false;
-        FeatureButtonController.RefreshAllNoti();
+        return popupShowReward != null && popupShowReward.gameObject.activeSelf;
     }
-    
+
+    private void ShowWithoutHidingOthers(GameObject popup, Action onShown = null)
+    {
+        isPopupActive = true;
+        popup.transform.SetAsLastSibling();
+        popup.SetActive(true);
+        onShown?.Invoke();
+    }
+
     private void EnqueuePopup(GameObject popup, Action onShown = null)
     {
         Action showAction = () =>
