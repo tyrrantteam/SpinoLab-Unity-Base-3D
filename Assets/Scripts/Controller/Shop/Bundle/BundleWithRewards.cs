@@ -19,9 +19,9 @@ public abstract class BundleWithRewards : BundleBase
     /// </summary>
     protected virtual ModuleRewardController GetHeartDisplay() => null;
 
-    public override void LoadBundle(List<BundleReward> reward, int index)
+    public override void LoadBundle(List<BundleReward> reward, int index, bool isProduct)
     {
-        base.LoadBundle(reward, index);
+        base.LoadBundle(reward, index, isProduct);
 
         // Hook cho subclass xử lý trước vòng lặp (vd: set header text)
         OnBeforeParseRewards(reward);

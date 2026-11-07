@@ -165,8 +165,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9726f5f2b9a33304db19f1fbfc916052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  typeResources: 0
   rewardIcon: {fileID: 4592886375440890487}
-  backgroundIcon: {fileID: 9095782394952304510}
   valueTxt: {fileID: 4417340736360219415}
 --- !u!1 &4069972474921231330
 GameObject:

@@ -18,6 +18,7 @@ public abstract class BundleBase : MonoBehaviour
     protected List<BundleReward> _bundleRewards;
 
     private Button btnBuy;
+    private bool   _isProduct;
 
     private void Awake()
     {
@@ -29,13 +30,13 @@ public abstract class BundleBase : MonoBehaviour
         }
     }
 
-    public virtual void LoadBundle(List<BundleReward> reward, int index)
+    public virtual void LoadBundle(List<BundleReward> reward, int index, bool isProduct)
     {
         _bundleRewards       = reward;
         bundleId             = reward[0].idBundle;
         bundleNameText.text  = reward[0].name;
         bundlePriceText.text = reward[0].price.ToString();
-
+        _isProduct           = isProduct;
         var icon = LoadResourceController.Instance.LoadItemIcon(reward[0].iconBundle);
         if (icon != null)
         {
@@ -49,12 +50,20 @@ public abstract class BundleBase : MonoBehaviour
 
     private void OnStartPurchase()
     {
-        ShowClaimRewardPopup();
+        if (_isProduct)
+        {
+            // todo: inseart inapp purchase
+            ShowClaimRewardPopup();
+        }
+        else
+        {
+            ShowClaimRewardPopup();
+        }
     }
 
     protected abstract void OnGrantProducts();
 
-    protected void ShowClaimRewardPopup() 
+    protected void ShowClaimRewardPopup()
     {
         if (_bundleRewards == null || _bundleRewards.Count == 0)
         {
@@ -87,12 +96,13 @@ public abstract class BundleBase : MonoBehaviour
 
     protected virtual void GrantAllRewards()
     {
+        this.PostEvent(EventID.OnPurchaseIAP);
         if (_bundleRewards == null || _bundleRewards.Count == 0)
         {
             GameDebug.LogWarning("[BundleBase] Không có dữ liệu phần thưởng!");
             return;
         }
-
+        
         foreach (var reward in _bundleRewards)
         {
             GameDebug.Log($"- Item ID: {reward.id} | Cần cộng: {reward.value} [{reward.typeResources}]");
@@ -107,24 +117,24 @@ public abstract class BundleBase : MonoBehaviour
                 case TypeResources.gold:
                     data.ChangeGoldValue(reward.value);
                     break;
-
                 case TypeResources.diamond:
                     data.ChangeDiamondValue(reward.value);
                     break;
-
                 case TypeResources.heart:
-                    // TODO: Sẽ implement lại sau
-                    // data.AddFreeHeartHours(reward.value);
+                    data.ChangeHeartValue(reward.value);
                     break;
-
+                case TypeResources.heartHour:
+                    data.AddInfiniteHeartHours(reward.value);
+                    break;
+                case TypeResources.heartDay:
+                    data.AddInfiniteHeartDays(reward.value);
+                    break;
                 case TypeResources.booster1:
                     data.ChangeBoosterCount(BoosterType.booster1, reward.value);
                     break;
-
                 case TypeResources.booster2:
                     data.ChangeBoosterCount(BoosterType.booster2, reward.value);
                     break;
-
                 case TypeResources.booster3:
                     data.ChangeBoosterCount(BoosterType.booster3, reward.value);
                     break;

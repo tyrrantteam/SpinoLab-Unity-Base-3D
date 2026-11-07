@@ -2,9 +2,9 @@ using System.Collections.Generic;
 
 public class CoinBundle : BundleBase
 {
-    public override void LoadBundle(List<BundleReward> reward, int index)
+    public override void LoadBundle(List<BundleReward> reward, int index, bool isProduct)
     {
-        base.LoadBundle(reward, index);
+        base.LoadBundle(reward, index, isProduct);
 
         foreach (var initReward in reward)
         {
