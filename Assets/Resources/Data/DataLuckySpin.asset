@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bda61424452a7c742b165ee75605836b, type: 3}
+  m_Name: DataLuckySpin
+  m_EditorClassIdentifier: 
+  foldoutImportGUI: 1
+  documentId: 1DfD6W3fyWQ_7sOn2Pqnt_RvTFfgKCbjfc21GTNfJ9h8
+  selectedTogglesIds:
+  - ListitemData
+  foldoutSerializationGUI: 0
+  serializationOutputPath: ../../Configs
+  serializationFileName: Configs.v0.1
+  serializationFormat: 0
+  content:
+    ListitemData:
+    - id: 1
+      typeResources: heart
+      value: 1
+      rate: 300
+      MileStoneSpin: 5
+    - id: 2
+      typeResources: booster1
+      value: 1
+      rate: 1250
+      MileStoneSpin: 0
+    - id: 3
+      typeResources: gold
+      value: 20
+      rate: 5000
+      MileStoneSpin: 0
+    - id: 4
+      typeResources: booster2
+      value: 1
+      rate: 600
+      MileStoneSpin: 0
+    - id: 5
+      typeResources: gold
+      value: 30
+      rate: 2500
+      MileStoneSpin: 0
+    - id: 6
+      typeResources: booster3
+      value: 1
+      rate: 200
+      MileStoneSpin: 0
+    - id: 7
+      typeResources: gold
+      value: 40
+      rate: 1250
+      MileStoneSpin: 0
+    - id: 8
+      typeResources: gold
+      value: 10
+      rate: 10000
+      MileStoneSpin: 0

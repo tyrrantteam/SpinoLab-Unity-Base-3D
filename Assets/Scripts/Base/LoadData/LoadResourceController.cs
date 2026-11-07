@@ -100,21 +100,9 @@ namespace JinGroup.Base.LoadData
             return Load<AudioClip>(ResourcesFolderPath.SoundFolder, soundType.ToString());
         }
 
-        //public string loadpathdatacharacter(skintype skin)
-        //{
-        //    var path = path.combine(resourcesfolderpath.herofolder, "character/");
-        //    return (path + skin.tostring());
-        //}
-
         #endregion
 
         #region LoadDataAsset
-
-        //public StatUpgradeDataAsset LoadStatUpgradeData()
-        //{
-        //    var path = string.Format(ResourcesFolderPath.DataFolder, ResourcesFolderPath.DataFolderStatUpgrade);
-        //    return Load<StatUpgradeDataAsset>(path, "StatUpgradeData");
-        //}
 
         public DataItemController DataItemController()
         {
@@ -198,6 +186,12 @@ namespace JinGroup.Base.LoadData
         {
             var path = string.Format(ResourcesFolderPath.DataFolder);
             return Load<DataAdsController>(path, "DataAds");
+        }
+
+        public DataLuckySpinController DataLuckySpinController()
+        {
+            var path = string.Format(ResourcesFolderPath.DataFolder);
+            return Load<DataLuckySpinController>(path, "DataLuckySpin");
         }
 
         #endregion

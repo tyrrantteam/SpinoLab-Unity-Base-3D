@@ -140,6 +140,7 @@ public class GameController : SingletonMono<GameController>
 
     public void SetWinGame()
     {
+        DataAccountPlayer.PlayerLuckySpinData.IncreasecurrentLevelProcess();
         AnalyticManager.instance.LogEventLevelComplete();
         HapticManager.Instance.PlayHapticSuccess();
         confetiStartWin.SetActive(true);

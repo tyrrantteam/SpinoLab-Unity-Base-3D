@@ -21,17 +21,21 @@ public class PopupBaseController : MonoBehaviour
 
     [Header("Stack")]
     [Tooltip("Bật: popup này mở đè lên popup đang có, và khi đóng chỉ tắt chính nó.")]
-    [SerializeField] private bool keepOtherPopupsOnClose;
+    [SerializeField] protected bool keepOtherPopupsOnClose;
 
-    public bool KeepOtherPopupsOnClose => keepOtherPopupsOnClose;
+    public bool KeepOtherPopupsOnClose
+    {
+        get => keepOtherPopupsOnClose;
+        set => keepOtherPopupsOnClose = value;
+    }
 
     private Transform    scaleTarget;
     private CanvasGroup  canvasGroup;
     private MotionHandle _closeHandle;
     private Vector3      _openScale;
     private float        _openAlpha;
-    private bool         _isClosing;
-    private bool         _canClose;
+    protected bool       _isClosing;
+    protected bool       _canClose;
 
     protected virtual void Awake()
     {
@@ -49,6 +53,10 @@ public class PopupBaseController : MonoBehaviour
 
     protected virtual void OnEnable()
     {
+        if (keepOtherPopupsOnClose)
+        {
+            transform.SetAsLastSibling();
+        }
         ResetOpenVisual();
         BeginCloseBlock();
     }
@@ -146,15 +154,27 @@ public class PopupBaseController : MonoBehaviour
             if (keepOtherPopupsOnClose)
             {
                 gameObject.SetActive(false);
-                PopupManager.Instance.ClosePopupKeepOthers();
+                if (PopupManager.Instance != null)
+                    PopupManager.Instance.ClosePopupKeepOthers();
             }
             else
             {
-                PopupManager.Instance.CloseCurrentPopup();
+                if (PopupManager.Instance != null)
+                    PopupManager.Instance.CloseCurrentPopup();
                 gameObject.SetActive(false);
             }
 
             _isClosing = false;
+            OnClosed();
         });
+    }
+
+    protected virtual void OnClosed()
+    {
+    }
+
+    public virtual void ClosePopup()
+    {
+        OnClosePopup();
     }
 }

@@ -12,6 +12,6 @@ namespace DataAccount
         public const string PlayerSpecialOfferAdsData = "PlayerSpecialOfferAdsData";
         public const string PlayerStreakData          = "PlayerStreakData";
         public const string PlayerShopData            = "PlayerShopData";
-
+        public const string PlayerLuckySpinData       = "PlayerLuckySpinData";
     }
 }

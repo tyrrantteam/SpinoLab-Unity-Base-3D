@@ -11,6 +11,7 @@ namespace DataAccount
         private static PlayerSpecialOfferAdsData _playerSpecialOfferAdsData;
         private static PlayerStreakData          _playerStreakData;
         private static PlayerShopData            _playerShopData;
+        private static PlayerLuckySpinData       _playerLuckySpinData;
 
 
         #region Getters
@@ -144,6 +145,19 @@ namespace DataAccount
             }
         }
 
+        public static PlayerLuckySpinData PlayerLuckySpinData
+        {
+            get
+            {
+                if (_playerLuckySpinData != null)
+                    return _playerLuckySpinData;
+
+                var playerLuckySpinData = new PlayerLuckySpinData();
+                _playerLuckySpinData = ES3.Load(DataAccountPlayerConstants.PlayerLuckySpinData, playerLuckySpinData);
+                return _playerLuckySpinData;
+            }
+        }
+
         #endregion
 
         #region Save
@@ -198,6 +212,14 @@ namespace DataAccount
                 _ = PlayerStreakData;
 
             ES3.Save(DataAccountPlayerConstants.PlayerStreakData, _playerStreakData);
+        }
+
+        public static void SavePlayerLuckySpinData()
+        {
+            if (_playerLuckySpinData == null)
+                _ = PlayerLuckySpinData;
+
+            ES3.Save(DataAccountPlayerConstants.PlayerLuckySpinData, _playerLuckySpinData);
         }
 
         #endregion
