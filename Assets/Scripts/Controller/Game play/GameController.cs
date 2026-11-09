@@ -144,7 +144,7 @@ public class GameController : SingletonMono<GameController>
         AnalyticManager.instance.LogEventLevelComplete();
         HapticManager.Instance.PlayHapticSuccess();
         confetiStartWin.SetActive(true);
-
+        DataAccountPlayer.PlayerDailyTashkData.UpdateTask(TypeTaskDaily.WinGame);
         DOVirtual.DelayedCall(1f, () =>
         {
             confetiStartWin.SetActive(false);

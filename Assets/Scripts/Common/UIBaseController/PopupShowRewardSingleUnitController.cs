@@ -115,6 +115,24 @@ public class PopupShowRewardSingleUnitController : PopupBaseController
         }, onClaimCallback);
     }
 
+    public void ShowReward(string typeResources, int value, Action onClaimCallback = null)
+    {
+        if (!Enum.TryParse(typeResources, true, out TypeResources type))
+            type = TypeResources.none;
+
+        TypeRarity rarity = LoadResourceController.Instance != null
+            ? LoadResourceController.Instance.loadRarityStaticByType(type)
+            : TypeRarity.normal;
+
+        ShowReward(new dataItem
+        {
+            typeReward = type,
+            typeRarity = rarity,
+            value = value,
+            level = 1
+        }, onClaimCallback);
+    }
+
     // Các alias OpenPopup tương thích
     public void OpenPopup(dataItem data, Action onClaimCallback = null) => ShowReward(data, onClaimCallback);
     public void OpenPopup(PopupReward reward, Action onClaimCallback = null) => ShowReward(reward, onClaimCallback);

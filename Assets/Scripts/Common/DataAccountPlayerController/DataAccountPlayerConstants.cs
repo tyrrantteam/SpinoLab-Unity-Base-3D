@@ -13,5 +13,7 @@ namespace DataAccount
         public const string PlayerStreakData          = "PlayerStreakData";
         public const string PlayerShopData            = "PlayerShopData";
         public const string PlayerLuckySpinData       = "PlayerLuckySpinData";
+        public const string PlayerDailyTashkData      = "PlayerDailyTashkData";
+        public const string PlayerDailyTaskData       = "PlayerDailyTashkData";
     }
 }

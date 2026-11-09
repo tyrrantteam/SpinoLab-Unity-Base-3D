@@ -28,8 +28,8 @@ public class AdsManager : SingletonMono<AdsManager>
     public void ShowRewarded(Action onRewardEarned)
     {
         var skipAds = DataAccountPlayer.PlayerResourceData.skipAds;
-
-        if(skipAds > 0)
+        DataAccountPlayer.PlayerDailyTashkData.UpdateTask(TypeTaskDaily.WatchAds);
+        if (skipAds > 0)
         {
             DataAccountPlayer.PlayerResourceData.ChangeSkipAdsValue(-1);
             onRewardEarned?.Invoke();

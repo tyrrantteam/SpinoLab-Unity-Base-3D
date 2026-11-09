@@ -232,6 +232,35 @@ public class PopupManager : SingletonMono<PopupManager>
             return inChild;
         }
 
+        string shortName = type.Name.Replace("Controller", "");
+        string[] resourcePaths = new string[]
+        {
+            $"Prefabs/UI/Popup/Meta/DailyTask/{type.Name}",
+            $"Prefabs/UI/Popup/Meta/DailyTask/{shortName}",
+            $"Prefabs/UI/Popup/Meta/{type.Name}",
+            $"Prefabs/UI/Popup/Meta/{shortName}",
+            $"Prefabs/UI/Popup/InGame/{type.Name}",
+            $"Prefabs/UI/Popup/InGame/{shortName}",
+            $"Prefabs/UI/Popup/Public/{type.Name}",
+            $"Prefabs/UI/Popup/Public/{shortName}",
+            $"Prefabs/UI/Popup/{type.Name}",
+            $"Prefabs/UI/Popup/{shortName}",
+            $"Prefabs/UI/{type.Name}",
+            $"Prefabs/UI/{shortName}"
+        };
+
+        foreach (var path in resourcePaths)
+        {
+            var resPrefab = Resources.Load<T>(path);
+            if (resPrefab != null)
+            {
+                var instance = Instantiate(resPrefab, transform);
+                instance.gameObject.SetActive(false);
+                instanceCache[type] = instance;
+                return instance;
+            }
+        }
+
         Debug.LogWarning($"[PopupManager] Prefab of type {typeof(T).Name} not found in popupPrefabs list.");
         return null;
     }

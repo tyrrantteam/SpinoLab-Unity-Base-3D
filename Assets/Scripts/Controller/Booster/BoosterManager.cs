@@ -206,6 +206,7 @@ public class BoosterManager : SingletonMono<BoosterManager>
     protected virtual void OnBoosterActivated(BoosterType boosterType)
     {
         AnalyticManager.instance.BoosterUsing(boosterType);
+        DataAccountPlayer.PlayerDailyTashkData.UpdateTask(TypeTaskDaily.UseBooster);
         GameDebug.Log($"BoosterManager: Activated booster2 {boosterType}");
     }
 

@@ -12,6 +12,7 @@ namespace DataAccount
         private static PlayerStreakData          _playerStreakData;
         private static PlayerShopData            _playerShopData;
         private static PlayerLuckySpinData       _playerLuckySpinData;
+        private static PlayerDailyTashkData      _playerDailyTashkData;
 
 
         #region Getters
@@ -158,6 +159,22 @@ namespace DataAccount
             }
         }
 
+        public static PlayerDailyTashkData PlayerDailyTashkData
+        {
+            get
+            {
+                if (_playerDailyTashkData != null)
+                    return _playerDailyTashkData;
+
+                var playerDailyTashkData = new PlayerDailyTashkData();
+                _playerDailyTashkData = ES3.Load(DataAccountPlayerConstants.PlayerDailyTashkData, playerDailyTashkData);
+                _playerDailyTashkData.CheckAndResetNewDay();
+                return _playerDailyTashkData;
+            }
+        }
+
+        public static PlayerDailyTashkData PlayerDailyTaskData => PlayerDailyTashkData;
+
         #endregion
 
         #region Save
@@ -221,6 +238,16 @@ namespace DataAccount
 
             ES3.Save(DataAccountPlayerConstants.PlayerLuckySpinData, _playerLuckySpinData);
         }
+
+        public static void SavePlayerDailyTashkData()
+        {
+            if (_playerDailyTashkData == null)
+                _ = PlayerDailyTashkData;
+
+            ES3.Save(DataAccountPlayerConstants.PlayerDailyTashkData, _playerDailyTashkData);
+        }
+
+        public static void SavePlayerDailyTaskData() => SavePlayerDailyTashkData();
 
         #endregion
     }

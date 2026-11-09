@@ -194,6 +194,12 @@ namespace JinGroup.Base.LoadData
             return Load<DataLuckySpinController>(path, "DataLuckySpin");
         }
 
+        public DataDailyTaskController DataDailyTaskController()
+        {
+            var path = string.Format(ResourcesFolderPath.DataFolder);
+            return Load<DataDailyTaskController>(path, "DataDailyTask");
+        }
+
         #endregion
     }
 }

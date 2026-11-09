@@ -256,7 +256,7 @@ public class PopupLuckySpinController : PopupBaseController
     public void Spin()
     {
         if (_isSpinning) return;
-
+        DataAccountPlayer.PlayerDailyTashkData.UpdateTask(TypeTaskDaily.PlayLuckySpin);
         var listData = _dataLuckySpinController?.ContentContent?.ListitemData;
         if (listData == null || listData.Count == 0)
         {
