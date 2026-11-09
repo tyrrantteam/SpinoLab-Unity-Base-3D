@@ -38,7 +38,7 @@ public class ShopManager : MonoBehaviour
         }
 
         this.RegisterListener(EventID.ActiveNoAds, (component, o) => DisableBundleType(BundleType.NoAds));
-        this.RegisterListener(EventID.BuySpecialBundle, (component, o) => DisableBundleType(BundleType.SpecialOffer));
+        this.RegisterListener(EventID.HideSpecialBundle, (component, o) => DisableBundleType(BundleType.SpecialOffer));
     }
 
     private IEnumerator DelayLayout()
@@ -58,6 +58,21 @@ public class ShopManager : MonoBehaviour
     {
         CheckBundleStatus();
         dataBundle.BuildCacheData();
+
+        if (shopBundles == null)
+        {
+            shopBundles = new List<ShopBundleContainer>();
+        }
+
+        var childContainers = GetComponentsInChildren<ShopBundleContainer>(true);
+        for (int i = 0; i < childContainers.Length; i++)
+        {
+            if (childContainers[i] != null && !shopBundles.Contains(childContainers[i]))
+            {
+                shopBundles.Add(childContainers[i]);
+            }
+        }
+
         foreach (var bundle in shopBundles)
         {
             if (bundle == null)
@@ -81,7 +96,7 @@ public class ShopManager : MonoBehaviour
             }
 
             // check special offer de hien bundle special offer
-
+            
             bundle.InitData(dataBundle, settings);
         }
 

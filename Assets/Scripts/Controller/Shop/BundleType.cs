@@ -4,5 +4,6 @@ public enum BundleType
     SpecialOffer,
     VIP,
     NoAds,
-    Coins
+    Coins,
+    Daily
 }

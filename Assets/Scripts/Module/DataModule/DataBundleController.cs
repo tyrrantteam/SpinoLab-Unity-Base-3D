@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Base.Core.Debug;
 using Unity.VisualScripting;
+using DataAccount;
 
 [CreateAssetMenu(fileName = "DataBundle", menuName = "DataBundle")]
 public class DataBundleController : SpreadsheetsContainerBase
@@ -33,7 +34,17 @@ public class DataBundleController : SpreadsheetsContainerBase
 
     public bool IsBundleAvailable(BundleType type)
     {
-        return _cachedBundleRewards[type].Count > 0;
+        if (_cachedBundleRewards == null)
+        {
+            BuildCache();
+        }
+
+        if (_cachedBundleRewards != null && _cachedBundleRewards.TryGetValue(type, out var list))
+        {
+            return list != null && list.Count > 0;
+        }
+
+        return false;
     }
 
     public List<List<BundleReward>> GetBundleRewardsByType(BundleType type)
@@ -115,19 +126,121 @@ public class DataBundleController : SpreadsheetsContainerBase
 
         _cachedBundleRewards[BundleType.Coins] = coinsList;
         Debug.Log($"Bundle count: {coinsList.Count} -- {BundleType.Coins}");
+
+        // 6. Daily Bundle
+        var dailyBundle = new List<List<BundleReward>>();
+        var todayDailyPack = GetDailyBundleForToday();
+        if (todayDailyPack != null && todayDailyPack.Count > 0)
+        {
+            dailyBundle.Add(todayDailyPack);
+        }
+        _cachedBundleRewards[BundleType.Daily] = dailyBundle;
+        Debug.Log($"Bundle count: {dailyBundle.Count} -- {BundleType.Daily}");
     }
 
     private void AddPackIfActive(List<List<BundleReward>> targetList, List<BundleReward> pack)
     {
-        GameDebug.Log(pack[0].isActive);
         if (pack != null && pack.Count > 0 && pack[0].isActive)
         {
             targetList.Add(pack);
         }
-        else
+        else if (pack != null && pack.Count > 0)
         {
             GameDebug.Log($"pack {pack[0].idBundle} was not active");
         }
+    }
+
+    public BundleReward GetDailyBundleRewardById(int id)
+    {
+        if (content?.dailyBundle == null) return null;
+        return content.dailyBundle.Find(x => x.id == id);
+    }
+
+    public BundleReward RollDailyBundle()
+    {
+        if (content?.dailyBundle == null || content.dailyBundle.Count == 0)
+        {
+            GameDebug.LogWarning("[DataBundleController] dailyBundle list is empty!");
+            return null;
+        }
+
+        var candidates = content.dailyBundle.FindAll(x => x.isActive && x.rate > 0);
+        if (candidates.Count == 0)
+        {
+            candidates = content.dailyBundle.FindAll(x => x.isActive);
+            if (candidates.Count == 0)
+            {
+                candidates = content.dailyBundle;
+            }
+        }
+
+        int totalRate = 0;
+        for (int i = 0; i < candidates.Count; i++)
+        {
+            totalRate += candidates[i].rate;
+        }
+
+        if (totalRate <= 0)
+        {
+            int index = UnityEngine.Random.Range(0, candidates.Count);
+            return candidates[index];
+        }
+
+        int randomValue = UnityEngine.Random.Range(0, totalRate);
+        int currentWeight = 0;
+        for (int i = 0; i < candidates.Count; i++)
+        {
+            currentWeight += candidates[i].rate;
+            if (randomValue < currentWeight)
+            {
+                return candidates[i];
+            }
+        }
+
+        return candidates[0];
+    }
+
+    public List<BundleReward> GetDailyBundleForToday()
+    {
+        if (content?.dailyBundle == null || content.dailyBundle.Count == 0)
+        {
+            return null;
+        }
+
+        var shopData = DataAccountPlayer.PlayerShopData;
+        string todayUtc = DateTime.UtcNow.ToString("yyyy-MM-dd");
+
+        BundleReward selected = null;
+        if (shopData != null && shopData.dailyBundleDateUtc == todayUtc && shopData.dailyBundleRewardId > 0)
+        {
+            selected = GetDailyBundleRewardById(shopData.dailyBundleRewardId);
+        }
+
+        if (selected == null)
+        {
+            selected = RollDailyBundle();
+            if (selected != null && shopData != null)
+            {
+                shopData.ResetDailyBundle(selected.id, todayUtc);
+            }
+        }
+
+        if (selected == null)
+        {
+            return null;
+        }
+
+        // Support both single item and pack grouped by idBundle
+        if (!string.IsNullOrEmpty(selected.idBundle))
+        {
+            var pack = content.dailyBundle.FindAll(x => x.isActive && x.idBundle == selected.idBundle);
+            if (pack.Count > 0)
+            {
+                return pack;
+            }
+        }
+
+        return new List<BundleReward>(1) { selected };
     }
 }
 
@@ -143,11 +256,12 @@ public class BundleReward
     public string idBundle;
     public string name;
     public string iconBundle;
-    public int    levelUnlock;
+    public int    levelUnlock; 
     public int    hourActive;
     public int    limitPurchase;
     public int    timeActive;
     public bool   isActive;
+    public int    rate;
 }
 
 [Serializable]
@@ -167,4 +281,5 @@ public class listBundle
     [SpreadsheetPage("Vip_bundle2")]     public List<BundleReward> vipBundle2;
     [SpreadsheetPage("Vip_bundle3")]     public List<BundleReward> vipBundle3;
     [SpreadsheetPage("Bundle_packGold")] public List<BundleReward> bundle_packGold;
+    [SpreadsheetPage("Daily_bundle")]    public List<BundleReward> dailyBundle;
 }

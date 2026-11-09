@@ -3809,6 +3809,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShopPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 2185007070682221490, guid: 5a06ee6aa95089f4eb62794b8de57075, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2185007070682221490, guid: 5a06ee6aa95089f4eb62794b8de57075, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2185007070682221490, guid: 5a06ee6aa95089f4eb62794b8de57075, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1227
+      objectReference: {fileID: 0}
+    - target: {fileID: 2185007070682221490, guid: 5a06ee6aa95089f4eb62794b8de57075, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 131
+      objectReference: {fileID: 0}
+    - target: {fileID: 2185007070682221490, guid: 5a06ee6aa95089f4eb62794b8de57075, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 555.61237
+      objectReference: {fileID: 0}
+    - target: {fileID: 2185007070682221490, guid: 5a06ee6aa95089f4eb62794b8de57075, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1145.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2533122326720291555, guid: 5a06ee6aa95089f4eb62794b8de57075, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2533122326720291555, guid: 5a06ee6aa95089f4eb62794b8de57075, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2533122326720291555, guid: 5a06ee6aa95089f4eb62794b8de57075, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 613.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2533122326720291555, guid: 5a06ee6aa95089f4eb62794b8de57075, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -65.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3055403240731893231, guid: 5a06ee6aa95089f4eb62794b8de57075, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1

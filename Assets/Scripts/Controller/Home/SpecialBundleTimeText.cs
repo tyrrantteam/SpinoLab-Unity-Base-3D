@@ -35,7 +35,7 @@ public class SpecialBundleTimeText : MonoBehaviour
     {
         _shownTotalSecs = -1;
         _nextTickTime   = 0f;
-        Refresh();
+        // Refresh();
     }
 
     private void OnApplicationPause(bool paused)
@@ -162,7 +162,7 @@ public class SpecialBundleTimeText : MonoBehaviour
 
         if (gameObject.activeSelf)
             gameObject.SetActive(false);
-        this.PostEvent(EventID.BuySpecialBundle);
+        this.PostEvent(EventID.HideSpecialBundle);
         // JinGroup.Common.HomeUIManager
         //         .Instance?
         //         .RefreshStarterPackButton();

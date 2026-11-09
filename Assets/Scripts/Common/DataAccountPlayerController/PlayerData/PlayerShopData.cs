@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Base.Core.Debug;
 
 namespace DataAccount
@@ -12,6 +12,35 @@ namespace DataAccount
         
         
         
+        #region Daily Bundle
+
+        public string dailyBundleDateUtc;
+        public int    dailyBundleRewardId;
+        public bool   isDailyBundleClaimed;
+
+        public bool IsDailyBundleClaimedToday()
+        {
+            string todayUtc = DateTime.UtcNow.ToString("yyyy-MM-dd");
+            return dailyBundleDateUtc == todayUtc && isDailyBundleClaimed;
+        }
+
+        public void MarkDailyBundleClaimed()
+        {
+            dailyBundleDateUtc = DateTime.UtcNow.ToString("yyyy-MM-dd");
+            isDailyBundleClaimed = true;
+            DataAccountPlayer.SaveShopData();
+        }
+
+        public void ResetDailyBundle(int rewardId, string dateUtc)
+        {
+            dailyBundleRewardId = rewardId;
+            dailyBundleDateUtc = dateUtc;
+            isDailyBundleClaimed = false;
+            DataAccountPlayer.SaveShopData();
+        }
+
+        #endregion
+
         #region Special Bundle
 
         /// <summary>Ghi timestamp lần đầu đạt levelUnlock (chỉ set 1 lần).</summary>

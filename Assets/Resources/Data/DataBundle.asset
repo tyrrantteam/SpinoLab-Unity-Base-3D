@@ -28,6 +28,7 @@ MonoBehaviour:
   - vipBundle1
   - vipBundle2
   - vipBundle3
+  - dailyBundle
   foldoutSerializationGUI: 0
   serializationOutputPath: ../../Configs
   serializationFileName: Configs.v0.1
@@ -831,3 +832,49 @@ MonoBehaviour:
       limitPurchase: 0
       timeActive: 0
       isActive: 0
+    dailyBundle:
+    - id: 1
+      typeResources: gold
+      value: 500
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: com.daily.pack1
+      name: Daily Gold
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 1
+      timeActive: 0
+      isActive: 1
+      rate: 50
+    - id: 2
+      typeResources: diamond
+      value: 15
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: com.daily.pack2
+      name: Daily Diamonds
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 1
+      timeActive: 0
+      isActive: 1
+      rate: 30
+    - id: 3
+      typeResources: booster1
+      value: 1
+      price: 0
+      isRemoveAds: 0
+      oneTimePurchase: 0
+      idBundle: com.daily.pack3
+      name: Daily Booster
+      iconBundle: 
+      levelUnlock: 0
+      hourActive: 0
+      limitPurchase: 1
+      timeActive: 0
+      isActive: 1
+      rate: 20

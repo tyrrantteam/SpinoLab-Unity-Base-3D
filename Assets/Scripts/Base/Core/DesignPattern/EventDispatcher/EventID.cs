@@ -29,6 +29,7 @@ public enum EventID
     ActiveVip,
     ActiveNoAds,
     BuySpecialBundle,
+    HideSpecialBundle,
     
     // VIP
     UpdateVipStatus,
