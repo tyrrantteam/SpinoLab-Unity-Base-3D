@@ -15,6 +15,15 @@ public class HeartResourcesHeader : BaseResourcesHeader
         this.RegisterListener(EventID.UpdateHeart, (sender, param) => UpdateValue());
     }
 
+    protected override void OnClickClaimMore()
+    {
+        base.OnClickClaimMore();
+        if (PopupManager.Instance != null)
+        {
+            PopupManager.Instance.ShowPopup<PopupGetMoreHeartController>();
+        }
+    }
+
     private void OnEnable()
     {
         DataAccountPlayer.PlayerResourceData.UpdateHeartRecovery();

@@ -2791,12 +2791,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6742378393955829124, guid: 8df6608482cca3f489fc320b8f68e81a, type: 3}
       propertyPath: popupPrefabs.Array.size
-      value: 13
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 6742378393955829124, guid: 8df6608482cca3f489fc320b8f68e81a, type: 3}
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 6742378393955829124, guid: 8df6608482cca3f489fc320b8f68e81a, type: 3}
+    - target: {fileID: 6742378393955829124, guid: 8df6608482cca3f489fc320b8f68e81a, type: 3}
+      propertyPath: popupShowRewardSingleUnit
+      value: 
+      objectReference: {fileID: 8158025275271656994, guid: 2fed50f310e663745a96f1b645618869, type: 3}
     - target: {fileID: 6742378393955829124, guid: 8df6608482cca3f489fc320b8f68e81a, type: 3}
       propertyPath: popupPrefabs.Array.data[8]
       value: 
@@ -2817,6 +2821,10 @@ PrefabInstance:
       propertyPath: popupPrefabs.Array.data[12]
       value: 
       objectReference: {fileID: 1203236079052884787, guid: bed4bdf300bc6104baeaa1a9d5c92b60, type: 3}
+    - target: {fileID: 6742378393955829124, guid: 8df6608482cca3f489fc320b8f68e81a, type: 3}
+      propertyPath: popupPrefabs.Array.data[13]
+      value: 
+      objectReference: {fileID: 5011940244829553156, guid: 320f81e7730b8e84c86f7524c64849a1, type: 3}
     - target: {fileID: 7936344057419671452, guid: 8df6608482cca3f489fc320b8f68e81a, type: 3}
       propertyPath: m_Name
       value: Popup

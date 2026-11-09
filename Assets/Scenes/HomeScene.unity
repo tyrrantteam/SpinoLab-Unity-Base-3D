@@ -1824,6 +1824,7 @@ MonoBehaviour:
   - {fileID: 3479542408400581644, guid: 1db8b2128d13abe489085c41e5a86786, type: 3}
   - {fileID: 5768127964115506549, guid: 965dd5ab0f3de224a94a06a2d67cce2c, type: 3}
   - {fileID: 1617885104198347161, guid: 10805fa41b364924f88253afd2b0ba0e, type: 3}
+  - {fileID: 5011940244829553156, guid: 320f81e7730b8e84c86f7524c64849a1, type: 3}
   popupShowReward: {fileID: 1345832269341838632, guid: 940a7254df56b344fb41697aa224a8b8, type: 3}
   popupShowRewardSingleUnit: {fileID: 8158025275271656994, guid: 2fed50f310e663745a96f1b645618869, type: 3}
 --- !u!1 &1323034006
