@@ -17,10 +17,10 @@ public abstract class BundleBase : MonoBehaviour
     protected string             bundleId;
     protected List<BundleReward> _bundleRewards;
 
-    private Button btnBuy;
-    private bool   _isProduct;
+    protected Button btnBuy;
+    private   bool   _isProduct;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         btnBuy = GetComponent<Button>();
 
@@ -48,7 +48,7 @@ public abstract class BundleBase : MonoBehaviour
         }
     }
 
-    private void OnStartPurchase()
+    protected virtual void OnStartPurchase()
     {
         if (_isProduct)
         {

@@ -20,7 +20,7 @@ namespace DataAccount
         {
             get
             {
-                if (_playerTutorialData != null)
+                if (_playerShopData != null)
                 {
                     return _playerShopData;
                 }
@@ -177,7 +177,7 @@ namespace DataAccount
         public static void SaveShopData()
         {
             if (_playerShopData == null)
-                _ = _playerShopData;
+                _ = PlayerShopData;
 
             ES3.Save(DataAccountPlayerConstants.PlayerShopData, _playerShopData);
         }
