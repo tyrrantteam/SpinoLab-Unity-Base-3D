@@ -33,4 +33,10 @@ MonoBehaviour:
     repeatIntervalHours: 24
     smallIcon: icon_0
     largeIcon: 
+  heartFullNotification:
+    enabled: 1
+    title: Hearts are full!
+    message: Your hearts have fully recharged. Jump back into the game!
+    smallIcon: icon_0
+    largeIcon: 
   _legacyNotifications: []

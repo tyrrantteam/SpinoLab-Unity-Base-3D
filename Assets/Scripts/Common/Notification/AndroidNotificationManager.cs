@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using Base.Core;
 using UnityEngine;
+using DataAccount;
+using JinGroup.Base.LoadData;
 
 #if UNITY_ANDROID
 using Unity.Notifications.Android;
@@ -19,6 +22,9 @@ public class AndroidNotificationManager : MonoBehaviour
     [Tooltip("Override the SO loaded from Resources. Leave empty to auto-load."), SerializeField]
     private NotificationSettingsSO settingsOverride;
 
+    [Tooltip("Override the GameConfig loaded from Resources. Leave empty to auto-load."), SerializeField]
+    private GameConfig gameConfigOverride;
+
     private NotificationSettingsSO _settings;
 
     private readonly List<int> _scheduledIds = new List<int>();
@@ -36,7 +42,8 @@ public class AndroidNotificationManager : MonoBehaviour
 
         _settings = settingsOverride != null
             ? settingsOverride
-            : Resources.Load<NotificationSettingsSO>(NotificationSettingsSO.ResourcePath);
+            : Resources.Load<NotificationSettingsSO>(NotificationSettingsSO.ResourcePath)
+              ?? Resources.Load<NotificationSettingsSO>("NotificationSettings");
 
         if (_settings == null)
         {
@@ -75,7 +82,7 @@ public class AndroidNotificationManager : MonoBehaviour
     // Public API
     // ──────────────────────────────────────────────────────────────────────────
 
-    /// <summary>Schedules daily slots and after-close rules from the ScriptableObject.</summary>
+    /// <summary>Schedules daily slots, after-close rules, and heart-full notification from the ScriptableObject.</summary>
     public void ScheduleAll()
     {
 #if UNITY_ANDROID
@@ -104,6 +111,43 @@ public class AndroidNotificationManager : MonoBehaviour
 
             Send(notification);
         }
+
+        ScheduleHeartFullNotification();
+#endif
+    }
+
+    /// <summary>
+    /// Schedules notification when heart is fully recovered, only if GameConfig.usingMetaSys is true.
+    /// </summary>
+    public void ScheduleHeartFullNotification()
+    {
+#if UNITY_ANDROID
+        if (_settings == null || _settings.heartFullNotification == null)
+            return;
+
+        if (!_settings.heartFullNotification.enabled)
+            return;
+
+        // Chỉ dùng khi gameconfig.usingMetaSys được bật lên
+        var config = GetGameConfig();
+        if (config == null || !config.usingMetaSys)
+            return;
+
+        if (!config.usingHeart)
+            return;
+
+        var resourceData = DataAccountPlayer.PlayerResourceData;
+        if (resourceData == null)
+            return;
+
+        long secondsToFull = resourceData.GetRemainingTimeToFullHeartSeconds();
+        if (secondsToFull <= 0)
+            return;
+
+        if (TryBuildHeartFull(_settings.heartFullNotification, secondsToFull, out var notification))
+        {
+            Send(notification);
+        }
 #endif
     }
 
@@ -116,6 +160,20 @@ public class AndroidNotificationManager : MonoBehaviour
 
         _scheduledIds.Clear();
 #endif
+    }
+
+    public GameConfig GetGameConfig()
+    {
+        if (gameConfigOverride != null)
+            return gameConfigOverride;
+
+        if (GameManager.Instance != null && GameManager.Instance.gameConfig != null)
+            return GameManager.Instance.gameConfig;
+
+        if (LoadResourceController.Instance != null)
+            return LoadResourceController.Instance.GameConfig();
+
+        return Resources.Load<GameConfig>("Data/GameConfig");
     }
 
 #if UNITY_ANDROID
@@ -178,6 +236,44 @@ public class AndroidNotificationManager : MonoBehaviour
 
         if (rule.repeating)
             notification.RepeatInterval = TimeSpan.FromHours(rule.repeatIntervalHours);
+
+        return true;
+    }
+
+    private static bool TryBuildHeartFull(NotificationHeartFullData data, long secondsToFull, out AndroidNotification notification)
+    {
+        if (data == null || !data.enabled)
+        {
+            notification = default;
+            return false;
+        }
+
+        if (string.IsNullOrWhiteSpace(data.title) && string.IsNullOrWhiteSpace(data.message))
+        {
+            notification = default;
+            return false;
+        }
+
+        if (secondsToFull <= 0)
+        {
+            notification = default;
+            return false;
+        }
+
+        var fireTime = DateTime.Now.AddSeconds(secondsToFull);
+
+        notification = new AndroidNotification
+        {
+            Title    = data.title,
+            Text     = data.message,
+            FireTime = fireTime,
+        };
+
+        if (!string.IsNullOrEmpty(data.smallIcon))
+            notification.SmallIcon = data.smallIcon;
+
+        if (!string.IsNullOrEmpty(data.largeIcon))
+            notification.LargeIcon = data.largeIcon;
 
         return true;
     }

@@ -492,6 +492,27 @@ namespace DataAccount
             return Mathf.Max(0, (int)remaining);
         }
 
+        /// <summary>
+        /// Lấy tổng số giây còn lại cho tới khi hồi đầy tim (heart == limit).
+        /// Trả về 0 nếu tim đã đầy hoặc vượt giới hạn.
+        /// </summary>
+        public long GetRemainingTimeToFullHeartSeconds()
+        {
+            UpdateHeartRecovery();
+
+            int limit = GetHeartLimit();
+            if (heart >= limit)
+            {
+                return 0;
+            }
+
+            int missingHearts = limit - heart;
+            long nextHeartRemaining = GetRemainingRecoverySeconds();
+            long recoveryInterval = (long)Mathf.Max(1, GetHeartRecoveryTime());
+
+            return nextHeartRemaining + (long)(missingHearts - 1) * recoveryInterval;
+        }
+
         #endregion
 
         #region Income
