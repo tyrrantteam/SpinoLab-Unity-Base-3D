@@ -1,4 +1,3 @@
-using System;
 using JinGroup.Base.LoadData;
 using JinGroup.Module.Resources;
 using System.Collections.Generic;
@@ -97,48 +96,6 @@ public abstract class BundleBase : MonoBehaviour
     protected virtual void GrantAllRewards()
     {
         this.PostEvent(EventID.OnPurchaseIAP);
-        if (_bundleRewards == null || _bundleRewards.Count == 0)
-        {
-            GameDebug.LogWarning("[BundleBase] Không có dữ liệu phần thưởng!");
-            return;
-        }
-        
-        foreach (var reward in _bundleRewards)
-        {
-            GameDebug.Log($"- Item ID: {reward.id} | Cần cộng: {reward.value} [{reward.typeResources}]");
-            if (!Enum.TryParse<TypeResources>(reward.typeResources, true, out var type))
-            {
-                continue;
-            }
-
-            var data = DataAccount.DataAccountPlayer.PlayerResourceData;
-            switch (type)
-            {
-                case TypeResources.gold:
-                    data.ChangeGoldValue(reward.value);
-                    break;
-                case TypeResources.diamond:
-                    data.ChangeDiamondValue(reward.value);
-                    break;
-                case TypeResources.heart:
-                    data.ChangeHeartValue(reward.value);
-                    break;
-                case TypeResources.heartHour:
-                    data.AddInfiniteHeartHours(reward.value);
-                    break;
-                case TypeResources.heartDay:
-                    data.AddInfiniteHeartDays(reward.value);
-                    break;
-                case TypeResources.booster1:
-                    data.ChangeBoosterCount(BoosterType.booster1, reward.value);
-                    break;
-                case TypeResources.booster2:
-                    data.ChangeBoosterCount(BoosterType.booster2, reward.value);
-                    break;
-                case TypeResources.booster3:
-                    data.ChangeBoosterCount(BoosterType.booster3, reward.value);
-                    break;
-            }
-        }
+        RewardHelper.GrantAll(_bundleRewards);
     }
 }

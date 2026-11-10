@@ -1,3 +1,4 @@
+using System.Collections;
 using Base.Core;
 using Base.Core.Debug;
 using DataAccount;
@@ -21,6 +22,9 @@ namespace JinGroup.Common
         [Header("Right Feature ")]
         [SerializeField] private Button dailyCheckinBtn;
         [SerializeField] private Button hiddenHatBtn;
+        [SerializeField] private Button vipBundleBtn;
+        [SerializeField] private Button noAdsBtn;
+        [SerializeField] private Button specialBundBtn;
         [Header("Left Feature ")]
         [SerializeField] private Button rankingBtn;
         [SerializeField] private Button piggyGemBtn;
@@ -33,6 +37,9 @@ namespace JinGroup.Common
         [SerializeField] private GoldResourcesHeader GoldResourcesHeader;
         [SerializeField] private GemResourcesHeader GemResourcesHeader;
         [SerializeField] private HeartResourcesHeader HeartResourcesHeader;
+
+
+        private Coroutine   _starterPackWatchCo;
 
         protected override void Awake()
         {
@@ -51,8 +58,23 @@ namespace JinGroup.Common
             luckSpinBtn.onClick.AddListener(OnClickLuckySpin);
             dailyTask.onClick.AddListener(OnClickDailyTask);
             hiddenHatBtn.onClick.AddListener(OnClickHiddenHat);
+            vipBundleBtn.onClick.AddListener(OnClickVipBundle);
+            noAdsBtn.onClick.AddListener(OnNoAdsClick);
+            specialBundBtn.onClick.AddListener(OnClickSpecialBundle);
         }
 
+        private void OnClickVipBundle()
+        {
+            PopupManager.Instance.ShowPopup<PopupBundleVipPass>();
+        }
+         private void OnNoAdsClick()
+        {
+            PopupManager.Instance.ShowPopup<PopupBundleRemoveAds>();
+        }
+         private void OnClickSpecialBundle()
+        {
+            PopupManager.Instance.ShowPopup<PopupBundleStartePack>();
+        }
         private void OnClickDailyCheckin()
         {
             PopupManager.Instance.ShowPopup<PopupDailyCheckinController>();
@@ -124,6 +146,122 @@ namespace JinGroup.Common
 
             GemResourcesHeader.gameObject.SetActive(usingGem);
             HeartResourcesHeader.gameObject.SetActive(usingHeart);
+        }
+
+         private void InitBundleActive()
+        {
+            if (DataAccountPlayer.PlayerResourceData.isNoAdsPurchase)
+            {
+                noAdsBtn.gameObject.SetActive(false);
+            }
+
+            RefreshStarterPackButton();
+        }
+
+        /// <summary>
+        /// starterPackBtn active khi: currentLevel ≥ levelUnlock và còn trong hourActive
+        /// kể từ lúc đạt unlock (và chưa mua hết limit).
+        /// </summary>
+        public void RefreshStarterPackButton()
+        {
+            if (specialBundBtn == null)
+                return;
+
+            bool show = TryGetStarterPackConfig(out var cfg) && IsStarterPackButtonAvailable(cfg);
+            specialBundBtn.gameObject.SetActive(show);
+
+            var featureBtn = specialBundBtn.GetComponent<TimerFeatureHomeBtn>();
+            if (show)
+            {
+                StartStarterPackWatch();
+                StartStarterPackCountdown(featureBtn, cfg.hourActive);
+            }
+            else
+            {
+                StopStarterPackWatch();
+                featureBtn?.StopCountdown();
+            }
+        }
+
+        private void StartStarterPackCountdown(TimerFeatureHomeBtn featureBtn, int hourActive)
+        {
+            if (featureBtn == null)
+                return;
+
+            if (hourActive <= 0)
+            {
+                featureBtn.StopCountdown();
+                return;
+            }
+
+            var remaining = DataAccountPlayer.PlayerShopData.GetStarterPackRemaining(hourActive);
+            if (remaining.TotalSeconds <= 0)
+            {
+                featureBtn.StopCountdown();
+                return;
+            }
+
+            featureBtn.StartCountdown(remaining);
+        }
+
+        private static bool TryGetStarterPackConfig(out BundleReward cfg)
+        {
+            cfg = null;
+            var loader = LoadResourceController.Instance;
+            if (loader == null)
+                return false;
+
+            var data = loader.DataBundleController();
+            var special = data != null ? data.ContentContent?.specialBundle : null;
+            if (special == null || special.Count == 0)
+                return false;
+
+            cfg = special[0];
+            return cfg != null;
+        }
+
+        private static bool IsStarterPackButtonAvailable()
+        {
+            return TryGetStarterPackConfig(out var cfg) && IsStarterPackButtonAvailable(cfg);
+        }
+
+        private static bool IsStarterPackButtonAvailable(BundleReward cfg)
+        {
+            int currentLv = DataAccountPlayer.PlayerPointProcessData.currentlevelShowScreen;
+            return DataAccountPlayer.PlayerShopData.IsStarterPackActive(
+                cfg.levelUnlock, cfg.hourActive, cfg.limitPurchase, currentLv);
+        }
+
+        private void StartStarterPackWatch()
+        {
+            if (_starterPackWatchCo != null)
+                return;
+            _starterPackWatchCo = StartCoroutine(CoWatchStarterPackExpiry());
+        }
+
+        private void StopStarterPackWatch()
+        {
+            if (_starterPackWatchCo == null)
+                return;
+            StopCoroutine(_starterPackWatchCo);
+            _starterPackWatchCo = null;
+        }
+
+        private IEnumerator CoWatchStarterPackExpiry()
+        {
+            while (specialBundBtn != null && specialBundBtn.gameObject.activeSelf)
+            {
+                if (!IsStarterPackButtonAvailable())
+                {
+                    specialBundBtn.gameObject.SetActive(false);
+                    _starterPackWatchCo = null;
+                    yield break;
+                }
+
+                yield return new WaitForSecondsRealtime(1f);
+            }
+
+            _starterPackWatchCo = null;
         }
 
     }
