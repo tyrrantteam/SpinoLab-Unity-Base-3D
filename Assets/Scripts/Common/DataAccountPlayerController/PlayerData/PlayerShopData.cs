@@ -14,8 +14,9 @@ namespace DataAccount
         
         #region Daily Bundle
 
+
         public string dailyBundleDateUtc;
-        public int    dailyBundleRewardId;
+        public int    dailyBundleRewardId; 
         public bool   isDailyBundleClaimed;
 
         public bool IsDailyBundleClaimedToday()
@@ -37,6 +38,12 @@ namespace DataAccount
             dailyBundleDateUtc = dateUtc;
             isDailyBundleClaimed = false;
             DataAccountPlayer.SaveShopData();
+        }
+
+         public void UpdatePurchaseCountStarterPack()
+        {
+            starterPackPurchase++;
+            DataAccountPlayer.SavePlayerResourceData();
         }
 
         #endregion

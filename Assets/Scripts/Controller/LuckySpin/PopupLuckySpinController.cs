@@ -411,50 +411,9 @@ public class PopupLuckySpinController : PopupBaseController
     private void AddRewardToAccount(ItemLuckySpin item)
     {
         if (item == null) return;
-        if (!Enum.TryParse(item.typeResources, true, out TypeResources type))
-            return;
-
-        var res = DataAccountPlayer.PlayerResourceData;
-        if (res == null) return;
-
-        switch (type)
-        {
-            case TypeResources.gold:
-                res.ChangeGoldValue(item.value);
-                break;
-            case TypeResources.diamond:
-                res.ChangeDiamondValue(item.value);
-                break;
-            case TypeResources.skipAds:
-                res.ChangeSkipAdsValue(item.value);
-                break;
-            case TypeResources.heart:
-                res.AddHeart(item.value);
-                break;
-            case TypeResources.heartHour:
-                res.AddInfiniteHeartHours(item.value);
-                break;
-            case TypeResources.heartDay:
-                res.AddInfiniteHeartDays(item.value);
-                break;
-            case TypeResources.booster1:
-                res.ChangeBoosterCount(BoosterType.booster1, item.value);
-                break;
-            case TypeResources.booster2:
-                res.ChangeBoosterCount(BoosterType.booster2, item.value);
-                break;
-            case TypeResources.booster3:
-                res.ChangeBoosterCount(BoosterType.booster3, item.value);
-                break;
-            case TypeResources.noads:
-                res.ChangeNoAdsStatus(true);
-                break;
-            case TypeResources.noads24h:
-                res.ChangeNoAds24hStatus(DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
-                break;
-        }
+        if (!RewardHelper.Grant(item.typeResources, item.value)) return;
 
         DataAccountPlayer.SavePlayerResourceData();
-        GameDebug.Log($"[LuckySpin] Đã nhận thưởng: {type} x{item.value}");
+        GameDebug.Log($"[LuckySpin] Đã nhận thưởng: {item.typeResources} x{item.value}");
     }
 }
