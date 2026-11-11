@@ -43,7 +43,7 @@ namespace DataAccount
          public void UpdatePurchaseCountStarterPack()
         {
             starterPackPurchase++;
-            DataAccountPlayer.SavePlayerResourceData();
+            DataAccountPlayer.SaveShopData();
         }
 
         #endregion

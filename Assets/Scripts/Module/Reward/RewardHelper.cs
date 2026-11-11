@@ -92,6 +92,28 @@ namespace JinGroup.Module.Resources
             }
         }
 
+        /// <summary>Maps bundle rewards to the list shown by the claim-reward popup.</summary>
+        public static List<PopupReward> ToPopupRewards(IReadOnlyList<BundleReward> rewards)
+        {
+            var list = new List<PopupReward>(rewards == null ? 0 : rewards.Count);
+            if (rewards == null) return list;
+
+            for (int i = 0; i < rewards.Count; i++)
+            {
+                var reward = rewards[i];
+                if (reward == null) continue;
+
+                list.Add(new PopupReward
+                {
+                    id            = reward.id,
+                    value         = reward.value,
+                    typeResources = reward.typeResources
+                });
+            }
+
+            return list;
+        }
+
         /// <summary>Fills reward slots in order and hides unused slots.</summary>
         public static void ShowRewards(IReadOnlyList<ModuleRewardController> slots, IReadOnlyList<BundleReward> rewards)
         {

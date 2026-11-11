@@ -27,7 +27,7 @@ public class PopupBundleVipPass : PopupBundleBaseController
     protected override void InitData()
     {
         var data = LoadResourceController.Instance.DataBundleController();
-        bundleData = data.ContentContent.vipBundle3;
+        bundleData = data != null ? data.ContentContent?.vipBundle3 : null;
         base.InitData();
     }
 
