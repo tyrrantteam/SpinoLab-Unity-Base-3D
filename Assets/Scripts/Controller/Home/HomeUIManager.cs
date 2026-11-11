@@ -43,8 +43,20 @@ namespace JinGroup.Common
 
         protected override void Awake()
         {
+            base.Awake(); // registers the singleton instance so HomeUIManager.IsNull is accurate
             RegisterButton();
             InitData();
+        }
+
+        private void OnEnable()
+        {
+            RefreshBundleButtons();
+        }
+
+        private void OnDisable()
+        {
+            // Unity stops coroutines on disable; clear the handle so the watch can restart on re-enable.
+            _starterPackWatchCo = null;
         }
 
         private void RegisterButton()
@@ -73,6 +85,10 @@ namespace JinGroup.Common
         }
          private void OnClickSpecialBundle()
         {
+            RefreshStarterPackButton();
+            if (!specialBundBtn.gameObject.activeSelf)
+                return;
+
             PopupManager.Instance.ShowPopup<PopupBundleStartePack>();
         }
         private void OnClickDailyCheckin()
@@ -148,12 +164,10 @@ namespace JinGroup.Common
             HeartResourcesHeader.gameObject.SetActive(usingHeart);
         }
 
-         private void InitBundleActive()
+        public void RefreshBundleButtons()
         {
-            if (DataAccountPlayer.PlayerResourceData.isNoAdsPurchase)
-            {
-                noAdsBtn.gameObject.SetActive(false);
-            }
+            if (noAdsBtn != null)
+                noAdsBtn.gameObject.SetActive(!DataAccountPlayer.PlayerResourceData.isNoAdsPurchase);
 
             RefreshStarterPackButton();
         }
@@ -165,9 +179,15 @@ namespace JinGroup.Common
         public void RefreshStarterPackButton()
         {
             if (specialBundBtn == null)
+            {
+                GameDebug.LogWarning("[StarterPack] specialBundBtn is not assigned on HomeUIManager");
                 return;
+            }
 
-            bool show = TryGetStarterPackConfig(out var cfg) && IsStarterPackButtonAvailable(cfg);
+            bool hasConfig = TryGetStarterPackConfig(out var cfg);
+            bool show = hasConfig && IsStarterPackButtonAvailable(cfg);
+            LogStarterPackState(hasConfig, cfg, show); // TODO: remove after debugging
+
             specialBundBtn.gameObject.SetActive(show);
 
             var featureBtn = specialBundBtn.GetComponent<TimerFeatureHomeBtn>();
@@ -181,6 +201,56 @@ namespace JinGroup.Common
                 StopStarterPackWatch();
                 featureBtn?.StopCountdown();
             }
+        }
+
+        /// <summary>Debug: prints every condition that decides whether the starter pack button shows.</summary>
+        private void LogStarterPackState(bool hasConfig, BundleReward cfg, bool show)
+        {
+            var sb = new System.Text.StringBuilder();
+            sb.Append($"[StarterPack] show = {show}");
+
+            if (!hasConfig)
+            {
+                var loader = LoadResourceController.Instance;
+                var data = loader != null ? loader.DataBundleController() : null;
+                var special = data != null ? data.ContentContent?.specialBundle : null;
+                sb.Append($"\n  x no config: loader={(loader != null)}, DataBundleController={(data != null)}, " +
+                          $"ContentContent={(data != null && data.ContentContent != null)}, " +
+                          $"specialBundle count={(special == null ? "null" : special.Count.ToString())}, " +
+                          $"specialBundle[0]={(special != null && special.Count > 0 && special[0] != null)}");
+                GameDebug.Log(sb.ToString(), specialBundBtn);
+                return;
+            }
+
+            var shop = DataAccountPlayer.PlayerShopData;
+            int currentLv = DataAccountPlayer.PlayerPointProcessData.currentlevelShowScreen;
+
+            bool limitOk = !(cfg.limitPurchase > 0 && shop.starterPackPurchase >= cfg.limitPurchase);
+            bool levelOk = currentLv >= cfg.levelUnlock;
+            bool timeOk  = true;
+            string timeInfo = "no time limit (hourActive <= 0)";
+            if (cfg.hourActive > 0)
+            {
+                if (shop.starterPackUnlockTimestamp <= 0)
+                {
+                    timeInfo = "unlock timestamp not set yet";
+                }
+                else
+                {
+                    long nowMs = System.DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                    double elapsedH = (nowMs - shop.starterPackUnlockTimestamp) / 3600000d;
+                    timeOk = elapsedH < cfg.hourActive;
+                    var unlockUtc = System.DateTimeOffset.FromUnixTimeMilliseconds(shop.starterPackUnlockTimestamp).UtcDateTime;
+                    timeInfo = $"unlocked at {unlockUtc:yyyy-MM-dd HH:mm:ss} UTC, elapsed {elapsedH:F2}h / {cfg.hourActive}h";
+                }
+            }
+
+            sb.Append($"\n  {(limitOk ? "ok" : "x ")} purchase limit: bought {shop.starterPackPurchase} / limit {cfg.limitPurchase}");
+            sb.Append($"\n  {(levelOk ? "ok" : "x ")} level: current {currentLv} / unlock {cfg.levelUnlock}");
+            sb.Append($"\n  {(timeOk ? "ok" : "x ")} time: {timeInfo}");
+            sb.Append($"\n  button parent active in hierarchy: " +
+                      $"{(specialBundBtn.transform.parent == null || specialBundBtn.transform.parent.gameObject.activeInHierarchy)}");
+            GameDebug.Log(sb.ToString(), specialBundBtn);
         }
 
         private void StartStarterPackCountdown(TimerFeatureHomeBtn featureBtn, int hourActive)

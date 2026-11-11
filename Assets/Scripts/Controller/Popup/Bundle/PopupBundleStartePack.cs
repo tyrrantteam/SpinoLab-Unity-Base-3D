@@ -1,5 +1,6 @@
 using DataAccount;
 using JinGroup.Base.LoadData;
+using JinGroup.Common;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -22,13 +23,15 @@ public class PopupBundleStartePack : PopupBundleBaseController
 
     protected override void OnEnable()
     {
-        base.OnEnable();
         EnsureConfigLoaded();
-        UpdateInforPurchase();
+        base.OnEnable();
+        UpdatePurchaseText();
 
         if (!IsStarterPackCurrentlyAvailable())
         {
-            ForceClosePopup();
+            // Unity ignores SetActive(false) while the object is still being enabled,
+            // so close on the next frame instead.
+            StartCoroutine(CoCloseNextFrame());
             return;
         }
 
@@ -49,18 +52,17 @@ public class PopupBundleStartePack : PopupBundleBaseController
     protected override void InitData()
     {
         EnsureConfigLoaded();
-        if (bundleData != null && bundleData.Count > 0)
-            base.InitData();
+        base.InitData();
     }
 
     private void EnsureConfigLoaded()
     {
-        if (_configLoaded && bundleData != null && bundleData.Count > 0)
+        if (_configLoaded && HasBundleData)
             return;
 
         var data = LoadResourceController.Instance.DataBundleController();
-        bundleData = data.ContentContent.specialBundle;
-        if (bundleData == null || bundleData.Count == 0)
+        bundleData = data != null ? data.ContentContent?.specialBundle : null;
+        if (!HasBundleData)
             return;
 
         limitPurchase = bundleData[0].limitPurchase;
@@ -71,27 +73,36 @@ public class PopupBundleStartePack : PopupBundleBaseController
 
     private bool IsStarterPackCurrentlyAvailable()
     {
+        if (!_configLoaded)
+            return false;
+
         var currentLv = DataAccountPlayer.PlayerPointProcessData.currentlevelShowScreen;
         return DataAccountPlayer.PlayerShopData.IsStarterPackActive(
             levelUnlock, hourActive, limitPurchase, currentLv);
     }
 
-    public override void OnProcessPurchase()
+    protected override void OnPurchaseSucceeded()
     {
-        base.OnProcessPurchase();
+        // Count first so the limit is saved even if the reward popup is never claimed.
         DataAccountPlayer.PlayerShopData.UpdatePurchaseCountStarterPack();
-        UpdateInforPurchase();
-        JinGroup.Common.HomeUIManager.Instance?.RefreshStarterPackButton();
+        base.OnPurchaseSucceeded(); // shows the reward popup and closes this popup
+        UpdatePurchaseText();
+        RefreshHomeStarterPackButton();
     }
 
-    private void UpdateInforPurchase()
+    private void UpdatePurchaseText()
     {
-        var numberCurrentPurchase = DataAccountPlayer.PlayerShopData.starterPackPurchase;
-        if (textLimitPurchase != null)
-            textLimitPurchase.text = (limitPurchase - numberCurrentPurchase) + "/" + limitPurchase + " Avaiable";
+        if (textLimitPurchase == null)
+            return;
 
-        if (limitPurchase > 0 && numberCurrentPurchase >= limitPurchase)
-            ForceClosePopup();
+        var numberCurrentPurchase = DataAccountPlayer.PlayerShopData.starterPackPurchase;
+        textLimitPurchase.text = (limitPurchase - numberCurrentPurchase) + "/" + limitPurchase + " Available";
+    }
+
+    private static void RefreshHomeStarterPackButton()
+    {
+        if (!HomeUIManager.IsNull)
+            HomeUIManager.Instance.RefreshStarterPackButton();
     }
 
     private void StartTimeCountdown()
@@ -119,6 +130,12 @@ public class PopupBundleStartePack : PopupBundleBaseController
         _countdownCo = null;
     }
 
+    private IEnumerator CoCloseNextFrame()
+    {
+        yield return null;
+        ForceClosePopup();
+    }
+
     private IEnumerator CoTimeCountdown()
     {
         while (true)
@@ -130,7 +147,8 @@ public class PopupBundleStartePack : PopupBundleBaseController
                 if (textTimeCountDown != null)
                     textTimeCountDown.text = "00:00:00";
 
-                JinGroup.Common.HomeUIManager.Instance?.RefreshStarterPackButton();
+                _countdownCo = null;
+                RefreshHomeStarterPackButton();
                 ForceClosePopup();
                 yield break;
             }
@@ -147,11 +165,11 @@ public class PopupBundleStartePack : PopupBundleBaseController
         }
     }
 
-    /// <summary>Đóng popup bỏ qua close-block (dùng khi hết giờ / hết lượt mua).</summary>
+    /// <summary>Đóng popup bỏ qua close-block (dùng khi hết giờ / không còn khả dụng).</summary>
     private void ForceClosePopup()
     {
         StopTimeCountdown();
-        if (!gameObject.activeInHierarchy && !gameObject.activeSelf)
+        if (!gameObject.activeSelf)
             return;
 
         if (PopupManager.Instance != null)

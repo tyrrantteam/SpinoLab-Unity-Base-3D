@@ -1,5 +1,6 @@
 using DataAccount;
 using JinGroup.Base.LoadData;
+using JinGroup.Common;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,13 +25,16 @@ public class PopupBundleRemoveAds : PopupBundleBaseController
     protected override void InitData()
     {
         var data = LoadResourceController.Instance.DataBundleController();
-        bundleData = data.ContentContent.noAdsBundle1;
+        bundleData = data != null ? data.ContentContent?.noAdsBundle1 : null;
         base.InitData();
     }
-    
-    public override void OnProcessPurchase()
+
+    protected override void OnPurchaseSucceeded()
     {
-        base.OnProcessPurchase();
+        base.OnPurchaseSucceeded();
         DataAccountPlayer.PlayerResourceData.ChangeNoAdsStatus(true);
+
+        if (!HomeUIManager.IsNull)
+            HomeUIManager.Instance.RefreshBundleButtons();
     }
 }

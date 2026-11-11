@@ -69,17 +69,7 @@ public abstract class BundleBase : MonoBehaviour
             return;
         }
 
-        var listReward = new List<PopupReward>(_bundleRewards.Count);
-        for (int i = 0; i < _bundleRewards.Count; i++)
-        {
-            var reward = _bundleRewards[i];
-            listReward.Add(new PopupReward
-            {
-                id            = reward.id,
-                value         = reward.value,
-                typeResources = reward.typeResources
-            });
-        }
+        var listReward = RewardHelper.ToPopupRewards(_bundleRewards);
 
         var popup = PopupManager.Instance != null ? PopupManager.Instance.ModuleShowReward() : null;
         if (popup != null)

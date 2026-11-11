@@ -40,6 +40,8 @@ namespace JinGroup.Base.LoadData
 
         #region Public Load Method
 
+    
+    
         public Sprite LoadItemIcon(TypeResources moneyType)
         {
             var path = string.Format(ResourcesFolderPath.SpriteFolder, ResourcesFolderPath.MONEYTYPE);
