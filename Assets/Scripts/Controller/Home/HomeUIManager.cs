@@ -31,6 +31,7 @@ namespace JinGroup.Common
         [SerializeField] private Button piggyGoldBtn;
         [SerializeField] private Button luckSpinBtn;
         [SerializeField] private Button dailyTask;
+
    
         [Header("Header")]
         private GameConfig _gameConfig;
@@ -57,6 +58,7 @@ namespace JinGroup.Common
             settings.onClick.AddListener(OnClickSettings);
             luckSpinBtn.onClick.AddListener(OnClickLuckySpin);
             dailyTask.onClick.AddListener(OnClickDailyTask);
+
             hiddenHatBtn.onClick.AddListener(OnClickHiddenHat);
             vipBundleBtn.onClick.AddListener(OnClickVipBundle);
             noAdsBtn.onClick.AddListener(OnNoAdsClick);
@@ -78,6 +80,11 @@ namespace JinGroup.Common
         private void OnClickDailyCheckin()
         {
             PopupManager.Instance.ShowPopup<PopupDailyCheckinController>();
+        }
+
+        private void OnClickHiddenHat()
+        {
+             PopupManager.Instance.ShowPopup<PopupHiddenHatController>();
         }
 
         private void OnClickranking()
@@ -116,10 +123,6 @@ namespace JinGroup.Common
             PopupManager.Instance.ShowPopup<PopupDailyTaskController>();
         }
 
-        private void OnClickHiddenHat()
-        {
-            PopupManager.Instance.ShowPopup<PopupLuckySpinController>();
-        }
 
         private void InitData()
         {

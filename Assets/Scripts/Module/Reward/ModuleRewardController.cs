@@ -37,13 +37,14 @@ namespace JinGroup.Module.Reward
             }
             else if (dataItem.typeReward == TypeResources.heart)
             {
+                valueTxt.gameObject.SetActive(dataItem.value != 0);
                 valueTxt.text = dataItem.value+"h";
             }
             else
             {
+                valueTxt.gameObject.SetActive(dataItem.value != 0);
                 valueTxt.text = dataItem.value.ToString();
             }
-            if (dataItem.value == 0) valueTxt.gameObject.SetActive(false);
         }
 
         public virtual void InitData(shopDataItem dataItem)

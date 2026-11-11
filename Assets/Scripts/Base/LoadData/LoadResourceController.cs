@@ -200,6 +200,12 @@ namespace JinGroup.Base.LoadData
             return Load<DataDailyTaskController>(path, "DataDailyTask");
         }
 
+        public DataHiddenHatController DataHiddenHatController()
+        {
+            var path = string.Format(ResourcesFolderPath.DataFolder);
+            return Load<DataHiddenHatController>(path, "DataHiddenHat");
+        }
+
         #endregion
     }
 }

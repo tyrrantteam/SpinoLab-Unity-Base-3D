@@ -13,6 +13,7 @@ namespace DataAccount
         private static PlayerShopData            _playerShopData;
         private static PlayerLuckySpinData       _playerLuckySpinData;
         private static PlayerDailyTashkData      _playerDailyTashkData;
+        private static PlayerHiddenHatData       _playerHiddenHatData;
 
 
         #region Getters
@@ -175,6 +176,23 @@ namespace DataAccount
 
         public static PlayerDailyTashkData PlayerDailyTaskData => PlayerDailyTashkData;
 
+        public static PlayerHiddenHatData PlayerHiddenHatData
+        {
+            get
+            {
+                if (_playerHiddenHatData != null)
+                {
+                    _playerHiddenHatData.CheckAndResetIfExpired();
+                    return _playerHiddenHatData;
+                }
+
+                var playerHiddenHatData = new PlayerHiddenHatData();
+                _playerHiddenHatData = ES3.Load(DataAccountPlayerConstants.PlayerHiddenHatData, playerHiddenHatData);
+                _playerHiddenHatData.CheckAndResetIfExpired();
+                return _playerHiddenHatData;
+            }
+        }
+
         #endregion
 
         #region Save
@@ -248,6 +266,14 @@ namespace DataAccount
         }
 
         public static void SavePlayerDailyTaskData() => SavePlayerDailyTashkData();
+
+        public static void SavePlayerHiddenHatData()
+        {
+            if (_playerHiddenHatData == null)
+                _ = PlayerHiddenHatData;
+
+            ES3.Save(DataAccountPlayerConstants.PlayerHiddenHatData, _playerHiddenHatData);
+        }
 
         #endregion
     }
