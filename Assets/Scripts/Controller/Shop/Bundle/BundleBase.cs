@@ -31,20 +31,13 @@ public abstract class BundleBase : MonoBehaviour
 
     public virtual void LoadBundle(List<BundleReward> reward, int index, bool isProduct)
     {
-        _bundleRewards       = reward;
-        bundleId             = reward[0].idBundle;
-        bundleNameText.text  = reward[0].name;
-        bundlePriceText.text = reward[0].price.ToString();
+        _bundleRewards = reward;
+        var data = reward[0];
+        bundleId             = data.idBundle;
+        bundleNameText.text  = data.name;
+        bundlePriceText.text = data.price.ToString();
         _isProduct           = isProduct;
-        var icon = LoadResourceController.Instance.LoadItemIcon(reward[0].iconBundle);
-        if (icon != null)
-        {
-            bundleIcon.sprite = icon;
-        }
-        else
-        {
-            GameDebug.LogWarning($"[BundleBase] Không tìm thấy icon bundle: {reward[0].iconBundle}");
-        }
+        bundleIcon.sprite    = data.imgIconBundle;
     }
 
     protected virtual void OnStartPurchase()

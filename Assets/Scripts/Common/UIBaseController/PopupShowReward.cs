@@ -246,7 +246,7 @@ public class PopupShowReward : SingletonMono<PopupShowReward>
         if (_shootEffectOrSelf() != null)
             _shootEffectOrSelf().StopAllEffects();
 
-        var ruongDo = GetComponentInChildren<RuongDo>();
+        var ruongDo = GetComponentInChildren<ClaimChest>();
         if (ruongDo != null)
             ruongDo.Stop();
 

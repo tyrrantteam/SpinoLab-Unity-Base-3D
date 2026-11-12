@@ -11,7 +11,7 @@ public class ShopManager : MonoBehaviour
     public DataBundleController      dataBundle;
     public GameDebugSettings         settings;
     public List<ShopBundleContainer> shopBundles;
-    
+
     [SerializeField] private float spawnDelay;
 
     private bool spawnComplete;
@@ -96,7 +96,7 @@ public class ShopManager : MonoBehaviour
             }
 
             // check special offer de hien bundle special offer
-            
+
             bundle.InitData(dataBundle, settings);
         }
 
@@ -137,4 +137,40 @@ public class ShopManager : MonoBehaviour
             }
         }
     }
+
+#if UNITY_EDITOR
+
+    [Button]
+    public void ForceSpawn()
+    {
+        dataBundle.BuildCacheData();
+
+        if (shopBundles == null)
+        {
+            shopBundles = new List<ShopBundleContainer>();
+        }
+
+        var childContainers = GetComponentsInChildren<ShopBundleContainer>(true);
+        for (int i = 0; i < childContainers.Length; i++)
+        {
+            if (childContainers[i] != null && !shopBundles.Contains(childContainers[i]))
+            {
+                shopBundles.Add(childContainers[i]);
+            }
+        }
+
+        foreach (var bundle in shopBundles)
+        {
+            if (bundle == null)
+            {
+                continue;
+            }
+
+            bundle.InitData(dataBundle, settings);
+        }
+
+        spawnComplete = true;
+        RebuildAllLayouts();
+    }
+#endif
 }

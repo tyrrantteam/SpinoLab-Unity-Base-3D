@@ -333,7 +333,7 @@ namespace DataAccount
             UpdateHeartRecovery();
             heart += value;
             int limit = GetHeartLimit();
-            if (heart >= limit)
+            if (IsInfiniteHeartActive() || heart >= limit)
             {
                 lastHeartRecoveryTime = 0;
             }
@@ -513,6 +513,18 @@ namespace DataAccount
             return nextHeartRemaining + (long)(missingHearts - 1) * recoveryInterval;
         }
 
+        public string GetHeartCooldownString()
+        {
+            float maxHeart = GetHeartLimit();
+            if (IsInfiniteHeartActive() || heart >= maxHeart)
+                return "Full";
+
+            long secs = GetRemainingRecoverySeconds();
+            long mm = secs / 60;
+            long ss = secs % 60;
+            return $"{mm:D2}:{ss:D2}";
+        }
+
         #endregion
 
         #region Income
@@ -594,7 +606,7 @@ namespace DataAccount
                 return 0;
             }
 
-            long now      = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            long now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
             long remainMs = vipTimestamp + dayActive * VipDayMs - now;
             return Math.Max(0, remainMs / 1000L);
         }
@@ -607,8 +619,8 @@ namespace DataAccount
                 return "00m : 00s";
             }
 
-            long days    = remaining / 86400;
-            long hours   = (remaining % 86400) / 3600;
+            long days = remaining / 86400;
+            long hours = (remaining % 86400) / 3600;
             long minutes = (remaining % 3600) / 60;
             long seconds = remaining % 60;
 

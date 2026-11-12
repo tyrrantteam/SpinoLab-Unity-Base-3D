@@ -495,10 +495,22 @@ PrefabInstance:
     - target: {fileID: 954557114115836192, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 2462045543079075383, guid: 3d71b06015337594cbb2a29041bc89e8, type: 2}
+      objectReference: {fileID: 2100000, guid: aa62cb68055727c42bac57a0c464f887, type: 2}
     - target: {fileID: 954557114115836192, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1032715750144611813, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
+      propertyPath: m_Color.b
+      value: 0.06666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 1032715750144611813, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
+      propertyPath: m_Color.g
+      value: 0.6509804
+      objectReference: {fileID: 0}
+    - target: {fileID: 1032715750144611813, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
+      propertyPath: m_Color.r
+      value: 0.9960785
       objectReference: {fileID: 0}
     - target: {fileID: 1762013212528085355, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
       propertyPath: m_SizeDelta.x
@@ -701,7 +713,7 @@ MonoBehaviour:
   bundleNameText: {fileID: 7015253041218789303}
   bundlePriceText: {fileID: 360438602030404904}
   rewards:
-  - {fileID: 4827101803538299175}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   goldNumber: {fileID: 1456418169622824721}
@@ -719,17 +731,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeTxt: {fileID: 874919306909087683}
   durationHours: 24
---- !u!114 &4827101803538299175 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5387013098548897071, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
-  m_PrefabInstance: {fileID: 594418375605492744}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9726f5f2b9a33304db19f1fbfc916052, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7015253041218789303 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7594444615524877247, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}

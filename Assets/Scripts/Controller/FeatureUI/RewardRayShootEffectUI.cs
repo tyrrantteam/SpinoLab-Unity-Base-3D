@@ -184,8 +184,8 @@ namespace JinGroup.Controller.Feature
                     total++;
             }
 
-            RuongDo ruongDo = GetRuongDo();
-            bool ruongDoVisible = ruongDo != null && ruongDo.gameObject.activeSelf && ruongDo.transform.localScale != Vector3.zero;
+            ClaimChest claimChest = GetRuongDo();
+            bool ruongDoVisible = claimChest != null && claimChest.gameObject.activeSelf && claimChest.transform.localScale != Vector3.zero;
             if (ruongDoVisible) total++;
 
             if (total == 0)
@@ -205,14 +205,14 @@ namespace JinGroup.Controller.Feature
             // Thu nhỏ rương đồ cùng với items
             if (ruongDoVisible)
             {
-                var ruongRT = ruongDo.GetComponent<RectTransform>();
+                var ruongRT = claimChest.GetComponent<RectTransform>();
                 if (ruongRT != null)
                 {
                     MotionHandle ruongHandle = LMotion.Create(ruongRT.localScale, Vector3.zero, hideDuration)
                                                       .WithEase(Ease.InBack)
                                                       .WithOnComplete(() =>
                                                       {
-                                                          ruongDo.Stop();
+                                                          claimChest.Stop();
                                                           OnOneDone();
                                                       })
                                                       .BindToLocalScale(ruongRT);
@@ -220,7 +220,7 @@ namespace JinGroup.Controller.Feature
                 }
                 else
                 {
-                    ruongDo.Stop();
+                    claimChest.Stop();
                     OnOneDone();
                 }
             }
@@ -264,11 +264,11 @@ namespace JinGroup.Controller.Feature
                 yield break;
             }
 
-            RuongDo ruongDo = GetRuongDo();
-            if (posSpawnItem == null && ruongDo != null)
-                posSpawnItem = ruongDo.GetComponent<RectTransform>();
+            ClaimChest claimChest = GetRuongDo();
+            if (posSpawnItem == null && claimChest != null)
+                posSpawnItem = claimChest.GetComponent<RectTransform>();
 
-            ruongDo?.Play();
+            claimChest?.Play();
 
             Vector2 startPos = GetOriginPosition(holderReward);
             int totalCount = rewardItems.Count;
@@ -300,10 +300,10 @@ namespace JinGroup.Controller.Feature
                 yield return null;
 
             // 2. RƯƠNG CO BÓP (nhún bẹt tích lực rồi vươn cao chuẩn bị bắn)
-            if (ruongDo != null)
+            if (claimChest != null)
             {
-                yield return StartCoroutine(ruongDo.Shrank());
-                ruongDo.ReboundToOriginal();
+                yield return StartCoroutine(claimChest.Shrank());
+                claimChest.ReboundToOriginal();
             }
 
             // 3. BẮN TOÀN BỘ ITEMS THEO CÁC TIA (giữa trước, rồi luân phiên trái phải)
@@ -384,10 +384,10 @@ namespace JinGroup.Controller.Feature
             _handles.Clear();
         }
 
-        private RuongDo GetRuongDo()
+        private ClaimChest GetRuongDo()
         {
-            RuongDo rd = posSpawnItem != null ? posSpawnItem.GetComponent<RuongDo>() : null;
-            return rd != null ? rd : GetComponentInChildren<RuongDo>();
+            ClaimChest rd = posSpawnItem != null ? posSpawnItem.GetComponent<ClaimChest>() : null;
+            return rd != null ? rd : GetComponentInChildren<ClaimChest>();
         }
 
         /// <summary>

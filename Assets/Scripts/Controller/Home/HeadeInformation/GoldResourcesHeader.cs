@@ -11,11 +11,9 @@ using UnityEngine.UI;
 
 public class GoldResourcesHeader : BaseResourcesHeader
 {
-    private                  int          _lastValue;
-    private                  MotionHandle _handle;
-    private                  float        _lastSoundTime;
-    [SerializeField] private Button       addMoreGold;
-
+    private                  int                         _lastValue;
+    private                  MotionHandle                _handle;
+    private                  float                       _lastSoundTime;
     [SerializeField] private ScaleEffectSquashAndStretch scaleEffectSquashAndStretch;
 
     protected override void Awake()
@@ -24,9 +22,6 @@ public class GoldResourcesHeader : BaseResourcesHeader
         _lastValue       = DataAccountPlayer.PlayerResourceData.gold;
         valueInformation = _lastValue;
         base.UpdateValue();
-
-
-        addMoreGold.onClick.AddListener(OnCLickMoreGold);
 
         if (scaleEffectSquashAndStretch == null)
             scaleEffectSquashAndStretch = GetComponent<ScaleEffectSquashAndStretch>();
@@ -59,17 +54,12 @@ public class GoldResourcesHeader : BaseResourcesHeader
                          });
     }
 
-
-    private void OnCLickMoreGold()
+    protected override void OnClickClaimMore()
     {
-        if (SwipePageHub.Instance != null)
-        {
-            SwipePageHub.Instance.SelectPage(SwipePageKind.Shop);
-            return;
-        }
-
-        // PopupManager.Instance.ShowPopup<PopupShopController>();
+        base.OnClickClaimMore();
+        SwipePageHub.Instance.SelectPage(SwipePageKind.Shop);
     }
+
 
     private void OnDestroy()
     {
