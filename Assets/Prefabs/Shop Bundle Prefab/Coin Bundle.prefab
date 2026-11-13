@@ -88,9 +88,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 479740356634641288, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 590400879371367898, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 954557114115836192, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 3d71b06015337594cbb2a29041bc89e8, type: 2}
+    - target: {fileID: 954557114115836192, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: aa62cb68055727c42bac57a0c464f887, type: 2}
+    - target: {fileID: 1032715750144611813, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
+      propertyPath: m_Color.b
+      value: 0.8745099
+      objectReference: {fileID: 0}
+    - target: {fileID: 1032715750144611813, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9490197
       objectReference: {fileID: 0}
     - target: {fileID: 1762013212528085355, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
       propertyPath: m_SizeDelta.x
@@ -274,12 +294,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7594444615524877247, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
       propertyPath: m_fontSize
-      value: 61.8
+      value: 50.95
       objectReference: {fileID: 0}
     - target: {fileID: 8243522985912625769, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: dd5fea6fe58aca84f9eae720785cae9b, type: 3}
+    - target: {fileID: 8243522985912625769, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8553788650392468460, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
       propertyPath: m_SizeDelta.x
       value: -621.4992

@@ -18,32 +18,52 @@ namespace JinGroup.Module.Reward
 
         public virtual void InitData(dataItem dataItem)
         {
-            typeResources = dataItem.typeReward;
+            var type = dataItem.typeReward;
+            typeResources = type;
 
-            GameDebug.Log($"[Reward] TypeResources truyền vào LoadItemIcon = {dataItem.typeReward}");
-
-            var icon = LoadResourceController.Instance.LoadItemIcon(dataItem.typeReward);
+            var icon = LoadResourceController.Instance.LoadItemIcon(type);
             if (icon != null)
             {
                 rewardIcon.sprite = icon;
             }
             else
             {
-                GameDebug.LogError($"[Reward] Không load được Sprite cho type = {dataItem.typeReward}");
+                GameDebug.LogError($"[Reward] Không load được Sprite cho type = {type}");
             }
-            if (dataItem.typeReward == TypeResources.noads7d || dataItem.typeReward == TypeResources.noads24h || dataItem.typeReward == TypeResources.noads)
+
+            string text = GetValueText(type, dataItem.value);
+            bool showValue = text != null;
+            if (showValue)
             {
-                valueTxt.gameObject.SetActive(false);
+                valueTxt.text = text;
             }
-            else if (dataItem.typeReward == TypeResources.heart)
+
+            // Always set active state so pooled/reused items don't keep a stale hidden/visible state
+            if (valueTxt.gameObject.activeSelf != showValue)
             {
-                valueTxt.gameObject.SetActive(dataItem.value != 0);
-                valueTxt.text = dataItem.value+"h";
+                valueTxt.gameObject.SetActive(showValue);
             }
-            else
+        }
+
+        /// <summary>Returns the value label for a reward, or null if the label should be hidden.</summary>
+        private static string GetValueText(TypeResources type, int value)
+        {
+            if (value == 0) return null;
+
+            switch (type)
             {
-                valueTxt.gameObject.SetActive(dataItem.value != 0);
-                valueTxt.text = dataItem.value.ToString();
+                case TypeResources.noads:
+                case TypeResources.noads7d:
+                case TypeResources.noads24h:
+                    return null;
+                case TypeResources.heart:
+                    return value + "h";
+                case TypeResources.booster1:
+                case TypeResources.booster2:
+                case TypeResources.booster3:
+                    return "x" + value;
+                default:
+                    return value.ToString();
             }
         }
 

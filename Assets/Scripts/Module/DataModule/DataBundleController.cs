@@ -6,6 +6,7 @@ using UnityEngine;
 using Base.Core.Debug;
 using Unity.VisualScripting;
 using DataAccount;
+using Sirenix.OdinInspector;
 
 [CreateAssetMenu(fileName = "DataBundle", menuName = "DataBundle")]
 public class DataBundleController : SpreadsheetsContainerBase
@@ -21,9 +22,93 @@ public class DataBundleController : SpreadsheetsContainerBase
     }
 
 #if UNITY_EDITOR
-    private void OnValidate()
-    {
+    [ContextMenu("Auto Link Bundle Sprites")]
+    private void AutoLinkAllBundles()
+    { 
         InvalidateCache();
+        AutoLinkSprites(false);
+    }
+
+    public const string BundleIconFolder = "Assets/Texture/UI/UI_shop/chest_icon";
+
+    [ContextMenu("Auto Link Bundle Sprites")]
+    public void AutoLinkSprites(bool saveAsset = true)
+    {
+        if (content == null) return;
+
+        bool changed = false;
+        changed |= LinkSprites(content.listBundlePack1);
+        changed |= LinkSprites(content.listBundlePack2);
+        changed |= LinkSprites(content.listBundlePack3);
+        changed |= LinkSprites(content.listBundlePack4);
+        changed |= LinkSprites(content.listBundlePack5);
+        changed |= LinkSprites(content.listBundlePack6);
+        changed |= LinkSprites(content.specialBundle);
+        changed |= LinkSprites(content.noAdsBundle1);
+        changed |= LinkSprites(content.noAdsBundle2);
+        changed |= LinkSprites(content.noAdsBundle3);
+        changed |= LinkSprites(content.vipBundle1);
+        changed |= LinkSprites(content.vipBundle2);
+        changed |= LinkSprites(content.vipBundle3);
+        changed |= LinkSprites(content.bundle_packGold);
+        changed |= LinkSprites(content.dailyBundle);
+
+        if (changed)
+        {
+            UnityEditor.EditorUtility.SetDirty(this);
+            if (saveAsset)
+            {
+                UnityEditor.AssetDatabase.SaveAssets();
+            }
+            Debug.Log("<color=green>[DataBundleController]</color> Auto linked imgIconBundle for bundles successfully!");
+        }
+    }
+
+    private static bool LinkSprites(List<BundleReward> list)
+    {
+        if (list == null || list.Count == 0) return false;
+
+        bool changed = false;
+        for (int i = 0; i < list.Count; i++)
+        {
+            var item = list[i];
+            if (item == null) continue;
+
+            var sprite = LoadSpriteAtPath(GetIconBundlePath(item.iconName));
+            if (sprite != null && item.imgIconBundle != sprite)
+            {
+                item.imgIconBundle = sprite;
+                changed = true;
+            }
+        }
+        return changed;
+    }
+
+    public static string GetIconBundlePath(string iconBundle)
+    {
+        if (string.IsNullOrWhiteSpace(iconBundle)) return null;
+
+        string fileName = System.IO.Path.GetFileNameWithoutExtension(iconBundle.Trim());
+        return $"{BundleIconFolder}/{fileName}.png";
+    }
+
+    private static Sprite LoadSpriteAtPath(string path)
+    {
+        if (string.IsNullOrEmpty(path)) return null;
+
+        var sprite = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>(path);
+        if (sprite != null) return sprite;
+
+        var assets = UnityEditor.AssetDatabase.LoadAllAssetsAtPath(path);
+        if (assets != null)
+        {
+            foreach (var a in assets)
+            {
+                if (a is Sprite s)
+                    return s;
+            }
+        }
+        return null;
     }
 #endif
 
@@ -255,7 +340,9 @@ public class BundleReward
     public bool   oneTimePurchase;
     public string idBundle;
     public string name;
-    public string iconBundle;
+    public string iconName;
+    public Sprite imgIconBundle;
+    public string productType;
     public int    levelUnlock; 
     public int    hourActive;
     public int    limitPurchase;

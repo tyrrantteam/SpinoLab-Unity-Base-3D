@@ -32,8 +32,7 @@ public class FreeHeartTimeText : MonoBehaviour
             return;
 
         var data = DataAccountPlayer.PlayerResourceData;
-        // if (data == null || !data.IsFreeHeartActive())
-        if (data == null )
+        if (data == null || !data.IsInfiniteHeartActive())
             return;
 
         long remainingMs = data.GetRemainingRecoverySeconds();
