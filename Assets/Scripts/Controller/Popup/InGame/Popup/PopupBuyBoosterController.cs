@@ -14,6 +14,8 @@ public class PopupBuyBoosterController : PopupBaseController
     [SerializeField] private Image boosterImgPreview;
     [SerializeField] private TextMeshProUGUI valueGetGold;
     [SerializeField] private TextMeshProUGUI priceText;
+    [SerializeField] private TextMeshProUGUI nameBoosterTxt;
+    [SerializeField] private TextMeshProUGUI boosterDesTxt;
 
     private BoosterType currentBoosterType;
     private ProcessBoosterData boosterData;
@@ -84,6 +86,8 @@ public class PopupBuyBoosterController : PopupBaseController
         mutipleValueGold = boosterData.mutipleValueGold > 0 ? boosterData.mutipleValueGold : 1;
         mutipleValueAds = boosterData.mutipleValueAds > 0 ? boosterData.mutipleValueAds : 1;
         price = boosterData.price;
+        boosterDesTxt.text = boosterData.description;
+        nameBoosterTxt.text = boosterData.nameBooster;
 
         UpdateUI();
         UpdateVisibility();

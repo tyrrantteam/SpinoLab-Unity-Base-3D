@@ -1419,7 +1419,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: X
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c1482dbce654844b9ba1c753cbea5d80, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 7374927986402738804, guid: c1482dbce654844b9ba1c753cbea5d80, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2511,6 +2511,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 79484262}
     m_Modifications:
+    - target: {fileID: 2686773683149851053, guid: 5dba5f895a72cc44fa6cf180272db20f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -14.350006
+      objectReference: {fileID: 0}
+    - target: {fileID: 2686773683149851053, guid: 5dba5f895a72cc44fa6cf180272db20f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -2.8320007
+      objectReference: {fileID: 0}
+    - target: {fileID: 3743699923854559077, guid: 5dba5f895a72cc44fa6cf180272db20f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 7.800003
+      objectReference: {fileID: 0}
+    - target: {fileID: 6453334299697178749, guid: 5dba5f895a72cc44fa6cf180272db20f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 9.299999
+      objectReference: {fileID: 0}
     - target: {fileID: 6880453522908530077, guid: 5dba5f895a72cc44fa6cf180272db20f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

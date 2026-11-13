@@ -94,10 +94,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2c8beb2a6e88104fb62184ad54b4577, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectList:
-  - {fileID: 558986385939347089}
-  - {fileID: 3083268792029231781}
-  canplayWhenEnable: 1
 --- !u!114 &558986385939347089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,8 +106,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c018689ba850574f914d9f4f6f4a25d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectType: 0
+  canPlayWhenEnable: 1
+  delayStart: 0
   duration: 1
+  fromScale: {x: 0, y: 0, z: 0}
+  toScale: {x: 1, y: 1, z: 1}
+  scaleCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &3083268792029231781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,7 +147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8726904960915274abb6212761122a15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectType: 0
+  canPlayWhenEnable: 1
+  delayStart: 0
   entryDirection: 0
   duration: 0.5
 --- !u!1 &1084151841139676244
@@ -194,7 +218,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: unlock when gundam unicorn come in to the sky
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c1482dbce654844b9ba1c753cbea5d80, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 7374927986402738804, guid: c1482dbce654844b9ba1c753cbea5d80, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -349,13 +373,14 @@ GameObject:
   - component: {fileID: 927989169700444404}
   - component: {fileID: 8656329954132844321}
   - component: {fileID: 7911579859455313539}
+  - component: {fileID: 1597534042325064308}
   m_Layer: 5
   m_Name: PopupProcessUnlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6281380307941733535
 RectTransform:
   m_ObjectHideFlags: 0
@@ -428,6 +453,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   closeBtn: {fileID: 5150450862895297321}
   closePanelBtn: {fileID: 7911579859455313539}
+  scaleEffectUi: {fileID: 0}
+  closeDuration: 0.25
+  closeEase: 4
+  closeBlockDuration: 0.8
+  keepOtherPopupsOnClose: 0
   TitleTxt: {fileID: 3180393468336605473}
   DescriptionTxt: {fileID: 8182917898658152631}
   previewMechImg: {fileID: 5494747917997762778}
@@ -475,6 +505,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!225 &1597534042325064308
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6062836318647604538}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7364785366312136081
 GameObject:
   m_ObjectHideFlags: 0
@@ -542,7 +584,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Close
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c1482dbce654844b9ba1c753cbea5d80, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 7374927986402738804, guid: c1482dbce654844b9ba1c753cbea5d80, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -676,7 +718,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Mechanic Unlock
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c1482dbce654844b9ba1c753cbea5d80, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 7374927986402738804, guid: c1482dbce654844b9ba1c753cbea5d80, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -877,6 +919,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67942e716285926488f23944c564ce5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectType: 0
+  canPlayWhenEnable: 1
+  delayStart: 0
   scaleMultiplier: 1.2
   duration: 0.1
