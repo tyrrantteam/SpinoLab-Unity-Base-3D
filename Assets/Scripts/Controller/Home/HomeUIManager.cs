@@ -120,8 +120,17 @@ namespace JinGroup.Common
 
         private void OnClickPlay()
         {
-            GameManager.instance.LoadScene(SceneName.GamePlayScreen);
-            DataAccountPlayer.PlayerDailyTashkData.UpdateTask(TypeTaskDaily.PlayGame);
+            var data = DataAccountPlayer.PlayerResourceData.heart;
+            var dataIsInfiniteHeartActive = DataAccountPlayer.PlayerResourceData.isInfiniteHeartActive;
+            if (data > 0 || dataIsInfiniteHeartActive)
+            {
+                GameManager.instance.LoadScene(SceneName.GamePlayScreen);
+                DataAccountPlayer.PlayerDailyTashkData.UpdateTask(TypeTaskDaily.PlayGame);
+            }
+            else
+            {
+                PopupManager.Instance.ShowPopup<PopupGetMoreHeartController>();
+            }
         }
 
         private void OnClickSettings()
