@@ -525,6 +525,41 @@ namespace DataAccount
             return $"{mm:D2}:{ss:D2}";
         }
 
+        /// <summary>
+        /// Lấy chuỗi đếm ngược thời gian hồi tim tiếp theo.
+        /// - Nếu đang Vô Hạn Tim: trả về chuỗi đếm ngược vô hạn tim (vd: 00h : 00m : 00s).
+        /// - Nếu tim đã đầy (heart >= limit): trả về "Full".
+        /// - Nếu đang hồi tim: trả về định dạng mm:ss (hoặc hh:mm:ss nếu >= 1 giờ).
+        /// </summary>
+        public string GetNextHeartRecoveryTimeString()
+        {
+            if (IsInfiniteHeartActive())
+            {
+                return GetRemainingInfiniteHeartTimeString();
+            }
+
+            int limit = GetHeartLimit();
+            if (heart >= limit)
+            {
+                return "Full";
+            }
+
+            long remaining = GetRemainingRecoverySeconds();
+            if (remaining >= 3600)
+            {
+                long hours = remaining / 3600;
+                long minutes = (remaining % 3600) / 60;
+                long seconds = remaining % 60;
+                return $"{hours:D2}:{minutes:D2}:{seconds:D2}";
+            }
+            else
+            {
+                long minutes = remaining / 60;
+                long seconds = remaining % 60;
+                return $"{minutes:D2}:{seconds:D2}";
+            }
+        }
+
         #endregion
 
         #region Income

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Base.Core.Debug;
 using DataAccount;
 using JinGroup.Base.LoadData;
@@ -12,14 +13,23 @@ public class PopupGetMoreHeartController : PopupBaseController
     [SerializeField] private Button claimGold;
     [SerializeField] private TextMeshProUGUI priceHeartTxt;
     [SerializeField] private TextMeshProUGUI valueHeartTxt;
-
+    [SerializeField] private TextMeshProUGUI currentHeartTxt;
+    [SerializeField] private TextMeshProUGUI timeCountingTxt;
+    
     private DataHeartController _dataHeartController;
     private bool _isProcessing;
+    private Coroutine _countdownCoroutine;
+    private Action<Component, object> _onUpdateHeart;
 
     protected override void Awake()
     {
         // Cho phép popup show đè lên popup khác, khi đóng chỉ tắt chính nó
         keepOtherPopupsOnClose = true;
+        _onUpdateHeart = (sender, param) =>
+        {
+            UpdateHeartDisplay();
+            UpdateCountdownDisplay();
+        };
         base.Awake();
     }
 
@@ -29,11 +39,55 @@ public class PopupGetMoreHeartController : PopupBaseController
         transform.SetAsLastSibling();
         base.OnEnable();
 
+        if (EventDispatcher.Instance != null && _onUpdateHeart != null)
+        {
+            EventDispatcher.Instance.RegisterListener(EventID.UpdateHeart, _onUpdateHeart);
+        }
+
         _isProcessing = false;
         if (claimAds != null) claimAds.interactable = true;
         if (claimGold != null) claimGold.interactable = true;
 
         UpdateUI();
+        StartCountdown();
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+
+        if (EventDispatcher.Instance != null && _onUpdateHeart != null)
+        {
+            EventDispatcher.Instance.RemoveListener(EventID.UpdateHeart, _onUpdateHeart);
+        }
+
+        StopCountdown();
+    }
+
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        if (!pauseStatus)
+        {
+            var res = DataAccountPlayer.PlayerResourceData;
+            if (res != null)
+            {
+                res.UpdateHeartRecovery();
+            }
+            UpdateUI();
+        }
+    }
+
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (hasFocus)
+        {
+            var res = DataAccountPlayer.PlayerResourceData;
+            if (res != null)
+            {
+                res.UpdateHeartRecovery();
+            }
+            UpdateUI();
+        }
     }
 
     protected override void InitData()
@@ -77,7 +131,8 @@ public class PopupGetMoreHeartController : PopupBaseController
     }
 
     /// <summary>
-    /// Hiển thị giá priceHeart và số lượng valueHeart từ DataHeartController
+    /// Hiển thị giá priceHeart, số lượng valueHeart từ DataHeartController,
+    /// số heart đang có (currentHeartTxt) và thời gian đếm ngược (timeCountingTxt).
     /// </summary>
     public void UpdateUI()
     {
@@ -96,6 +151,67 @@ public class PopupGetMoreHeartController : PopupBaseController
             {
                 valueHeartTxt.text = _dataHeartController.ValueHeart.ToString();
             }
+        }
+
+        UpdateHeartDisplay();
+        UpdateCountdownDisplay();
+    }
+
+    /// <summary>
+    /// Hiển thị số heart hiện đang có vào currentHeartTxt
+    /// </summary>
+    public void UpdateHeartDisplay()
+    {
+        if (currentHeartTxt == null) return;
+
+        var res = DataAccountPlayer.PlayerResourceData;
+        int currentHeart = res != null ? res.heart : 0;
+        currentHeartTxt.text = currentHeart.ToString();
+    }
+
+    /// <summary>
+    /// Hiển thị thời gian đếm ngược hồi heart tiếp theo vào timeCountingTxt
+    /// </summary>
+    public void UpdateCountdownDisplay()
+    {
+        if (timeCountingTxt == null) return;
+
+        var res = DataAccountPlayer.PlayerResourceData;
+        if (res == null)
+        {
+            timeCountingTxt.text = "00:00";
+            return;
+        }
+
+        timeCountingTxt.text = res.GetNextHeartRecoveryTimeString();
+    }
+
+    private void StartCountdown()
+    {
+        StopCountdown();
+        if (gameObject.activeInHierarchy)
+        {
+            _countdownCoroutine = StartCoroutine(CountdownRoutine());
+        }
+    }
+
+    private void StopCountdown()
+    {
+        if (_countdownCoroutine != null)
+        {
+            StopCoroutine(_countdownCoroutine);
+            _countdownCoroutine = null;
+        }
+    }
+
+    private IEnumerator CountdownRoutine()
+    {
+        var wait = new WaitForSecondsRealtime(1f);
+        while (true)
+        {
+            UpdateCountdownDisplay();
+            UpdateHeartDisplay();
+            yield return wait;
         }
     }
 

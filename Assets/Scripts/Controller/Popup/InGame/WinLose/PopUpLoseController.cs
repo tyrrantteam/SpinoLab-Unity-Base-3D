@@ -94,8 +94,19 @@ public class PopUpLoseController : PopupBaseController
     private void OnTryAgain()
     {
         //GameManager.Instance.LoadScene(SceneName.GamePlayScreen);
-        AnalyticManager.Instance.LogEventLevelTryAgain();
-        GameManager.Instance.LoadScene(SceneName.GamePlayScreen);
-        OnClosePopup();
+        var data = DataAccountPlayer.PlayerResourceData.heart;
+        var dataIsInfiniteHeartActive = DataAccountPlayer.PlayerResourceData.isInfiniteHeartActive;
+        if (data > 0 || dataIsInfiniteHeartActive)
+        {
+            AnalyticManager.Instance.LogEventLevelTryAgain();
+            GameManager.Instance.LoadScene(SceneName.GamePlayScreen);
+            OnClosePopup();
+        }
+        else
+        {
+            PopupManager.Instance.ShowPopup<PopupGetMoreHeartController>();
+        }
+
+        
     }
 }
