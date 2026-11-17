@@ -27,13 +27,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1343541945723269745}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.99225134, w: 0.12424689}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.726, y: 0.726, z: 0.726}
+  m_LocalScale: {x: 0.3922941, y: 0.3922941, z: 0.3922941}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8396177768265816381}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -165.725}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -108, y: 56}
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 22f0596543ce94bf5a521ca3139cfe02, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 374aa89aa5fa26e4eb22f90537ec2ea9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -101,9 +101,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ffbbd042f71ca7499b672d443146c9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canplayWhenEnable: 1
+  canPlayWhenEnable: 1
+  delayStart: 0
+  infiniteLoop: 1
+  loopCount: 3
+  duration: 1
   floatStrength: 10
-  floatSpeed: 1
+  ease: 3
 --- !u!1 &4733213690693915657
 GameObject:
   m_ObjectHideFlags: 0
