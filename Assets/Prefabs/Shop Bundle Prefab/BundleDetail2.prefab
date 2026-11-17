@@ -430,10 +430,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PF_ShopReward
       objectReference: {fileID: 0}
-    - target: {fileID: 3845090717119119552, guid: c7671e1821ef51247aab00436909b937, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 54.1
-      objectReference: {fileID: 0}
     - target: {fileID: 4417340736360219415, guid: c7671e1821ef51247aab00436909b937, type: 3}
       propertyPath: m_text
       value: x1
