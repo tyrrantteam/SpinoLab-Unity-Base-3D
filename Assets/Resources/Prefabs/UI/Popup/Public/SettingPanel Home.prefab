@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 5759802715792271678}
   - component: {fileID: 3644832590555488192}
   - component: {fileID: 796925230620515959}
-  - component: {fileID: 6053952382382853702}
   - component: {fileID: 2203620430057644012}
   m_Layer: 5
   m_Name: SettingPanel Home
@@ -169,47 +168,6 @@ MonoBehaviour:
   fromAlpha: 0
   toAlpha: 1
   ease: 5
---- !u!114 &6053952382382853702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 290847840256182689}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c018689ba850574f914d9f4f6f4a25d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canPlayWhenEnable: 1
-  delayStart: 0
-  duration: 0.25
-  fromScale: {x: 0, y: 0, z: 0}
-  toScale: {x: 1, y: 1, z: 1}
-  scaleCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &2203620430057644012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,7 +182,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   closeBtn: {fileID: 2020227300043911396}
   closePanelBtn: {fileID: 5290402354395758483}
-  scaleEffectUi: {fileID: 0}
+  scaleEffectUi: {fileID: 3698681492378604676}
   closeDuration: 0.25
   closeEase: 4
   closeBlockDuration: 0.8
@@ -1811,6 +1769,9 @@ GameObject:
   - component: {fileID: 3061643981906662473}
   - component: {fileID: 4616373670825352354}
   - component: {fileID: 7141432117432125082}
+  - component: {fileID: 3176742841771929873}
+  - component: {fileID: 3698681492378604676}
+  - component: {fileID: 1834734514184294834}
   m_Layer: 5
   m_Name: BG
   m_TagString: Untagged
@@ -1827,7 +1788,7 @@ RectTransform:
   m_GameObject: {fileID: 5498831275122241876}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.15642089, y: 0.15642089, z: 0.15642089}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5238433059979843527}
@@ -1878,6 +1839,102 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3176742841771929873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5498831275122241876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2c8beb2a6e88104fb62184ad54b4577, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3698681492378604676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5498831275122241876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c018689ba850574f914d9f4f6f4a25d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canPlayWhenEnable: 0
+  delayStart: 0
+  duration: 1
+  fromScale: {x: 1, y: 1, z: 1}
+  toScale: {x: 0, y: 0, z: 0}
+  scaleCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &1834734514184294834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5498831275122241876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae8ec263b4ba2bf49a83dbf49eede601, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canPlayWhenEnable: 1
+  delayStart: 0
+  duration: 1
+  fromScale: {x: 0, y: 0, z: 0}
+  toScale: {x: 1, y: 1, z: 1}
+  scaleExtend: 0.1
+  scaleCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  bounceRatio: 0.7
 --- !u!1 &5646012561145992509
 GameObject:
   m_ObjectHideFlags: 0

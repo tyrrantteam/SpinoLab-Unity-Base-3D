@@ -23,18 +23,18 @@ MonoBehaviour:
   content:
     listTut:
     - level: 5
-      imgMechanic: {fileID: 21300000, guid: fbb27ddaa7dcb9646b1ebe8a065ba9c5, type: 3}
+      imgMechanic: {fileID: 21300000, guid: 3f50c50d605df874a828878a0f87331e, type: 3}
       nameMechanic: Hannah1
       description: mechanic nay hay
     - level: 10
-      imgMechanic: {fileID: 21300000, guid: f6115fb19a494b84fafa897821890b05, type: 3}
+      imgMechanic: {fileID: 21300000, guid: aa4ff9fc40e78e54baa1926e040e44bb, type: 3}
       nameMechanic: Hannah2
       description: mechanic nay kho
     - level: 30
-      imgMechanic: {fileID: 21300000, guid: d9c964a5bc8cb34499902857469bbbb5, type: 3}
+      imgMechanic: {fileID: 21300000, guid: 7b01cb9dfb8245948883f1da1372e2cf, type: 3}
       nameMechanic: Hannah3
       description: cum cum
     - level: 40
-      imgMechanic: {fileID: 21300000, guid: ff29f98f3d52bf448a21642af0474d9f, type: 3}
+      imgMechanic: {fileID: 0}
       nameMechanic: Hannah4
       description: gundam Frame Unicorn
