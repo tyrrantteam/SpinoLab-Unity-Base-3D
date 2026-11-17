@@ -800,7 +800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c018689ba850574f914d9f4f6f4a25d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canPlayWhenEnable: 1
+  canPlayWhenEnable: 0
   delayStart: 0
   duration: 1
   fromScale: {x: 1, y: 1, z: 1}
