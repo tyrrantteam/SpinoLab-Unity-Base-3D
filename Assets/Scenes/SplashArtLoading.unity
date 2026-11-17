@@ -1776,6 +1776,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingsOverride: {fileID: 11400000, guid: 23ee81fd8783afd459c423bffb274bb6, type: 2}
+  gameConfigOverride: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
