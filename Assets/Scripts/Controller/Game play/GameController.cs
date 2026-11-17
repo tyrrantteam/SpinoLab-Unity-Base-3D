@@ -147,6 +147,7 @@ public class GameController : SingletonMono<GameController>
         DataAccountPlayer.PlayerDailyTashkData.UpdateTask(TypeTaskDaily.WinGame);
         DOVirtual.DelayedCall(1f, () =>
         {
+            uIGameController.SetPanelActive();
             confetiStartWin.SetActive(false);
             confetiRainWin.SetActive(true);
             SoundManager.Instance.PlaySound(SoundType.LevelCompleted);
@@ -157,6 +158,7 @@ public class GameController : SingletonMono<GameController>
 
     public void SetLoseGame()
     {
+        uIGameController.SetPanelActive();
         AnalyticManager.instance.LogEventLevelFailed();
         HapticManager.Instance.PlayHapticFailure();
         SoundManager.Instance.PlaySound(SoundType.LevelFail);
