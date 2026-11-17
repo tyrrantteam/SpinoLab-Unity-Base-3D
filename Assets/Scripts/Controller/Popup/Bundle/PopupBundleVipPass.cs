@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class PopupBundleVipPass : PopupBundleBaseController
 {
+   
     protected override void Awake()
     {
         base.Awake();
