@@ -33,6 +33,16 @@ namespace JinGroup.Controller.Feature
                 .BindToLocalScale(transform);
         }
         
+        public override void PrepareInitialState()
+        {
+            transform.localScale = Vector3.one;
+        }
+
+        public override void CancelMotion()
+        {
+            _handle.TryCancel();
+        }
+
         public override void Stop()
         {
             _handle.TryCancel();

@@ -11,10 +11,13 @@ using UnityEngine.UI;
 public class DailyTaskElementController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI taskDescriptionTxt;
+    [SerializeField] private TextMeshProUGUI taskDescriptionlayerCanClaimTxt;
+    [SerializeField] private TextMeshProUGUI taskDescriptionlayerCLaimedTxt;
     [SerializeField] private Image taskProcessor;
     [SerializeField] private TextMeshProUGUI valueTaskTxt;
     [SerializeField] private ModuleRewardController rewardController;
     [SerializeField] private GameObject notiObject;
+    [SerializeField] private GameObject canclaim;
     [FormerlySerializedAs("claimObject")]
     [SerializeField] private GameObject claimedObject;
     [SerializeField] private Button claimBtn;
@@ -62,10 +65,14 @@ public class DailyTaskElementController : MonoBehaviour
             if (!string.IsNullOrEmpty(item.describeText) && item.describeText.Contains("{0}"))
             {
                 taskDescriptionTxt.text = string.Format(item.describeText, item.valueTask);
+                taskDescriptionlayerCanClaimTxt.text = string.Format(item.describeText, item.valueTask);
+                taskDescriptionlayerCLaimedTxt.text = string.Format(item.describeText, item.valueTask);
             }
             else
             {
                 taskDescriptionTxt.text = $"{item.describeText} {item.valueTask}";
+                taskDescriptionlayerCanClaimTxt.text = $"{item.describeText} {item.valueTask}";
+                taskDescriptionlayerCLaimedTxt.text = $"{item.describeText} {item.valueTask}";
             }
         }
 
@@ -118,9 +125,15 @@ public class DailyTaskElementController : MonoBehaviour
             notiObject.SetActive(isCompleted && !isClaimed);
         }
 
+        if (canclaim != null)
+        {
+            canclaim.SetActive(isCompleted && !isClaimed);
+        }
+
         if (claimBtn != null)
         {
-            claimBtn.interactable = !isClaimed && isCompleted;
+            // Thay vì set interactable = false khi không đủ điều kiện, vẫn để true, bấm thì không chạy logic trong OnClickClaim
+            claimBtn.interactable = true;
         }
     }
 

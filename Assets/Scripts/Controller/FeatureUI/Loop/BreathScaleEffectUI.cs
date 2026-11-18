@@ -23,11 +23,26 @@ namespace JinGroup.Controller.Feature
 
         private MotionHandle _handle;
         private Vector3      _initialScale;
+        private bool         _isCaptured;
+
+        protected override void Awake()
+        {
+            CaptureInitialState();
+            base.Awake();
+        }
+
+        private void CaptureInitialState()
+        {
+            if (!_isCaptured)
+            {
+                _initialScale = transform.localScale == Vector3.zero ? Vector3.one : transform.localScale;
+                _isCaptured = true;
+            }
+        }
 
         public override void PrepareInitialState()
         {
-            // Lưu scale gốc và snap về minScale ngay khi enable (trước delay)
-            _initialScale = transform.localScale;
+            CaptureInitialState();
             transform.localScale = minScale;
         }
 
@@ -40,10 +55,16 @@ namespace JinGroup.Controller.Feature
                 .BindToLocalScale(transform);
         }
 
+        public override void CancelMotion()
+        {
+            _handle.TryCancel();
+        }
+
         public override void Stop()
         {
             _handle.TryCancel();
-            transform.localScale = _initialScale;
+            if (_isCaptured)
+                transform.localScale = _initialScale;
         }
     }
 }

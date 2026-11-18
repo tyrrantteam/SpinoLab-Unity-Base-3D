@@ -17,9 +17,20 @@ public class HorizontalShake : EffectBase
     Vector3      _baseLocalPosition;
     MotionHandle _handle;
 
-    protected void Awake()
+    protected override void Awake()
     { 
         CaptureBase();
+        base.Awake();
+    }
+
+    public override void PrepareInitialState()
+    {
+        RestoreBase();
+    }
+
+    public override void CancelMotion()
+    {
+        _handle.TryCancel();
     }
     
     /// <summary>Begin horizontal shake from the stored base local position.</summary>

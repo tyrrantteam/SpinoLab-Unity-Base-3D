@@ -21,6 +21,13 @@ namespace JinGroup.Controller.Feature
 
         private MotionHandle _handle;
 
+        public override bool IsCloseEffect => toScale == Vector3.zero && fromScale != Vector3.zero;
+
+        public override void CancelMotion()
+        {
+            _handle.TryCancel();
+        }
+
         public override void PrepareInitialState()
         {
             // Snap về fromScale ngay lập tức (trước khi render frame đầu tiên)

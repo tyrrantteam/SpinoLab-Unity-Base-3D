@@ -141,6 +141,12 @@ namespace JinGroup.Controller.Feature
         {
         }
 
+        public override void CancelMotion()
+        {
+            CancelHandles();
+            ClearItems();
+        }
+
         public override void Stop()
         {
             CancelHandles();

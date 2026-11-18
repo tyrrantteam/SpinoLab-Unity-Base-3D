@@ -14,7 +14,7 @@ namespace JinGroup.Common.Effect
             PrepareInitialState();
         }
 
-        private void OnEnable()
+        private void OnDisable()
         {
             PrepareInitialState();
         }
@@ -24,22 +24,47 @@ namespace JinGroup.Common.Effect
             if (_effects == null || _effects.Length == 0)
             {
                 _effects = GetComponents<EffectBase>();
+                if (_effects == null || _effects.Length == 0)
+                {
+                    _effects = GetComponentsInChildren<EffectBase>(true);
+                }
             }
         }
 
         /// <summary>
-        /// Reset tất cả effect trên GameObject về trạng thái ban đầu ngay lập tức
+        /// Reset tất cả effect về trạng thái ban đầu ngay lập tức.
+        /// Ưu tiên các effect mở (CanPlayWhenEnable = true), bỏ qua close effect để không bị đè scale=1 / alpha=1 gây nháy.
         /// </summary>
         public void PrepareInitialState()
         {
             CacheEffects();
-            if (_effects == null) return;
+            if (_effects == null || _effects.Length == 0) return;
+
+            bool hasOpenEffect = false;
+            for (int i = 0; i < _effects.Length; i++)
+            {
+                if (_effects[i] != null && _effects[i].enabled && _effects[i].CanPlayWhenEnable)
+                {
+                    hasOpenEffect = true;
+                    break;
+                }
+            }
 
             for (int i = 0; i < _effects.Length; i++)
             {
-                if (_effects[i] != null && _effects[i].enabled)
+                var effect = _effects[i];
+                if (effect == null || !effect.enabled) continue;
+
+                if (hasOpenEffect)
                 {
-                    _effects[i].PrepareInitialState();
+                    if (effect.CanPlayWhenEnable)
+                    {
+                        effect.PrepareInitialState();
+                    }
+                }
+                else if (!effect.IsCloseEffect)
+                {
+                    effect.PrepareInitialState();
                 }
             }
         }
@@ -52,13 +77,35 @@ namespace JinGroup.Common.Effect
         public void PlayAll()
         {
             CacheEffects();
-            if (_effects == null) return;
+            if (_effects == null || _effects.Length == 0) return;
+
+            bool hasOpenEffect = false;
+            for (int i = 0; i < _effects.Length; i++)
+            {
+                if (_effects[i] != null && _effects[i].enabled && _effects[i].CanPlayWhenEnable)
+                {
+                    hasOpenEffect = true;
+                    break;
+                }
+            }
 
             for (int i = 0; i < _effects.Length; i++)
             {
-                if (_effects[i] != null && _effects[i].enabled)
+                var effect = _effects[i];
+                if (effect == null || !effect.enabled) continue;
+
+                if (hasOpenEffect)
                 {
-                    _effects[i].Play();
+                    if (effect.CanPlayWhenEnable)
+                    {
+                        effect.PrepareInitialState();
+                        effect.Play();
+                    }
+                }
+                else if (!effect.IsCloseEffect)
+                {
+                    effect.PrepareInitialState();
+                    effect.Play();
                 }
             }
         }
@@ -135,9 +182,11 @@ namespace JinGroup.Common.Effect
                 EffectTypeLoop.Float          => gameObject.AddComponent<FloatingEffectUI>(),
                 EffectTypeLoop.BreathScale    => gameObject.AddComponent<BreathScaleEffectUI>(),
                 EffectTypeLoop.BreathAlpha    => gameObject.AddComponent<BreathAlphaEffectUI>(),
-                EffectTypeLoop.Rotate         => gameObject.AddComponent<RotateEffectUI>(),
-                EffectTypeLoop.RotatePingPong => gameObject.AddComponent<RotatePingPongEffectUI>(),
-                _                             => null
+                EffectTypeLoop.Rotate                => gameObject.AddComponent<RotateEffectUI>(),
+                EffectTypeLoop.RotatePingPong        => gameObject.AddComponent<RotatePingPongEffectUI>(),
+                EffectTypeLoop.ScaleSquashAndStretch => gameObject.AddComponent<ScaleSquashAndStretchLoopEffectUI>(),
+                EffectTypeLoop.MirrorShine           => gameObject.AddComponent<UIMirrorShineLoopEffectUI>(),
+                _                                    => null
             };
         }
 #endif

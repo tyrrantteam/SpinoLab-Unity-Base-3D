@@ -19,16 +19,34 @@ namespace JinGroup.Controller.Feature
         private MotionHandle  _handle;
 
         private RectTransform RT => _rt != null ? _rt : (_rt = GetComponent<RectTransform>());
+        private bool          _isCaptured;
 
-        private void Awake()
+        protected override void Awake()
         {
             _rt = GetComponent<RectTransform>();
+            CaptureInitialState();
+            base.Awake();
+        }
+
+        private void CaptureInitialState()
+        {
+            if (!_isCaptured)
+            {
+                _initialPos = RT.anchoredPosition;
+                _isCaptured = true;
+            }
+        }
+
+        public override void CancelMotion()
+        {
+            _handle.TryCancel();
         }
 
         public override void PrepareInitialState()
         {
-            // Ghi nhớ vị trí gốc ngay khi enable (trước delay)
-            _initialPos = RT.anchoredPosition;
+            CaptureInitialState();
+            if (RT != null)
+                RT.anchoredPosition = _initialPos;
         }
 
         public override void Play()

@@ -25,11 +25,26 @@ namespace JinGroup.Controller.Feature
 
         private MotionHandle _handle;
         private Vector3      _initialRotation;
+        private bool         _isCaptured;
+
+        protected override void Awake()
+        {
+            CaptureInitialState();
+            base.Awake();
+        }
+
+        private void CaptureInitialState()
+        {
+            if (!_isCaptured)
+            {
+                _initialRotation = transform.localEulerAngles;
+                _isCaptured = true;
+            }
+        }
 
         public override void PrepareInitialState()
         {
-            // Lưu rotation gốc và snap Z về minAngle (điểm bắt đầu) ngay khi enable (trước delay)
-            _initialRotation = transform.localEulerAngles;
+            CaptureInitialState();
             transform.localEulerAngles = new Vector3(_initialRotation.x, _initialRotation.y, minAngle);
         }
 
@@ -42,10 +57,16 @@ namespace JinGroup.Controller.Feature
                 .BindToLocalEulerAnglesZ(transform);
         }
 
+        public override void CancelMotion()
+        {
+            _handle.TryCancel();
+        }
+
         public override void Stop()
         {
             _handle.TryCancel();
-            transform.localEulerAngles = _initialRotation;
+            if (_isCaptured)
+                transform.localEulerAngles = _initialRotation;
         }
     }
 }
