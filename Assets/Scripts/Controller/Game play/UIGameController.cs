@@ -31,6 +31,9 @@ public class UIGameController : SingletonMono<UIGameController>
     private const float BottomBarRestPositionEpsilon = 1f;
 
     // Lưu vị trí sibling gốc của headerUIController để CloseResource khôi phục
+
+    [Header("Bottom bar slide")] public Button btnCloseBanner;
+    
     private int _headerOriginalSiblingIndex;
 
     protected override void Awake()
@@ -43,6 +46,7 @@ public class UIGameController : SingletonMono<UIGameController>
 
         // Ghi nhớ vị trí ban đầu của header trong Canvas
         _headerOriginalSiblingIndex = headerUIController.transform.GetSiblingIndex();
+        btnCloseBanner.onClick.AddListener(OnCloseBannerButton);
     }
 
     [Button("TEST WARNING", ButtonSizes.Large), GUIColor(0, 1, 0)]
@@ -91,6 +95,11 @@ public class UIGameController : SingletonMono<UIGameController>
 
     #region bottomBar
 
+    public void OnCloseBannerButton()
+    {
+        PopupManager.Instance.ShowPopup<PopupBundleRemoveAds>();
+    }
+    
     public void BottomBarSlideDown()
     {
         _bottomBarMotion.TryCancel();
