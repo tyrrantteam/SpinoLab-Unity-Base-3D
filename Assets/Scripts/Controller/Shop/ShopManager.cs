@@ -11,9 +11,9 @@ public class ShopManager : MonoBehaviour
     public DataBundleController      dataBundle;
     public GameDebugSettings         settings;
     public List<ShopBundleContainer> shopBundles;
-
-    [SerializeField] private float spawnDelay;
-
+    
+    [SerializeField] private float  spawnDelay;
+    
     private bool spawnComplete;
 
     private bool hasNoAds;
@@ -36,9 +36,11 @@ public class ShopManager : MonoBehaviour
         {
             StartCoroutine(DelayLayout());
         }
-
+        
+        
         this.RegisterListener(EventID.ActiveNoAds, (component, o) => DisableBundleType(BundleType.NoAds));
         this.RegisterListener(EventID.HideSpecialBundle, (component, o) => DisableBundleType(BundleType.SpecialOffer));
+        
     }
 
     private IEnumerator DelayLayout()

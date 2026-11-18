@@ -3228,7 +3228,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6742378393955829124, guid: 8df6608482cca3f489fc320b8f68e81a, type: 3}
       propertyPath: popupPrefabs.Array.size
-      value: 13
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 6742378393955829124, guid: 8df6608482cca3f489fc320b8f68e81a, type: 3}
       propertyPath: serializationData.Prefab
@@ -3289,11 +3289,11 @@ PrefabInstance:
     - target: {fileID: 6742378393955829124, guid: 8df6608482cca3f489fc320b8f68e81a, type: 3}
       propertyPath: popupPrefabs.Array.data[12]
       value: 
-      objectReference: {fileID: 1317597930555997823, guid: 45d4f1fac040b6e41827105c85343765, type: 3}
+      objectReference: {fileID: 4865623217107688371, guid: 19dae78cca387d94ebd9c17462757504, type: 3}
     - target: {fileID: 6742378393955829124, guid: 8df6608482cca3f489fc320b8f68e81a, type: 3}
       propertyPath: popupPrefabs.Array.data[13]
       value: 
-      objectReference: {fileID: 5011940244829553156, guid: 320f81e7730b8e84c86f7524c64849a1, type: 3}
+      objectReference: {fileID: 3174447263787776875, guid: 405285db5042b7c4a98cf382a3be7b2f, type: 3}
     - target: {fileID: 7936344057419671452, guid: 8df6608482cca3f489fc320b8f68e81a, type: 3}
       propertyPath: m_Name
       value: Popup
