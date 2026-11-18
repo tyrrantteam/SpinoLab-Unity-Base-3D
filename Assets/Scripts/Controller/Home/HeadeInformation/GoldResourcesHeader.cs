@@ -57,7 +57,15 @@ public class GoldResourcesHeader : BaseResourcesHeader
     protected override void OnClickClaimMore()
     {
         base.OnClickClaimMore();
-        SwipePageHub.Instance.SelectPage(SwipePageKind.Shop);
+        var currentScence = GameManager.Instance.currentScene;
+        if(currentScence == UI.LoadingScene.SceneName.HomeScene)
+        {
+            SwipePageHub.Instance.SelectPage(SwipePageKind.Shop);
+        }
+        else
+        {
+            //PopupManager.Instance.ShowPopup<ShopManager>();
+        }
     }
 
 

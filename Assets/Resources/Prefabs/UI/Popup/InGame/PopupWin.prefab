@@ -164,7 +164,7 @@ GameObject:
   - component: {fileID: 1406130661212794636}
   - component: {fileID: 2532664902524874956}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Gold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -184,7 +184,6 @@ RectTransform:
   m_Children:
   - {fileID: 3072600648331894306}
   - {fileID: 8186528587439917071}
-  - {fileID: 1003950946018137705}
   m_Father: {fileID: 8052161689707976939}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1081,7 +1080,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2438481151991529713}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -1177,7 +1176,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &689440756550780573
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1755,6 +1754,7 @@ RectTransform:
   - {fileID: 8079072657190008967}
   - {fileID: 6987196424231974261}
   - {fileID: 7329174312207677833}
+  - {fileID: 1003950946018137705}
   - {fileID: 525143516974355938}
   m_Father: {fileID: 770259761195188955}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2567,7 +2567,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ef36f6fa91394b047800047ee322d04d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ff728a3d61ad05e419017b84d1e1c863, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3067,7 +3067,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7869805258243270613
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3212,7 +3212,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8656944927482196385}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -4424,7 +4424,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 525143516974355938}
+    m_TransformParent: {fileID: 8052161689707976939}
     m_Modifications:
     - target: {fileID: 9144540493384991193, guid: 09ee501c197b44229b8de422eb1cbfc3, type: 3}
       propertyPath: m_SortingLayer
@@ -4504,7 +4504,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9144540493384991204, guid: 09ee501c197b44229b8de422eb1cbfc3, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 638
       objectReference: {fileID: 0}
     - target: {fileID: 9144540493384991204, guid: 09ee501c197b44229b8de422eb1cbfc3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4521,6 +4521,10 @@ PrefabInstance:
     - target: {fileID: 9144540493384991205, guid: 09ee501c197b44229b8de422eb1cbfc3, type: 3}
       propertyPath: m_Name
       value: Fx_Shines_Light02
+      objectReference: {fileID: 0}
+    - target: {fileID: 9144540493384991205, guid: 09ee501c197b44229b8de422eb1cbfc3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

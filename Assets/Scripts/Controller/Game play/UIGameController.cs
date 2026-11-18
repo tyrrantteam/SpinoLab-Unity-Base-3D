@@ -26,6 +26,7 @@ public class UIGameController : SingletonMono<UIGameController>
 
     [SerializeField] RectTransform _bottomBarRect;
     [SerializeField] Vector2 _bottomBarRestAnchoredPosition;
+    [SerializeField] private GameObject panelWinLose;
     private MotionHandle _bottomBarMotion;
     private const float BottomBarRestPositionEpsilon = 1f;
 
@@ -131,5 +132,16 @@ public class UIGameController : SingletonMono<UIGameController>
         headerUIController.transform.SetSiblingIndex(_headerOriginalSiblingIndex);
         headerUIController.CloseResource();
     }
+    #endregion
+
+    #region WinLose
+
+    public void SetPanelActive()
+    {
+        HighLightResource();
+        BottomBarSlideDown();
+        panelWinLose.gameObject.SetActive(true);
+    }
+
     #endregion
 }
