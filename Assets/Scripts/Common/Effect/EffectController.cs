@@ -182,9 +182,11 @@ namespace JinGroup.Common.Effect
                 EffectTypeLoop.Float          => gameObject.AddComponent<FloatingEffectUI>(),
                 EffectTypeLoop.BreathScale    => gameObject.AddComponent<BreathScaleEffectUI>(),
                 EffectTypeLoop.BreathAlpha    => gameObject.AddComponent<BreathAlphaEffectUI>(),
-                EffectTypeLoop.Rotate         => gameObject.AddComponent<RotateEffectUI>(),
-                EffectTypeLoop.RotatePingPong => gameObject.AddComponent<RotatePingPongEffectUI>(),
-                _                             => null
+                EffectTypeLoop.Rotate                => gameObject.AddComponent<RotateEffectUI>(),
+                EffectTypeLoop.RotatePingPong        => gameObject.AddComponent<RotatePingPongEffectUI>(),
+                EffectTypeLoop.ScaleSquashAndStretch => gameObject.AddComponent<ScaleSquashAndStretchLoopEffectUI>(),
+                EffectTypeLoop.MirrorShine           => gameObject.AddComponent<UIMirrorShineLoopEffectUI>(),
+                _                                    => null
             };
         }
 #endif

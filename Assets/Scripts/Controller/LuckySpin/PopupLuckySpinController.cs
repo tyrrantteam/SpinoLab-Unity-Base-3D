@@ -8,6 +8,7 @@ using JinGroup.Module.Reward;
 using LitMotion;
 using Sirenix.OdinInspector;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -42,15 +43,29 @@ public class PopupLuckySpinController : PopupBaseController
     [SerializeField] private float decorKickAngle = 18f;
     [SerializeField] private float decorKickDuration = 0.1f;
 
+    [Title("Decor Light Elements")]
+    [SerializeField] private GameObject DecorLightSpin;
+    [SerializeField] private GameObject[] DecorLightSpins;
+    [SerializeField] private GameObject[] DecorLightSpins1;
+    [SerializeField] private GameObject LightSelection;
+
+    [Title("Decor Light Settings")]
+    [SerializeField] private float rewardShowDelay = 1.2f;
+    [SerializeField] private float chaserStepDuration = 0.12f;
+    [SerializeField] private float chaserOffDuration = 0.04f;
+
     private DataLuckySpinController _dataLuckySpinController;
     private int _mileStoneSpin;
     private bool _isSpinning;
     private MotionHandle _spinMotion;
     private MotionHandle _decorMotion;
+    private Coroutine _chaserCoroutine;
+    private Coroutine _rewardCoroutine;
 
     protected override void InitData()
     {
         base.InitData();
+        ResetAllDecorLights();
 
         if (_dataLuckySpinController == null)
         {
@@ -70,6 +85,7 @@ public class PopupLuckySpinController : PopupBaseController
     {
         base.OnEnable();
         _isSpinning = false;
+        ResetAllDecorLights();
         InitData();
     }
 
@@ -78,7 +94,24 @@ public class PopupLuckySpinController : PopupBaseController
         base.OnDisable();
         _spinMotion.TryCancel();
         _decorMotion.TryCancel();
+        if (_rewardCoroutine != null)
+        {
+            StopCoroutine(_rewardCoroutine);
+            _rewardCoroutine = null;
+        }
+        ResetAllDecorLights();
         _isSpinning = false;
+    }
+
+    public override void ResetToInitialState()
+    {
+        base.ResetToInitialState();
+        if (_rewardCoroutine != null)
+        {
+            StopCoroutine(_rewardCoroutine);
+            _rewardCoroutine = null;
+        }
+        ResetAllDecorLights();
     }
 
     protected override void ListenerButton()
@@ -297,6 +330,13 @@ public class PopupLuckySpinController : PopupBaseController
         if (spinBtn != null) spinBtn.interactable = false;
         if (spinAdsBtn != null) spinAdsBtn.interactable = false;
 
+        // 1: khi bấm vào spin và bắt đầu quay sẽ set active true DecorLightSpin
+        ResetAllDecorLights();
+        if (DecorLightSpin != null)
+        {
+            DecorLightSpin.SetActive(true);
+        }
+
         float angleStep = 360f / slotCount;
         float startAngle = coreSpin != null ? coreSpin.transform.localEulerAngles.z : 0f;
 
@@ -380,32 +420,157 @@ public class PopupLuckySpinController : PopupBaseController
 
     private void OnSpinCompleted(ItemLuckySpin chosenItem)
     {
-        _isSpinning = false;
-
         // 10.5: Trả phần thưởng nhận được và cộng tài nguyên vào dataAccountPlayer
         AddRewardToAccount(chosenItem);
 
-        // Yêu cầu 3: Thay thế logic trả thưởng qua popup cũ thành popup PopupShowRewardSingleUnitController
+        // 2: khi spin dừng lại sẽ set active true và false liên tục theo thứ tự từ đầu đến cuối với 2 mảng cùng lúc là DecorLightSpins và DecorLightSpins1
+        // 3: khi spin dừng lại sẽ set active true LightSelection
+        if (LightSelection != null)
+        {
+            LightSelection.SetActive(true);
+        }
+
+        StartChaserLights();
+
+        if (_rewardCoroutine != null)
+        {
+            StopCoroutine(_rewardCoroutine);
+        }
+        _rewardCoroutine = StartCoroutine(RoutineShowReward(chosenItem));
+    }
+
+    private IEnumerator RoutineShowReward(ItemLuckySpin chosenItem)
+    {
+        if (rewardShowDelay > 0f)
+        {
+            yield return new WaitForSeconds(rewardShowDelay);
+        }
+
+        ShowRewardPopup(chosenItem);
+        _rewardCoroutine = null;
+    }
+
+    private void ShowRewardPopup(ItemLuckySpin chosenItem)
+    {
+        Action onRewardShown = () =>
+        {
+            // sau khi popup trả thưởng hiện lên sẽ setactive false những object trên
+            ResetAllDecorLights();
+        };
+
         if (PopupManager.Instance != null)
         {
             var singleRewardPopup = PopupManager.Instance.ShowPopup<PopupShowRewardSingleUnitController>(popup =>
             {
                 popup.ShowReward(chosenItem);
-            });
+            }, onRewardShown);
 
             if (singleRewardPopup == null)
             {
-                singleRewardPopup = PopupManager.Instance.ModuleShowRewardSingleUnit();
+                singleRewardPopup = PopupManager.Instance.ModuleShowRewardSingleUnit(onRewardShown);
                 if (singleRewardPopup != null)
                 {
                     singleRewardPopup.ShowReward(chosenItem);
                 }
+                else
+                {
+                    onRewardShown.Invoke();
+                }
             }
+        }
+        else
+        {
+            onRewardShown.Invoke();
         }
 
         // 11: sau khi spin xong sẽ reset lại currentLevelProcess = 0 và valueProcessorTxt, textDescriptionTxt
         DataAccountPlayer.PlayerLuckySpinData.ResetProcess();
         UpdateUI();
+        _isSpinning = false;
+    }
+
+    private void StartChaserLights()
+    {
+        StopChaserLights();
+        _chaserCoroutine = StartCoroutine(RoutineChaserLights());
+    }
+
+    private void StopChaserLights()
+    {
+        if (_chaserCoroutine != null)
+        {
+            StopCoroutine(_chaserCoroutine);
+            _chaserCoroutine = null;
+        }
+
+        SetLightsActive(DecorLightSpins, false);
+        SetLightsActive(DecorLightSpins1, false);
+    }
+
+    private IEnumerator RoutineChaserLights()
+    {
+        int count0 = DecorLightSpins != null ? DecorLightSpins.Length : 0;
+        int count1 = DecorLightSpins1 != null ? DecorLightSpins1.Length : 0;
+        int maxLen = Mathf.Max(count0, count1);
+
+        if (maxLen == 0) yield break;
+
+        SetLightsActive(DecorLightSpins, false);
+        SetLightsActive(DecorLightSpins1, false);
+
+        while (true)
+        {
+            for (int i = 0; i < maxLen; i++)
+            {
+                SetLightPairActive(i, true);
+                yield return new WaitForSeconds(chaserStepDuration > 0f ? chaserStepDuration : 0.12f);
+                SetLightPairActive(i, false);
+                if (chaserOffDuration > 0f)
+                {
+                    yield return new WaitForSeconds(chaserOffDuration);
+                }
+            }
+        }
+    }
+
+    private void SetLightPairActive(int index, bool isActive)
+    {
+        if (DecorLightSpins != null && index >= 0 && index < DecorLightSpins.Length && DecorLightSpins[index] != null)
+        {
+            DecorLightSpins[index].SetActive(isActive);
+        }
+
+        if (DecorLightSpins1 != null && index >= 0 && index < DecorLightSpins1.Length && DecorLightSpins1[index] != null)
+        {
+            DecorLightSpins1[index].SetActive(isActive);
+        }
+    }
+
+    private void SetLightsActive(GameObject[] lights, bool isActive)
+    {
+        if (lights == null) return;
+        for (int i = 0; i < lights.Length; i++)
+        {
+            if (lights[i] != null)
+            {
+                lights[i].SetActive(isActive);
+            }
+        }
+    }
+
+    private void ResetAllDecorLights()
+    {
+        StopChaserLights();
+
+        if (DecorLightSpin != null)
+        {
+            DecorLightSpin.SetActive(false);
+        }
+
+        if (LightSelection != null)
+        {
+            LightSelection.SetActive(false);
+        }
     }
 
     private void AddRewardToAccount(ItemLuckySpin item)
