@@ -1229,14 +1229,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e28bfbfac8442347b3112c2cddf691d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  closeBtn: {fileID: 4891734785095973881}
+  closeBtn: {fileID: 242137447715637648}
   closePanelBtn: {fileID: 5570108654209437084}
   scaleEffectUi: {fileID: 5303619980198379321}
   closeDuration: 0.25
   closeEase: 4
   closeBlockDuration: 0.8
   keepOtherPopupsOnClose: 0
-  goHomeBtn: {fileID: 242137447715637648}
+  goHomeBtn: {fileID: 4891734785095973881}
 --- !u!1001 &3292087979344367470
 PrefabInstance:
   m_ObjectHideFlags: 0
