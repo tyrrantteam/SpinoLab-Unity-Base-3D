@@ -51,8 +51,8 @@ public class TimerFeatureHomeBtn : BaseFeatureHomeBtn
             _countdownCo = null;
         }
 
-        if (timeObject != null)
-            timeObject.SetActive(false);
+        timeObject.SetActive(false);
+           
     }
 
     private IEnumerator CoCountdown(DateTime endTime)
