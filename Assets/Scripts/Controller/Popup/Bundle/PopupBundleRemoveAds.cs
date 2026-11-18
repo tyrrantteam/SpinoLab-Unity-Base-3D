@@ -4,6 +4,7 @@ using JinGroup.Common;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PopupBundleRemoveAds : PopupBundleBaseController
 {
@@ -36,5 +37,15 @@ public class PopupBundleRemoveAds : PopupBundleBaseController
 
         if (!HomeUIManager.IsNull)
             HomeUIManager.Instance.RefreshBundleButtons();
+    }
+
+    protected override void OnClosed()
+    {
+        if (SceneManager.GetActiveScene().name == "GamePlayScreen")
+        {
+            Debug.Log("Current scene is Gameplay");
+            AdsManager.Instance.ShowInter();
+        }
+        base.OnClosed();
     }
 }
