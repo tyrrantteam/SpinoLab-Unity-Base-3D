@@ -58,6 +58,11 @@ namespace JinGroup.Controller.Feature
                 .Bind(ApplyScale);
         }
 
+        public override void CancelMotion()
+        {
+            _handle.TryCancel();
+        }
+
         public override void Stop()
         {
             _handle.TryCancel();

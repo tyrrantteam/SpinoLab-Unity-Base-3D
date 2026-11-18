@@ -1,6 +1,5 @@
 using JinGroup.Common.Effect;
 using LitMotion;
-using LitMotion.Extensions;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -24,11 +23,13 @@ namespace JinGroup.Controller.Feature
         [LabelText("Scale Curve")]
         public AnimationCurve scaleCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
-        [LabelText("Bounce Ratio"), Range(0.1f, 0.9f)]
+        [LabelText("Bounce Ratio"), Range(0.05f, 0.95f)]
         [Tooltip("Tỷ lệ thời gian giữa 2 phase: từ start -> peak và từ peak -> toScale.")]
         public float bounceRatio = 0.7f;
 
         private MotionHandle _handle;
+
+        public override bool IsCloseEffect => toScale == Vector3.zero && fromScale != Vector3.zero;
 
         public override void PrepareInitialState()
         {
@@ -50,26 +51,38 @@ namespace JinGroup.Controller.Feature
             // Nếu scaleExtend = 0 thì diễn mượt trực tiếp như ScaleEffectUi thông thường
             if (Mathf.Approximately(scaleExtend, 0f))
             {
-                _handle = LMotion.Create(fromScale, toScale, duration)
+                _handle = LMotion.Create(0f, 1f, duration)
                     .WithEase(scaleCurve)
-                    .BindToLocalScale(transform);
+                    .Bind(t => transform.localScale = Vector3.LerpUnclamped(fromScale, toScale, t));
                 return;
             }
 
             Vector3 peakScale = CalculatePeakScale();
-            float phase1Duration = duration * bounceRatio;
-            float phase2Duration = duration * (1f - bounceRatio);
+            float ratio = Mathf.Clamp(bounceRatio, 0.05f, 0.95f);
 
-            // Phase 1: FromScale -> PeakScale (vượt ngưỡng hoặc thụt ngưỡng theo scaleExtend)
-            // Phase 2: PeakScale -> ToScale (hồi về toScale)
-            _handle = LSequence.Create()
-                .Append(LMotion.Create(fromScale, peakScale, phase1Duration)
-                    .WithEase(scaleCurve)
-                    .BindToLocalScale(transform))
-                .Append(LMotion.Create(peakScale, toScale, phase2Duration)
-                    .WithEase(scaleCurve)
-                    .BindToLocalScale(transform))
-                .Run();
+            // Dùng 1 LMotion duy nhất thay vì LSequence để tránh ImmediateBind của Phase 2
+            // đè scale = peakScale (~1) ngay ở frame đầu gây ra hiện tượng nháy hình 1 -> 0 -> bounce.
+            _handle = LMotion.Create(0f, 1f, duration)
+                .Bind(t =>
+                {
+                    if (t <= ratio)
+                    {
+                        float p = t / ratio;
+                        float curveVal = scaleCurve != null ? scaleCurve.Evaluate(p) : p;
+                        transform.localScale = Vector3.LerpUnclamped(fromScale, peakScale, curveVal);
+                    }
+                    else
+                    {
+                        float p = (t - ratio) / (1f - ratio);
+                        float curveVal = scaleCurve != null ? scaleCurve.Evaluate(p) : p;
+                        transform.localScale = Vector3.LerpUnclamped(peakScale, toScale, curveVal);
+                    }
+                });
+        }
+
+        public override void CancelMotion()
+        {
+            _handle.TryCancel();
         }
 
         public override void Stop()

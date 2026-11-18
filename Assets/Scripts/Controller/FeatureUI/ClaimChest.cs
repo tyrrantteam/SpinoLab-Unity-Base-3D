@@ -60,7 +60,7 @@ namespace JinGroup.Controller.Feature
         private MotionHandle _scaleHandle;
         private Coroutine    _recoilRoutine;
 
-        private void Awake()
+        protected override void Awake()
         {
             _initialLocalEulerAngles = transform.localEulerAngles;
             _initialScale            = transform.localScale;
@@ -74,6 +74,25 @@ namespace JinGroup.Controller.Feature
                 spriteChest.SetNativeSize();
                 _initialSprite            = spriteChest.sprite;
                 spriteChest.raycastTarget = false;
+            }
+            base.Awake();
+        }
+
+        public override void PrepareInitialState()
+        {
+            ResetRotation();
+            ResetScale();
+            ResetSprite();
+        }
+
+        public override void CancelMotion()
+        {
+            _rotHandle.TryCancel();
+            _scaleHandle.TryCancel();
+            if (_recoilRoutine != null)
+            {
+                StopCoroutine(_recoilRoutine);
+                _recoilRoutine = null;
             }
         }
 

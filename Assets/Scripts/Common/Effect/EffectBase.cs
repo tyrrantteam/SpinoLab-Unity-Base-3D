@@ -11,16 +11,29 @@ namespace JinGroup.Common.Effect
 {
     public abstract class EffectBase : MonoBehaviour, IEffect
     {
+        [UnityEngine.Serialization.FormerlySerializedAs("canplayWhenEnable")]
         [SerializeField] private bool canPlayWhenEnable = true;
 
-        [ShowIf("canPlayWhenEnable")] [LabelText("Delay Start")] [SerializeField]
+        /// <summary>
+        /// Cho biết hiệu ứng này có phải hiệu ứng đóng (scale down hoặc fade out) hay không.
+        /// Hiệu ứng đóng không bao giờ tự động chạy khi GameObject được enable.
+        /// </summary>
+        public virtual bool IsCloseEffect => false;
+
+        public bool CanPlayWhenEnable
+        {
+            get => canPlayWhenEnable && !IsCloseEffect;
+            set => canPlayWhenEnable = value;
+        }
+
+        [ShowIf("CanPlayWhenEnable")] [LabelText("Delay Start")] [SerializeField]
         private float delayStart = 0f;
 
         private MotionHandle _delayHandle;
 
         protected virtual void Awake()
         {
-            if (canPlayWhenEnable)
+            if (CanPlayWhenEnable)
             {
                 PrepareInitialState();
             }
@@ -28,7 +41,7 @@ namespace JinGroup.Common.Effect
 
         protected virtual void OnEnable()
         {
-            if (!canPlayWhenEnable) return;
+            if (!CanPlayWhenEnable) return;
 
             // Snap về giá trị bắt đầu ngay lập tức khi enable (trước khi render frame đầu tiên và trước delay)
             // → đảm bảo object luôn ở đúng trạng thái khởi đầu ngay từ frame đầu tiên khi mở popup
@@ -50,13 +63,23 @@ namespace JinGroup.Common.Effect
         protected virtual void OnDisable()
         {
             _delayHandle.TryCancel();
-            Stop();
+            CancelMotion();
 
-            if (canPlayWhenEnable)
+            // Reset về trạng thái ban đầu ngay khi disable để lần mở tiếp theo không bị nháy hình ở frame đầu.
+            // Hiệu ứng đóng (IsCloseEffect) không reset về fromScale=1 / fromAlpha=1 để tránh đè lên hiệu ứng mở.
+            if (!IsCloseEffect)
             {
-                // Reset về trạng thái ban đầu ngay khi disable để lần mở tiếp theo không bị nháy hình ở frame đầu
                 PrepareInitialState();
             }
+        }
+
+        /// <summary>
+        /// Hủy tween đang chạy mà không ép giá trị về toScale/toAlpha như Stop().
+        /// Dùng khi disable hoặc reset để tránh làm nhảy trạng thái visual của object.
+        /// </summary>
+        public virtual void CancelMotion()
+        {
+            Stop();
         }
 
         /// <summary>

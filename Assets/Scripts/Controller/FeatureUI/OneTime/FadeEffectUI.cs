@@ -26,12 +26,20 @@ namespace JinGroup.Controller.Feature
         private CanvasGroup  _canvasGroup;
         private MotionHandle _handle;
 
-        private void Awake()
+        public override bool IsCloseEffect => Mathf.Approximately(toAlpha, 0f) && fromAlpha > 0f;
+
+        protected override void Awake()
         {
             _canvasGroup = GetComponent<CanvasGroup>();
+            base.Awake();
         }
  
         private CanvasGroup CanvasGroup => _canvasGroup != null ? _canvasGroup : (_canvasGroup = GetComponent<CanvasGroup>());
+
+        public override void CancelMotion()
+        {
+            _handle.TryCancel();
+        }
 
         public override void PrepareInitialState()
         {

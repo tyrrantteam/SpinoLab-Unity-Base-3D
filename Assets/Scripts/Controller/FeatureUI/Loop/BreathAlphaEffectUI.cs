@@ -29,16 +29,32 @@ namespace JinGroup.Controller.Feature
         private CanvasGroup CanvasGroup => _canvasGroup != null
             ? _canvasGroup
             : (_canvasGroup = GetComponent<CanvasGroup>());
+        private bool _isCaptured;
 
-        private void Awake()
+        protected override void Awake()
         {
             _canvasGroup = GetComponent<CanvasGroup>();
+            CaptureInitialState();
+            base.Awake();
+        }
+
+        private void CaptureInitialState()
+        {
+            if (!_isCaptured)
+            {
+                _initialAlpha = CanvasGroup.alpha;
+                _isCaptured = true;
+            }
+        }
+
+        public override void CancelMotion()
+        {
+            _handle.TryCancel();
         }
 
         public override void PrepareInitialState()
         {
-            // Lưu alpha gốc và snap về minAlpha ngay khi enable (trước delay)
-            _initialAlpha = CanvasGroup.alpha;
+            CaptureInitialState();
             CanvasGroup.alpha = minAlpha;
         }
 
@@ -54,7 +70,8 @@ namespace JinGroup.Controller.Feature
         public override void Stop()
         {
             _handle.TryCancel();
-            CanvasGroup.alpha = _initialAlpha;
+            if (_isCaptured)
+                CanvasGroup.alpha = _initialAlpha;
         }
     }
 }

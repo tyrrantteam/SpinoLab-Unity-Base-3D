@@ -43,8 +43,9 @@ public class PopUpWinController : PopupBaseController
     }
 
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         Invoke("ActiveStarDecor", 0.5f);
         Invoke("ActiveHeaderDecor", 0.5f);
         Invoke("ActiveNextProcess", 2);
@@ -58,6 +59,7 @@ public class PopUpWinController : PopupBaseController
     }
     protected override void OnDisable()
     {
+        base.OnDisable();
         rewardGauge.OnRewardResult -= OnGetResult;
         rewardGauge.OnRewardChange -= OnRewardChange;
     }

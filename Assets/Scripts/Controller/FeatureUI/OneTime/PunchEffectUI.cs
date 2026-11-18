@@ -35,25 +35,39 @@ namespace JinGroup.Controller.Feature
         private Vector3 _initialScale;
         private Vector2 _initialPosition;
         private Vector3 _initialRotation;
+        private bool    _isCaptured;
 
-        private void Awake()
+        protected override void Awake()
         {
             _rt = GetComponent<RectTransform>();
+            CaptureInitialState();
+            base.Awake();
+        }
+
+        private void CaptureInitialState()
+        {
+            if (!_isCaptured)
+            {
+                _initialScale = transform.localScale == Vector3.zero ? Vector3.one : transform.localScale;
+                _initialPosition = RT.anchoredPosition;
+                _initialRotation = transform.localEulerAngles;
+                _isCaptured = true;
+            }
         }
 
         public override void PrepareInitialState()
         {
-            // Ghi nhớ giá trị gốc trước khi delay để Stop() restore đúng
+            CaptureInitialState();
             switch (punchType)
             {
                 case PunchType.Scale:
-                    _initialScale = transform.localScale;
+                    transform.localScale = _initialScale;
                     break;
                 case PunchType.Position:
-                    _initialPosition = RT.anchoredPosition;
+                    RT.anchoredPosition = _initialPosition;
                     break;
                 case PunchType.Rotation:
-                    _initialRotation = transform.localEulerAngles;
+                    transform.localEulerAngles = _initialRotation;
                     break;
             }
         }
@@ -61,13 +75,14 @@ namespace JinGroup.Controller.Feature
         public override void Play()
         {
             _handle.TryCancel();
+            CaptureInitialState();
 
             float dampingRatio = 1f - elasticity;
 
             switch (punchType)
             {
                 case PunchType.Scale:
-                    _initialScale = transform.localScale;
+                    transform.localScale = _initialScale;
                     _handle = LMotion.Punch.Create(_initialScale, strength, duration)
                         .WithFrequency(vibrato)
                         .WithDampingRatio(dampingRatio)
@@ -76,7 +91,7 @@ namespace JinGroup.Controller.Feature
 
                 case PunchType.Position:
                     RectTransform rt = RT;
-                    _initialPosition = rt.anchoredPosition;
+                    rt.anchoredPosition = _initialPosition;
                     _handle = LMotion.Punch.Create(_initialPosition, (Vector2)strength, duration)
                         .WithFrequency(vibrato)
                         .WithDampingRatio(dampingRatio)
@@ -84,13 +99,18 @@ namespace JinGroup.Controller.Feature
                     break;
 
                 case PunchType.Rotation:
-                    _initialRotation = transform.localEulerAngles;
+                    transform.localEulerAngles = _initialRotation;
                     _handle = LMotion.Punch.Create(_initialRotation, strength, duration)
                         .WithFrequency(vibrato)
                         .WithDampingRatio(dampingRatio)
                         .BindToLocalEulerAngles(transform);
                     break;
             }
+        }
+
+        public override void CancelMotion()
+        {
+            _handle.TryCancel();
         }
 
         public override void Stop()
