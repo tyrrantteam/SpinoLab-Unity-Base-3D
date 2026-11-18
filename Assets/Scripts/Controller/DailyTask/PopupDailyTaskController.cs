@@ -75,7 +75,8 @@ public class PopupDailyTaskController : PopupBaseController
     }
 
     /// <summary>
-    /// Sinh dailyTaskSample theo số lượng task element có trong DataDailyTaskController vào holderdailyTask
+    /// Sinh dailyTaskSample theo số lượng task element có trong DataDailyTaskController vào holderdailyTask.
+    /// Các task có thể claim được sẽ được ưu tiên đảo lên đầu danh sách.
     /// </summary>
     private void SpawnOrUpdateTasks()
     {
@@ -96,7 +97,22 @@ public class PopupDailyTaskController : PopupBaseController
             }
         }
 
-        for (int i = 0; i < listData.Count; i++)
+        // Sắp xếp: các task có thể claim được (CanClaimTask) đưa lên đầu, tiếp đến các task đang làm, cuối cùng là các task đã claim
+        var sortedList = new List<ItemDailyTask>(listData);
+        sortedList.Sort((a, b) =>
+        {
+            int pA = DataAccountPlayer.PlayerDailyTashkData.CanClaimTask(a.typeTask) ? 0 :
+                     (!DataAccountPlayer.PlayerDailyTashkData.IsTaskClaimed(a.typeTask) ? 1 : 2);
+            int pB = DataAccountPlayer.PlayerDailyTashkData.CanClaimTask(b.typeTask) ? 0 :
+                     (!DataAccountPlayer.PlayerDailyTashkData.IsTaskClaimed(b.typeTask) ? 1 : 2);
+
+            if (pA != pB)
+                return pA.CompareTo(pB);
+
+            return listData.IndexOf(a).CompareTo(listData.IndexOf(b));
+        });
+
+        for (int i = 0; i < sortedList.Count; i++)
         {
             DailyTaskElementController elem;
             if (i < _elements.Count)
@@ -126,10 +142,11 @@ public class PopupDailyTaskController : PopupBaseController
             }
 
             elem.gameObject.SetActive(true);
-            elem.InitData(listData[i], OnElementTaskClaimed);
+            elem.transform.SetSiblingIndex(i);
+            elem.InitData(sortedList[i], OnElementTaskClaimed);
         }
 
-        for (int i = listData.Count; i < _elements.Count; i++)
+        for (int i = sortedList.Count; i < _elements.Count; i++)
         {
             _elements[i].gameObject.SetActive(false);
         }
@@ -137,26 +154,18 @@ public class PopupDailyTaskController : PopupBaseController
 
     private void OnElementTaskClaimed()
     {
+        SpawnOrUpdateTasks();
         UpdateClaimAllButtonState();
         NotifyManager.RefreshAllNoti();
     }
 
     private void UpdateClaimAllButtonState()
     {
-        if (claimAllBtn == null || _dataDailyTask == null || _dataDailyTask.ContentContent?.listDailyTask == null)
+        if (claimAllBtn == null)
             return;
 
-        bool hasClaimable = false;
-        var listData = _dataDailyTask.ContentContent.listDailyTask;
-        for (int i = 0; i < listData.Count; i++)
-        {
-            if (DataAccountPlayer.PlayerDailyTashkData.CanClaimTask(listData[i].typeTask))
-            {
-                hasClaimable = true;
-                break;
-            }
-        }
-        claimAllBtn.interactable = hasClaimable;
+        // Thay vì set interactable = false khi không đủ điều kiện, vẫn để true, bấm thì không chạy logic trong OnClickClaimAll
+        claimAllBtn.interactable = true;
     }
 
     /// <summary>
@@ -168,6 +177,20 @@ public class PopupDailyTaskController : PopupBaseController
             return;
 
         var listData = _dataDailyTask.ContentContent.listDailyTask;
+
+        // Kiểm tra xem có task nào đủ điều kiện claim không; nếu không đủ thì bấm không chạy logic
+        bool hasClaimable = false;
+        for (int i = 0; i < listData.Count; i++)
+        {
+            if (DataAccountPlayer.PlayerDailyTashkData.CanClaimTask(listData[i].typeTask))
+            {
+                hasClaimable = true;
+                break;
+            }
+        }
+
+        if (!hasClaimable) return;
+
         List<PopupReward> rewardsClaimed = new List<PopupReward>();
 
         for (int i = 0; i < listData.Count; i++)
