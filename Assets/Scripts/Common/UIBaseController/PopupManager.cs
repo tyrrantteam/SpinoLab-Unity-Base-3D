@@ -36,10 +36,7 @@ public class PopupManager : SingletonMono<PopupManager>
         var instance = GetOrSpawnInstance<T>();
         if (instance == null) return null;
         configure?.Invoke(instance);
-        if (instance.KeepOtherPopupsOnClose)
-            ShowWithoutHidingOthers(instance.gameObject, onShown);
-        else
-            EnqueuePopup(instance.gameObject, onShown);
+        ShowWithoutHidingOthers(instance.gameObject, onShown);
         return instance;
     }
 

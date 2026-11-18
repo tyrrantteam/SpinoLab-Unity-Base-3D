@@ -52,10 +52,10 @@ namespace JinGroup.Module.Reward
 
             switch (type)
             {
-                case TypeResources.noads:
-                case TypeResources.noads7d:
-                case TypeResources.noads24h:
-                    return null;
+                // case TypeResources.noads:
+                // case TypeResources.noads7d:
+                // case TypeResources.noads24h:
+                //     return null;
                 case TypeResources.heart:
                     return value + "h";
                 case TypeResources.booster1:
@@ -63,29 +63,16 @@ namespace JinGroup.Module.Reward
                 case TypeResources.booster3:
                     return "x" + value;
                 default:
-                    return value.ToString();
+                    return null;
             }
         }
-
-        public virtual void InitData(shopDataItem dataItem)
-        {
-            typeResources = dataItem.typeReward;
-        }
-
-
+        
         public void DisableLayer()
         {
             rewardIcon.raycastTarget = false;
             //backgroundIcon.raycastTarget = false;
             valueTxt.raycastTarget = false;
         }
-    }
-    public struct shopDataItem
-    {
-        public TypeResources typeReward;
-        public TypeRarity typeRarity;
-        public string value;
-        public int level;
     }
     public struct dataItem
     {

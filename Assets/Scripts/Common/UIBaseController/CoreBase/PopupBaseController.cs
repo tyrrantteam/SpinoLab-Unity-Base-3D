@@ -20,16 +20,6 @@ public class PopupBaseController : MonoBehaviour
     [Header("Close Input")] [SerializeField]
     private float closeBlockDuration = 0.8f;
 
-    [Header("Stack")]
-    [Tooltip("Bật: popup này mở đè lên popup đang có, và khi đóng chỉ tắt chính nó.")]
-    [SerializeField] protected bool keepOtherPopupsOnClose;
-
-    public bool KeepOtherPopupsOnClose
-    {
-        get => keepOtherPopupsOnClose;
-        set => keepOtherPopupsOnClose = value;
-    }
-
     private Transform    scaleTarget;
     private CanvasGroup  canvasGroup;
     private MotionHandle _closeHandle;
@@ -62,10 +52,7 @@ public class PopupBaseController : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        if (keepOtherPopupsOnClose)
-        {
-            transform.SetAsLastSibling();
-        }
+        transform.SetAsLastSibling();
         ResetOpenVisual();
         BeginCloseBlock();
     }
@@ -223,18 +210,9 @@ public class PopupBaseController : MonoBehaviour
 
         AnimateCloseToZero(() =>
         {
-            if (keepOtherPopupsOnClose)
-            {
-                gameObject.SetActive(false);
-                if (PopupManager.Instance != null)
-                    PopupManager.Instance.ClosePopupKeepOthers();
-            }
-            else
-            {
-                if (PopupManager.Instance != null)
-                    PopupManager.Instance.CloseCurrentPopup();
-                gameObject.SetActive(false);
-            }
+            gameObject.SetActive(false);
+            if (PopupManager.Instance != null)
+                PopupManager.Instance.ClosePopupKeepOthers();
 
             _isClosing = false;
             ResetToInitialState();

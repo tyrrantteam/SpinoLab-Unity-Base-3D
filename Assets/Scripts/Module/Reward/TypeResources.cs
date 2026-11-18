@@ -21,6 +21,7 @@ namespace JinGroup.Module.Resources
         incomex2,
         incomex3,
         incomex4,
-        noads24h
+        noads24h,
+        unlock1slot
     }
 }
