@@ -52,16 +52,14 @@ namespace JinGroup.Module.Reward
 
             switch (type)
             {
-                // case TypeResources.noads:
-                // case TypeResources.noads7d:
-                // case TypeResources.noads24h:
-                //     return null;
                 case TypeResources.heart:
                     return value + "h";
                 case TypeResources.booster1:
                 case TypeResources.booster2:
                 case TypeResources.booster3:
                     return "x" + value;
+                case TypeResources.gold:
+                    return value.ToString();
                 default:
                     return null;
             }

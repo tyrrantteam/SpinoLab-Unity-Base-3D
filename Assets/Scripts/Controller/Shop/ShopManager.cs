@@ -96,7 +96,7 @@ public class ShopManager : MonoBehaviour
                 bundle.gameObject.SetActive(false);
                 continue;
             }
-
+            
             // check special offer de hien bundle special offer
 
             bundle.InitData(dataBundle, settings);
