@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Base.Core;
 using Base.Core.Debug;
@@ -59,6 +60,7 @@ namespace JinGroup.Common
             // Unity stops coroutines on disable; clear the handle so the watch can restart on re-enable.
             _starterPackWatchCo = null;
         }
+        
 
         private void RegisterButton()
         {
@@ -172,7 +174,7 @@ namespace JinGroup.Common
             var usingGem = _gameConfig.usingGem;
             var usingHeart = _gameConfig.usingHeart;
 
-            GemResourcesHeader.gameObject.SetActive(usingGem);
+            GemResourcesHeader?.gameObject.SetActive(usingGem);
             HeartResourcesHeader.gameObject.SetActive(usingHeart);
         }
 
@@ -180,7 +182,6 @@ namespace JinGroup.Common
         {
             if (noAdsBtn != null)
                 noAdsBtn.gameObject.SetActive(!DataAccountPlayer.PlayerResourceData.isNoAdsPurchase);
-
             RefreshStarterPackButton();
         }
 
@@ -190,9 +191,6 @@ namespace JinGroup.Common
         /// </summary>
         public void RefreshStarterPackButton()
         {
-            if (specialBundBtn == null)
-                return;
-
             bool show = TryGetStarterPackConfig(out var cfg) && IsStarterPackButtonAvailable(cfg);
             specialBundBtn.gameObject.SetActive(show);
 

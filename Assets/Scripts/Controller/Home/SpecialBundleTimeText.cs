@@ -100,7 +100,6 @@ public class SpecialBundleTimeText : MonoBehaviour
 
         TimeSpan remaining =
             shopData.GetStarterPackRemaining(hours);
-
         // ==========================================
         // 3. KIỂM TRA PACK CÒN ACTIVE
         // ==========================================
@@ -112,7 +111,6 @@ public class SpecialBundleTimeText : MonoBehaviour
                 hours,
                 cfg.limitPurchase,
                 currentLv);
-
         if (!stillOpen)
         {
             if (_shownTotalSecs != 0)
