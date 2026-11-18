@@ -1297,6 +1297,8 @@ GameObject:
   - component: {fileID: 9211693619324768429}
   - component: {fileID: 8931603614015116917}
   - component: {fileID: 323783991633635145}
+  - component: {fileID: 7496558865612766429}
+  - component: {fileID: 3971386922663360331}
   m_Layer: 5
   m_Name: SpinBtn
   m_TagString: Untagged
@@ -1408,6 +1410,34 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7496558865612766429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3992079854480535211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2c8beb2a6e88104fb62184ad54b4577, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3971386922663360331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3992079854480535211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67942e716285926488f23944c564ce5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canPlayWhenEnable: 0
+  delayStart: 0
+  scaleMultiplier: 1.2
+  duration: 0.1
 --- !u!1 &5045513582940801162
 GameObject:
   m_ObjectHideFlags: 0
@@ -1824,6 +1854,8 @@ MonoBehaviour:
   - {fileID: 5045513582940801162}
   - {fileID: 5830113486261083501}
   LightSelection: {fileID: 7298157633443724070}
+  rewardShowDelay: 1.8
+  chaserStepDuration: 0.15
 --- !u!114 &7439703891812583701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2392,6 +2424,8 @@ GameObject:
   - component: {fileID: 7817590276391060504}
   - component: {fileID: 7533797456085372474}
   - component: {fileID: 6489193877173782190}
+  - component: {fileID: 2274361340366039351}
+  - component: {fileID: 9052407214813393809}
   m_Layer: 5
   m_Name: SpinAds
   m_TagString: Untagged
@@ -2502,6 +2536,34 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2274361340366039351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6767201521904185729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2c8beb2a6e88104fb62184ad54b4577, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9052407214813393809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6767201521904185729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67942e716285926488f23944c564ce5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canPlayWhenEnable: 0
+  delayStart: 0
+  scaleMultiplier: 1.2
+  duration: 0.1
 --- !u!1 &7120083809357971783
 GameObject:
   m_ObjectHideFlags: 0

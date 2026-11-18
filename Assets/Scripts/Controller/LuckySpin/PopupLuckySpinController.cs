@@ -50,13 +50,13 @@ public class PopupLuckySpinController : PopupBaseController
     [SerializeField] private GameObject LightSelection;
 
     [Title("Decor Light Settings")]
-    [SerializeField] private float rewardShowDelay = 1.2f;
-    [SerializeField] private float chaserStepDuration = 0.12f;
-    [SerializeField] private float chaserOffDuration = 0.04f;
+    [SerializeField] private float rewardShowDelay = 1.8f;
+    [SerializeField] private float chaserStepDuration = 0.15f;
 
     private DataLuckySpinController _dataLuckySpinController;
     private int _mileStoneSpin;
     private bool _isSpinning;
+    private bool _isAdsSpin;
     private MotionHandle _spinMotion;
     private MotionHandle _decorMotion;
     private Coroutine _chaserCoroutine;
@@ -257,7 +257,7 @@ public class PopupLuckySpinController : PopupBaseController
         int currentProcess = DataAccountPlayer.PlayerLuckySpinData.currentLevelProcess;
         if (_mileStoneSpin <= currentProcess)
         {
-            Spin();
+            Spin(false);
         }
     }
 
@@ -270,25 +270,26 @@ public class PopupLuckySpinController : PopupBaseController
         {
             AdsManager.Instance.ShowRewarded(() =>
             {
-                Spin();
+                Spin(true);
             });
 #if UNITY_EDITOR
             // Fallback khi test trên Unity Editor nếu Ads SDK chưa uncomment callback
             if (DataAccountPlayer.PlayerResourceData.skipAds <= 0)
             {
-                Spin();
+                Spin(true);
             }
 #endif
         }
         else
         {
-            Spin();
+            Spin(true);
         }
     }
 
-    public void Spin()
+    public void Spin(bool isAds = false)
     {
         if (_isSpinning) return;
+        _isAdsSpin = isAds;
         DataAccountPlayer.PlayerDailyTashkData.UpdateTask(TypeTaskDaily.PlayLuckySpin);
         var listData = _dataLuckySpinController?.ContentContent?.ListitemData;
         if (listData == null || listData.Count == 0)
@@ -458,11 +459,29 @@ public class PopupLuckySpinController : PopupBaseController
             ResetAllDecorLights();
         };
 
+        Action onRewardClaimed = () =>
+        {
+            ResetAllDecorLights();
+            _isSpinning = false;
+            UpdateUI();
+        };
+
+        // 1: Nếu quay bằng Ads thì không reset tiến trình, giữ nguyên tiến trình hiện tại.
+        // Chỉ reset khi quay bằng nút Spin tiến trình thông thường.
+        if (!_isAdsSpin)
+        {
+            DataAccountPlayer.PlayerLuckySpinData.ResetProcess();
+        }
+
+        // 2: Mở lại khả năng tương tác cho nút spin & spin Ads
+        _isSpinning = false;
+        UpdateUI();
+
         if (PopupManager.Instance != null)
         {
             var singleRewardPopup = PopupManager.Instance.ShowPopup<PopupShowRewardSingleUnitController>(popup =>
             {
-                popup.ShowReward(chosenItem);
+                popup.ShowReward(chosenItem, onRewardClaimed);
             }, onRewardShown);
 
             if (singleRewardPopup == null)
@@ -470,23 +489,20 @@ public class PopupLuckySpinController : PopupBaseController
                 singleRewardPopup = PopupManager.Instance.ModuleShowRewardSingleUnit(onRewardShown);
                 if (singleRewardPopup != null)
                 {
-                    singleRewardPopup.ShowReward(chosenItem);
+                    singleRewardPopup.ShowReward(chosenItem, onRewardClaimed);
                 }
                 else
                 {
                     onRewardShown.Invoke();
+                    onRewardClaimed.Invoke();
                 }
             }
         }
         else
         {
             onRewardShown.Invoke();
+            onRewardClaimed.Invoke();
         }
-
-        // 11: sau khi spin xong sẽ reset lại currentLevelProcess = 0 và valueProcessorTxt, textDescriptionTxt
-        DataAccountPlayer.PlayerLuckySpinData.ResetProcess();
-        UpdateUI();
-        _isSpinning = false;
     }
 
     private void StartChaserLights()
@@ -518,18 +534,50 @@ public class PopupLuckySpinController : PopupBaseController
         SetLightsActive(DecorLightSpins, false);
         SetLightsActive(DecorLightSpins1, false);
 
+        float stepDuration = chaserStepDuration > 0f ? chaserStepDuration : 0.15f;
+
+        if (maxLen == 1)
+        {
+            SetLightPairActive(0, true);
+            yield break;
+        }
+
+        if (maxLen == 2)
+        {
+            SetLightPairActive(0, true);
+            yield return new WaitForSeconds(stepDuration);
+            SetLightPairActive(1, true);
+            yield return new WaitForSeconds(stepDuration);
+
+            while (true)
+            {
+                SetLightPairActive(0, false);
+                yield return new WaitForSeconds(stepDuration);
+                SetLightPairActive(0, true);
+                SetLightPairActive(1, false);
+                yield return new WaitForSeconds(stepDuration);
+                SetLightPairActive(1, true);
+            }
+        }
+
+        // maxLen >= 3 (bật 0 rồi bật 1 sau đó bật 2 thì tắt 0 cứ như vậy loop)
+        SetLightPairActive(0, true);
+        yield return new WaitForSeconds(stepDuration);
+
+        SetLightPairActive(1, true);
+        yield return new WaitForSeconds(stepDuration);
+
+        int step = 2;
         while (true)
         {
-            for (int i = 0; i < maxLen; i++)
-            {
-                SetLightPairActive(i, true);
-                yield return new WaitForSeconds(chaserStepDuration > 0f ? chaserStepDuration : 0.12f);
-                SetLightPairActive(i, false);
-                if (chaserOffDuration > 0f)
-                {
-                    yield return new WaitForSeconds(chaserOffDuration);
-                }
-            }
+            int turnOnIndex = step % maxLen;
+            int turnOffIndex = (step - 2 + maxLen) % maxLen;
+
+            SetLightPairActive(turnOnIndex, true);
+            SetLightPairActive(turnOffIndex, false);
+
+            yield return new WaitForSeconds(stepDuration);
+            step++;
         }
     }
 

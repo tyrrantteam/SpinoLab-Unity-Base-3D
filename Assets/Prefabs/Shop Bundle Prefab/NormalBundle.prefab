@@ -5437,9 +5437,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3087773134027120238, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 684351274254449157}
-    - targetCorrespondingSourceObject: {fileID: 3087773134027120238, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7167271064540642633}
   m_SourcePrefab: {fileID: 100100000, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
 --- !u!114 &360438602030404904 stripped
 MonoBehaviour:
@@ -5539,26 +5536,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2c8beb2a6e88104fb62184ad54b4577, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7167271064540642633
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2514755796533789286}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 981a3af81ba78bd4dab3d72191f5138a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canPlayWhenEnable: 1
-  delayStart: 0
-  infiniteLoop: 1
-  loopCount: 3
-  duration: 1
-  maxScale: {x: 1.05, y: 1.05, z: 1.05}
-  minScale: {x: 0.95, y: 0.95, z: 0.95}
-  ease: 3
 --- !u!1 &4977076086404225288 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5561360635248837888, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
