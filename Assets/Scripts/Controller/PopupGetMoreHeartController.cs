@@ -23,8 +23,6 @@ public class PopupGetMoreHeartController : PopupBaseController
 
     protected override void Awake()
     {
-        // Cho phép popup show đè lên popup khác, khi đóng chỉ tắt chính nó
-        keepOtherPopupsOnClose = true;
         _onUpdateHeart = (sender, param) =>
         {
             UpdateHeartDisplay();

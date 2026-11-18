@@ -30,13 +30,15 @@ public class PopupBundleRemoveAds : PopupBundleBaseController
         base.InitData();
     }
 
+
     protected override void OnPurchaseSucceeded()
     {
         base.OnPurchaseSucceeded();
         DataAccountPlayer.PlayerResourceData.ChangeNoAdsStatus(true);
-
+        
         if (!HomeUIManager.IsNull)
             HomeUIManager.Instance.RefreshBundleButtons();
+        gameObject.SetActive(false);
     }
 
     protected override void OnClosed()
@@ -46,6 +48,7 @@ public class PopupBundleRemoveAds : PopupBundleBaseController
             Debug.Log("Current scene is Gameplay");
             AdsManager.Instance.ShowInter();
         }
+
         base.OnClosed();
     }
 }

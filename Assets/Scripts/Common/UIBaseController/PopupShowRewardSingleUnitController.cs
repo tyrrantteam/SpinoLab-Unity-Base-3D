@@ -16,8 +16,6 @@ public class PopupShowRewardSingleUnitController : PopupBaseController
 
     protected override void Awake()
     {
-        // Yêu cầu 2: Cho phép show đè lên popup khác, khi đóng chỉ tắt chính nó
-        keepOtherPopupsOnClose = true;
         base.Awake();
 
         if (rewardClaim == null)
