@@ -29,7 +29,8 @@ MonoBehaviour:
       description: Booster nay cx cx hoi manh manh
       nameBooster: Finger GOD
       price: 850
-      mutipleValue: 0
+      mutipleValueGold: 3
+      mutipleValueAds: 1
     - level: 8
       boosterType: 1
       imgMechanic: {fileID: 21300000, guid: 7c1b4be6a1a72d14996d7677f3f35927, type: 3}
@@ -37,7 +38,8 @@ MonoBehaviour:
       description: booster nay manh vl
       nameBooster: Icon Hammer
       price: 200
-      mutipleValue: 0
+      mutipleValueGold: 2
+      mutipleValueAds: 1
     - level: 20
       boosterType: 2
       imgMechanic: {fileID: 21300000, guid: 6d24a88b27df8fa408e8fd33f4582fbd, type: 3}
@@ -45,4 +47,5 @@ MonoBehaviour:
       description: booster nay cung manh nhung khong bang cai duoi
       nameBooster: Key finger
       price: 500
-      mutipleValue: 0
+      mutipleValueGold: 3
+      mutipleValueAds: 1
