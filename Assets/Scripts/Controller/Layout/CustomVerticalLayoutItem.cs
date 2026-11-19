@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class CustomVerticalLayoutItem : MonoBehaviour
 {
-    public                   FloatyKind              kind = FloatyKind.Small;
+    public                   HomeNode              kind = HomeNode.Small;
     public                   bool                    ignoreLayout;
     [SerializeField] private TMP_Text                textvalue;
     public                   Image                   _imageFloaty;
@@ -35,7 +35,8 @@ public class CustomVerticalLayoutItem : MonoBehaviour
 
     private void InitData()
     {
-        var currentLevel = DataAccountPlayer.PlayerPointProcessData.currentlevelShowScreen;
+        if (kind == HomeNode.Small) return;
+        // var currentLevel = DataAccountPlayer.PlayerPointProcessData.currentlevelShowScreen;
         if (gameConfig == null || _imageFloaty == null) return;
 
         var difficulty = HomeUIManager.Instance.Difficulty;
@@ -56,7 +57,7 @@ public class CustomVerticalLayoutItem : MonoBehaviour
     }
 }
 
-public enum FloatyKind
+public enum HomeNode
 {
     Small,
     Large

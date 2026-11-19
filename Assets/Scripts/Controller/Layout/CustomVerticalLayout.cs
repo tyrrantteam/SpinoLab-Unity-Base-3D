@@ -262,7 +262,7 @@ public class CustomVerticalLayout : MonoBehaviour
     }
     private RectTransform SpawnIncoming(SlotPose topPose, Action onComplete)
     {
-        var spawned = TakeFloaty(FloatyKind.Small, _items[0]);
+        var spawned = TakeFloaty(HomeNode.Small, _items[0]);
         if (spawned == null)
             return null;
 
@@ -280,9 +280,9 @@ public class CustomVerticalLayout : MonoBehaviour
         var exitPose = new SlotPose(fromPose.LocalPosition + Vector3.down * exitDistance, fromPose.LocalScale);
         AnimateToPose(item, exitPose, true, onComplete, 1f, 1f, slot3ExitDuration);
     }
-    private RectTransform TakeFloaty(FloatyKind kind, RectTransform template)
+    private RectTransform TakeFloaty(HomeNode kind, RectTransform template)
     {
-        var pool = kind == FloatyKind.Large ? _largePool : _smallPool;
+        var pool = kind == HomeNode.Large ? _largePool : _smallPool;
         RectTransform rt = null;
         for (int i = pool.Count - 1; i >= 0; i--)
         {
@@ -298,7 +298,7 @@ public class CustomVerticalLayout : MonoBehaviour
         }
 
         if (rt == null)
-            rt = SpawnFloaty(kind == FloatyKind.Large ? largeFloatyPrefab : smallFloatyPrefab, kind, template);
+            rt = SpawnFloaty(kind == HomeNode.Large ? largeFloatyPrefab : smallFloatyPrefab, kind, template);
 
         if (rt == null)
             return null;
@@ -308,21 +308,21 @@ public class CustomVerticalLayout : MonoBehaviour
     }
     private void WarmPools()
     {
-        WarmPool(FloatyKind.Small, 3, _items.Count > 0 ? _items[0] : null);
-        WarmPool(FloatyKind.Large, 2, _items.Count > 0 ? _items[_items.Count - 1] : null);
+        WarmPool(HomeNode.Small, 3, _items.Count > 0 ? _items[0] : null);
+        WarmPool(HomeNode.Large, 2, _items.Count > 0 ? _items[_items.Count - 1] : null);
     }
-    private void WarmPool(FloatyKind kind, int count, RectTransform template)
+    private void WarmPool(HomeNode kind, int count, RectTransform template)
     {
-        var pool = kind == FloatyKind.Large ? _largePool : _smallPool;
+        var pool = kind == HomeNode.Large ? _largePool : _smallPool;
         while (pool.Count < count)
         {
-            var rt = SpawnFloaty(kind == FloatyKind.Large ? largeFloatyPrefab : smallFloatyPrefab, kind, template);
+            var rt = SpawnFloaty(kind == HomeNode.Large ? largeFloatyPrefab : smallFloatyPrefab, kind, template);
             if (rt == null)
                 break;
             Recycle(rt);
         }
     }
-    private static void PrepareTakenFloaty(RectTransform rt, FloatyKind kind, RectTransform template)
+    private static void PrepareTakenFloaty(RectTransform rt, HomeNode kind, RectTransform template)
     {
         rt.SetParent(rt.parent, false);
         rt.SetAsLastSibling();
@@ -346,14 +346,14 @@ public class CustomVerticalLayout : MonoBehaviour
         canvasGroup.alpha = 1f;
         rt.GetComponent<FloatingEffectUI>()?.CancelMotion();
     }
-    private RectTransform SpawnFloaty(GameObject prefab, FloatyKind kind, RectTransform template)
+    private RectTransform SpawnFloaty(GameObject prefab, HomeNode kind, RectTransform template)
     {
         var source = prefab != null ? prefab : template != null ? template.gameObject : null;
         if (source == null)
             return null;
 
         var instance = Instantiate(source, transform);
-        instance.name = kind == FloatyKind.Large ? "FloatyLarge" : "FloatySmall";
+        instance.name = kind == HomeNode.Large ? "FloatyLarge" : "FloatySmall";
         instance.SetActive(false);
 
         var rt = instance.GetComponent<RectTransform>();
@@ -387,7 +387,7 @@ public class CustomVerticalLayout : MonoBehaviour
         int last = _items.Count - 1;
         var bottom = _items[last];
         var item = bottom != null ? bottom.GetComponent<CustomVerticalLayoutItem>() : null;
-        if (item != null && item.kind == FloatyKind.Large)
+        if (item != null && item.kind == HomeNode.Large)
             return;
 
         var large = ReplaceWithLarge(bottom);
@@ -529,7 +529,7 @@ public class CustomVerticalLayout : MonoBehaviour
             return null;
         }
 
-        var large = TakeFloaty(FloatyKind.Large, largeTemplate != null ? largeTemplate : small);
+        var large = TakeFloaty(HomeNode.Large, largeTemplate != null ? largeTemplate : small);
         if (large == null)
         {
             AnimateToPose(small, target, false, onComplete);
@@ -618,7 +618,7 @@ public class CustomVerticalLayout : MonoBehaviour
 
         Vector3 scale = small.localScale;
 
-        var large = TakeFloaty(FloatyKind.Large, small);
+        var large = TakeFloaty(HomeNode.Large, small);
         Recycle(small);
         if (large == null)
             return null;
@@ -650,7 +650,7 @@ public class CustomVerticalLayout : MonoBehaviour
         ResetAlpha(child);
         child.gameObject.SetActive(false);
 
-        var pool = item != null && item.kind == FloatyKind.Large ? _largePool : _smallPool;
+        var pool = item != null && item.kind == HomeNode.Large ? _largePool : _smallPool;
         if (!pool.Contains(child))
             pool.Add(child);
     }

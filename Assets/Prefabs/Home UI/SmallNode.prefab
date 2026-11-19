@@ -92,7 +92,7 @@ MonoBehaviour:
   kind: 0
   ignoreLayout: 0
   textvalue: {fileID: 1207855275636947675}
-  _imageFloaty: {fileID: 2100000000000000104}
+  _imageFloaty: {fileID: 0}
 --- !u!1 &6158778507113930115
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,7 +295,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 56b9b8df879fac249a587f28b6dd8419, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
