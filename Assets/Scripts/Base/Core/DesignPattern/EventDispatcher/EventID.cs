@@ -3,8 +3,8 @@ public enum EventID
 
     LevelUp,
     ShowWarning,
-
-
+    
+    updateLevelDifficulty,
     // Settings
     OnSoundChange,
     OnMusicChange,

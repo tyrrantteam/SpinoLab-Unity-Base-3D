@@ -18,4 +18,12 @@ public class GameConfig : ScriptableObject
     [Header("UsingBooster")]
     public bool usingBooster = true;
     public bool showPriceUnderBoosterButton = false;
+    [Header("Level Difficulty Sprites")]
+    public Sprite normalLevel;
+    public Sprite hardLevel;
+    public Sprite superHardLevel;
+    [Header("Level Difficulty Preview Sprites")]
+    public Sprite normalLevelPreview;
+    public Sprite hardLevelPreview;
+    public Sprite superHardPreview;
 }

@@ -97,9 +97,7 @@ public class DataLoopLevelController : SpreadsheetsContainerBase
             return currentLevel;
         }
 
-        int maxCurve = maximumLevelCurve;
         int startRand = levelStartRandom;
-        int startLoop = levelStartLoop;
 
         // Nếu chưa đến mốc bắt đầu random, giữ nguyên level hiện tại
         if (currentLevel < startRand)
@@ -113,19 +111,7 @@ public class DataLoopLevelController : SpreadsheetsContainerBase
         }
 
         // Tính curve level tương ứng theo chu kỳ loop nếu vượt quá maximumLevelCurve
-        int mappedCurveLevel = currentLevel;
-        if (mappedCurveLevel > maxCurve)
-        {
-            int loopLength = maxCurve - startLoop + 1;
-            if (loopLength > 0)
-            {
-                mappedCurveLevel = startLoop + ((mappedCurveLevel - startLoop) % loopLength);
-            }
-            else
-            {
-                mappedCurveLevel = startLoop;
-            }
-        }
+        int mappedCurveLevel = MapToCurveLevel(currentLevel);
 
         // Tìm độ khó của curve level này (O(1))
         if (!_levelToDifficulty.TryGetValue(mappedCurveLevel, out int currentDifficulty))
@@ -218,6 +204,36 @@ public class DataLoopLevelController : SpreadsheetsContainerBase
 
         RecordLevel(history, selectedLevel);
         return selectedLevel;
+    }
+
+    /// <summary>
+    /// Quy đổi level của người chơi về level tương ứng trong curve (theo chu kỳ loop nếu vượt quá maximumLevelCurve).
+    /// </summary>
+    public int MapToCurveLevel(int level)
+    {
+        int maxCurve = maximumLevelCurve;
+        if (level <= maxCurve) return level;
+
+        int startLoop = levelStartLoop;
+        int loopLength = maxCurve - startLoop + 1;
+        return loopLength > 0
+            ? startLoop + ((level - startLoop) % loopLength)
+            : startLoop;
+    }
+
+    /// <summary>
+    /// Lấy độ khó của level từ curve data. Trả về defaultDifficulty nếu không tìm thấy.
+    /// </summary>
+    public int GetDifficulty(int level, int defaultDifficulty = 1)
+    {
+        if (!_isInitialized)
+        {
+            InitCache();
+        }
+
+        return _levelToDifficulty.TryGetValue(MapToCurveLevel(level), out int difficulty)
+            ? difficulty
+            : defaultDifficulty;
     }
 
     private void RecordLevel(List<int> history, int level)

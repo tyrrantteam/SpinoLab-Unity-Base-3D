@@ -64,5 +64,6 @@ namespace JinGroup.Controller.Feature
             if (RT != null)
                 RT.anchoredPosition = _initialPos;
         }
+        
     }
 }

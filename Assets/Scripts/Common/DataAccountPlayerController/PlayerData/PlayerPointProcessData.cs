@@ -4,14 +4,15 @@ namespace DataAccount
 {
     public class PlayerPointProcessData
     {
-        public int pointPlayer;
-        public int currentlevel = 1;
-        public int currentlevelShowScreen = 1;
-        public int progressConfigId;
-        public int configCamera;
-        public int lastMechanicProgressPercent;
+        public int       pointPlayer;
+        public int       currentlevel           = 1;
+        public int       currentlevelShowScreen = 1;
+        public int       progressConfigId;
+        public int       configCamera;
+        public int       lastMechanicProgressPercent;
+        public int       lastHomeLevel;
         public List<int> shownMechanicUnlockIndices = new List<int>();
-        public List<int> listLvLoop = new List<int>();
+        public List<int> listLvLoop                 = new List<int>();
 
         public bool cheatUnlockAllBoosters;
 
