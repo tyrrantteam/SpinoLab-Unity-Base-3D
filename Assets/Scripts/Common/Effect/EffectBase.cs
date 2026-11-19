@@ -90,11 +90,7 @@ namespace JinGroup.Common.Effect
         public virtual void PrepareInitialState()
         {
         }
-
-        /// <summary>
-        /// Alias tiện dụng cho PrepareInitialState
-        /// </summary>
-        public void ResetToInitialState() => PrepareInitialState();
+        
 
         public abstract void Play();
 

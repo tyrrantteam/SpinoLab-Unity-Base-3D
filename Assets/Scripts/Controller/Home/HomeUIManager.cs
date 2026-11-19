@@ -8,40 +8,45 @@ using JinGroup.Controller.PiggyBank;
 using JinGroup.UI.Common.Setting;
 using UI.LoadingScene;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 namespace JinGroup.Common
 {
     public class HomeUIManager : SingletonMono<HomeUIManager>
     {
-        [SerializeField] private Button playBtn;
+        [SerializeField] private Button        playBtn;
         [SerializeField] private RectTransform footerArea;
-        [SerializeField] private float offsetY = 500f;
+        [SerializeField] private float         offsetY = 500f;
 
-        [Header("Player Settings")]
-        [SerializeField] private Button settings;
-        [Header("Right Feature ")]
-        [SerializeField] private Button dailyCheckinBtn;
+        [Header("Player Settings")] [SerializeField]
+        private Button settings;
+
+        [Header("Right Feature ")] [SerializeField]
+        private Button dailyCheckinBtn;
+
         [SerializeField] private Button hiddenHatBtn;
         [SerializeField] private Button vipBundleBtn;
         [SerializeField] private Button noAdsBtn;
         [SerializeField] private Button specialBundBtn;
-        [Header("Left Feature ")]
-        [SerializeField] private Button rankingBtn;
+
+        [Header("Left Feature ")] [SerializeField]
+        private Button rankingBtn;
+
         [SerializeField] private Button piggyGemBtn;
         [SerializeField] private Button piggyGoldBtn;
         [SerializeField] private Button luckSpinBtn;
         [SerializeField] private Button dailyTask;
 
-   
-        [Header("Header")]
-        private GameConfig _gameConfig;
-        [SerializeField] private GoldResourcesHeader GoldResourcesHeader;
-        [SerializeField] private GemResourcesHeader GemResourcesHeader;
-        [SerializeField] private HeartResourcesHeader HeartResourcesHeader;
 
+        [Header("Header")] private GameConfig           _gameConfig;
+        [SerializeField]   private GoldResourcesHeader  GoldResourcesHeader;
+        [SerializeField]   private GemResourcesHeader   GemResourcesHeader;
+        [SerializeField]   private HeartResourcesHeader HeartResourcesHeader;
 
-        private Coroutine   _starterPackWatchCo;
+        public  int       Difficulty => difficulty;
+        private int       difficulty;
+        private Coroutine _starterPackWatchCo;
 
         protected override void Awake()
         {
@@ -60,7 +65,7 @@ namespace JinGroup.Common
             // Unity stops coroutines on disable; clear the handle so the watch can restart on re-enable.
             _starterPackWatchCo = null;
         }
-        
+
 
         private void RegisterButton()
         {
@@ -83,11 +88,13 @@ namespace JinGroup.Common
         {
             PopupManager.Instance.ShowPopup<PopupBundleVipPass>();
         }
-         private void OnNoAdsClick()
+
+        private void OnNoAdsClick()
         {
             PopupManager.Instance.ShowPopup<PopupBundleRemoveAds>();
         }
-         private void OnClickSpecialBundle()
+
+        private void OnClickSpecialBundle()
         {
             RefreshStarterPackButton();
             if (!specialBundBtn.gameObject.activeSelf)
@@ -95,6 +102,7 @@ namespace JinGroup.Common
 
             PopupManager.Instance.ShowPopup<PopupBundleStartePack>();
         }
+
         private void OnClickDailyCheckin()
         {
             PopupManager.Instance.ShowPopup<PopupDailyCheckinController>();
@@ -102,7 +110,7 @@ namespace JinGroup.Common
 
         private void OnClickHiddenHat()
         {
-             PopupManager.Instance.ShowPopup<PopupHiddenHatController>();
+            PopupManager.Instance.ShowPopup<PopupHiddenHatController>();
         }
 
         private void OnClickranking()
@@ -153,16 +161,6 @@ namespace JinGroup.Common
 
         private void InitData()
         {
-            // if (DataAccountPlayer.PlayerResourceData.isNoAdsPurchase)
-            // {
-            //     GameDebug.Log("is remove no ads");
-            //     footerArea.anchoredPosition = new Vector2(footerArea.anchoredPosition.x, 0);
-            // }
-            // else
-            // {
-            //     GameDebug.Log("is no ads");
-            //     footerArea.anchoredPosition = new Vector2(footerArea.anchoredPosition.x, offsetY);
-            // }
 
             // Ghi nhận task login mỗi ngày nếu chưa đạt
             if (DataAccountPlayer.PlayerDailyTashkData.GetCurrentValue(TypeTaskDaily.Login) < 1)
@@ -176,6 +174,8 @@ namespace JinGroup.Common
 
             GemResourcesHeader?.gameObject.SetActive(usingGem);
             HeartResourcesHeader.gameObject.SetActive(usingHeart);
+
+            StartCoroutine(CheckLevelDifficultyAndSetButton());
         }
 
         public void RefreshBundleButtons()
@@ -288,5 +288,53 @@ namespace JinGroup.Common
             _starterPackWatchCo = null;
         }
 
+        private IEnumerator CheckLevelDifficultyAndSetButton()
+        {
+            int level = DataAccountPlayer.PlayerPointProcessData.currentlevelShowScreen;
+            
+            var dataGame = LoadResourceController.Instance != null
+                ? LoadResourceController.Instance.LoadDataLoopLevel()
+                : null;
+            var gameConfig = LoadResourceController.Instance != null
+                ? LoadResourceController.Instance.GameConfig()
+                : null;
+            // Lấy difficulty từ curve data; mặc định = 1 nếu không có data
+            difficulty = dataGame != null ? dataGame.GetDifficulty(level) : 1;
+            yield return null;
+
+            if (gameConfig != null && playBtn != null)
+            {
+                Image btnImage = playBtn.GetComponent<Image>();
+                if (btnImage != null)
+                {
+                    switch (difficulty)
+                    {
+                        case 5:
+                            btnImage.sprite = gameConfig.hardLevel;
+                            break;
+                        case 6:
+                            btnImage.sprite = gameConfig.superHardLevel;
+                            break;
+                        default:
+                            btnImage.sprite = gameConfig.normalLevel;
+                            break;
+                    }
+
+                    // if (difficulty == 1 || difficulty == 2)
+                    // {
+                    //     btnImage.sprite = dataGame.normalPlay;
+                    // }
+                    // else if (difficulty == 3 || difficulty == 4)
+                    // {
+                    //     btnImage.sprite = dataGame.hardPlay;
+                    // }
+                    // else if (difficulty == 5 || difficulty == 6)
+                    // {
+                    //     btnImage.sprite = dataGame.superHardPlay;
+                    // }
+                    this.PostEvent(EventID.updateLevelDifficulty);
+                }
+            }
+        }
     }
 }

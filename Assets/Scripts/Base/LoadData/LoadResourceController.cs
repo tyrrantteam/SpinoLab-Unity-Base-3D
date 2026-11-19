@@ -67,6 +67,12 @@ namespace JinGroup.Base.LoadData
             }
         }
 
+        public DataLoopLevelController LoadDataLoopLevel()
+        {
+            var path = string.Format(ResourcesFolderPath.DataLoopLevel);
+            return Load<DataLoopLevelController>(path, "DataCurveLevel");
+        }
+        
         public DataProcessMechanic LoadDataProcessMechanic()
         {
             var path = string.Format(ResourcesFolderPath.DataFolder);

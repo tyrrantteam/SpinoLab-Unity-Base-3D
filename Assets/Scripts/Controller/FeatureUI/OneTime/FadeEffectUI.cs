@@ -26,26 +26,12 @@ namespace JinGroup.Controller.Feature
         private CanvasGroup  _canvasGroup;
         private MotionHandle _handle;
 
-        public override bool IsCloseEffect => Mathf.Approximately(toAlpha, 0f) && fromAlpha > 0f;
-
-        protected override void Awake()
+        private void Awake()
         {
             _canvasGroup = GetComponent<CanvasGroup>();
-            base.Awake();
         }
  
         private CanvasGroup CanvasGroup => _canvasGroup != null ? _canvasGroup : (_canvasGroup = GetComponent<CanvasGroup>());
-
-        public override void CancelMotion()
-        {
-            _handle.TryCancel();
-        }
-
-        public override void PrepareInitialState()
-        {
-            // Snap về fromAlpha ngay lập tức (trước khi render frame đầu tiên)
-            CanvasGroup.alpha = fromAlpha;
-        }
 
         public override void Play()
         {
@@ -60,6 +46,15 @@ namespace JinGroup.Controller.Feature
         {
             _handle.TryCancel();
             CanvasGroup.alpha = toAlpha;
+        }
+
+        public override void PrepareInitialState()
+        {
+            base.PrepareInitialState();
+            if (CanvasGroup != null)
+            {
+                CanvasGroup.alpha = fromAlpha;
+            }
         }
     }
 }
