@@ -14,7 +14,6 @@ public class GoldResourcesHeader : BaseResourcesHeader
     private                  int                         _lastValue;
     private                  MotionHandle                _handle;
     private                  float                       _lastSoundTime;
-    [SerializeField] private ScaleEffectSquashAndStretch scaleEffectSquashAndStretch;
 
     protected override void Awake()
     {
@@ -22,9 +21,6 @@ public class GoldResourcesHeader : BaseResourcesHeader
         _lastValue       = DataAccountPlayer.PlayerResourceData.gold;
         valueInformation = _lastValue;
         base.UpdateValue();
-
-        if (scaleEffectSquashAndStretch == null)
-            scaleEffectSquashAndStretch = GetComponent<ScaleEffectSquashAndStretch>();
         this.RegisterListener(EventID.UpdateGold, (sender, param) => UpdateValueTween());
     }
 
@@ -64,7 +60,7 @@ public class GoldResourcesHeader : BaseResourcesHeader
         }
         else
         {
-            //PopupManager.Instance.ShowPopup<ShopManager>();
+            PopupManager.Instance.ShowPopup<PopupShopManager>();
         }
     }
 

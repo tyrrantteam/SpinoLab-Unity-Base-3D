@@ -281,7 +281,6 @@ MonoBehaviour:
   closeDuration: 0.25
   closeEase: 4
   closeBlockDuration: 0.8
-  keepOtherPopupsOnClose: 0
 --- !u!1 &3094329496379343537
 GameObject:
   m_ObjectHideFlags: 0
