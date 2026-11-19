@@ -1,4 +1,4 @@
-﻿public class PopupShopManager : PopupBaseController
+public class PopupShopManager : PopupBaseController
 {
     
 }

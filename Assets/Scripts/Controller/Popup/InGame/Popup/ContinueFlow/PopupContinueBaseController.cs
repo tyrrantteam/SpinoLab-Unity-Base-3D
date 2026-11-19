@@ -1,4 +1,4 @@
-﻿using DataAccount;
+using DataAccount;
 using JinGroup.Base.LoadData;
 using JinGroup.Common.UIBaseController;
 using TMPro;
@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 namespace JinGroup.Controller.Popup.InGame.Popup.ContinueFlow
 {
-
     public class PopupContinueBaseController : PopupBaseController
     {
         [SerializeField] private Button continueAdsBtn;
@@ -40,7 +39,6 @@ namespace JinGroup.Controller.Popup.InGame.Popup.ContinueFlow
             });
         }
 
-
         private void OnClickContinue()
         {
             var gold = DataAccountPlayer.PlayerResourceData.gold;
@@ -53,9 +51,35 @@ namespace JinGroup.Controller.Popup.InGame.Popup.ContinueFlow
             }
             else
             {
-                // Show popup Shop to buy gold
-                //todo sửa popup base tắt shop xong show lại popup này 
-                base.OnClosePopup();
+                if (gameConfig == null && !LoadResourceController.IsNull)
+                {
+                    gameConfig = LoadResourceController.Instance.GameConfig();
+                }
+
+                var usingMeta = gameConfig != null && gameConfig.usingMetaSys;
+                if (usingMeta)
+                {
+                    if (PopupManager.Instance != null)
+                    {
+                        var shop = PopupManager.Instance.ShowPopup<PopupShopManager>(s =>
+                        {
+                            s.SetOnClosedCallback(() =>
+                            {
+                                transform.SetAsLastSibling();
+                                gameObject.SetActive(true);
+                            });
+                        });
+
+                        if (shop == null && !ToastManager.IsNull)
+                        {
+                            ToastManager.Instance.Show("Not enough gold!");
+                        }
+                    }
+                }
+                else if (!ToastManager.IsNull)
+                {
+                    ToastManager.Instance.Show("Not enough gold!");
+                }
             }
         }
     }

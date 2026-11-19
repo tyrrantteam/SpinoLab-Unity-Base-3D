@@ -201,6 +201,13 @@ public class PopupBaseController : MonoBehaviour
                               });
     }
 
+    private Action _onClosedCallback;
+
+    public void SetOnClosedCallback(Action callback)
+    {
+        _onClosedCallback = callback;
+    }
+
     protected virtual void OnClosePopup()
     {
         if (!_canClose || _isClosing)
@@ -216,6 +223,8 @@ public class PopupBaseController : MonoBehaviour
 
             _isClosing = false;
             ResetToInitialState();
+            _onClosedCallback?.Invoke();
+            _onClosedCallback = null;
             OnClosed();
         });
     }

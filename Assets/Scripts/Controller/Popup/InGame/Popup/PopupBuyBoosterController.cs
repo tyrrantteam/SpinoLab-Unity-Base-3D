@@ -217,7 +217,32 @@ public class PopupBuyBoosterController : PopupBaseController
         }
         else
         {
-            if (!ToastManager.IsNull)
+            if (gameConfig == null && !LoadResourceController.IsNull)
+            {
+                gameConfig = LoadResourceController.Instance.GameConfig();
+            }
+
+            var usingMeta = gameConfig != null && gameConfig.usingMetaSys;
+            if (usingMeta)
+            {
+                if (PopupManager.Instance != null)
+                {
+                    var shop = PopupManager.Instance.ShowPopup<PopupShopManager>(s =>
+                    {
+                        s.SetOnClosedCallback(() =>
+                        {
+                            transform.SetAsLastSibling();
+                            gameObject.SetActive(true);
+                        });
+                    });
+
+                    if (shop == null && !ToastManager.IsNull)
+                    {
+                        ToastManager.Instance.Show("Not enough gold!");
+                    }
+                }
+            }
+            else if (!ToastManager.IsNull)
             {
                 ToastManager.Instance.Show("Not enough gold!");
             }
