@@ -86,6 +86,7 @@ public class PopupLuckySpinController : PopupBaseController
         base.OnEnable();
         _isSpinning = false;
         ResetAllDecorLights();
+        this.PostEvent(EventID.luckySpinUpdate);
         InitData();
     }
 

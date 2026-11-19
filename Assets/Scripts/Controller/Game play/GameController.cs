@@ -150,6 +150,7 @@ public class GameController : SingletonMono<GameController>
             uIGameController.SetPanelActive();
             confetiStartWin.SetActive(false);
             confetiRainWin.SetActive(true);
+            fireWorkEffect.SetActive(true);
             SoundManager.Instance.PlaySound(SoundType.LevelCompleted);
             PopupManager.Instance.ShowPopup<PopUpWinController>();
         });
