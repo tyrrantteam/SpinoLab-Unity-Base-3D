@@ -3,6 +3,7 @@ using DataAccount;
 using DG.Tweening;
 using JinGroup.Common.UIBaseController;
 using LitMotion;
+using TMPro;
 using UI.LoadingScene;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,18 +17,15 @@ public class PopUpWinController : PopupBaseController
     [SerializeField] private Button nextProcess;
 
     //[SerializeField] private Button tryAgain;
-    [SerializeField] private GameObject            headerDecor;
-    [SerializeField] private GameObject            starDecor;
     private                  bool                  checkClick;
     [SerializeField] private RewardGaugeController rewardGauge;
     [SerializeField] private CoinRewardFlyEffect    coinFlyEffect;
     [SerializeField] private GameObject            process;
     [SerializeField] private GameObject            textNextMechanic;
-    [SerializeField] private Text                  levelPreview;
+    [SerializeField] private TextMeshProUGUI                  levelPreview;
     [Header("Gold Text ")] [SerializeField]
     private DataWinReward winReward;
 
-    [SerializeField] private Text         goldText;
     [SerializeField] private Text         rewardText;
     [SerializeField] private float        duration;
     private                  int          lastGoldValue;
@@ -46,15 +44,9 @@ public class PopUpWinController : PopupBaseController
     protected override void OnEnable()
     {
         base.OnEnable();
-        Invoke("ActiveStarDecor", 0.5f);
-        Invoke("ActiveHeaderDecor", 0.5f);
-        Invoke("ActiveNextProcess", 2);
-       
-        this.RegisterListener(EventID.UpdateGold, OnGoldUpdate);
         rewardGauge.OnRewardResult += OnGetResult;
         rewardGauge.OnRewardChange += OnRewardChange;
         lastGoldValue              =  DataAccountPlayer.PlayerResourceData.gold;
-        goldText.text              =  lastGoldValue.ToString();
         rewardText.text            =  GetRewardValue().ToString();
     }
     protected override void OnDisable()
@@ -64,27 +56,17 @@ public class PopUpWinController : PopupBaseController
         rewardGauge.OnRewardChange -= OnRewardChange;
     }
 
+    protected override void ListenerButton()
+    {
+        nextLevelBtn.onClick.AddListener(OnClickNext);
+        nextProcess.onClick.AddListener(OnNextProcess);
+    }
+
     private void OnRewardChange(int reward)
     {
         var value = GetRewardValue() * reward;
         rewardText.text = value.ToString();
     }
-
-    private void OnGoldUpdate(Component arg1, object arg2) 
-    {
-        goldTextHandle.TryCancel();
-        var newGold = DataAccountPlayer.PlayerResourceData.gold;
-
-        goldTextHandle = LMotion.Create(lastGoldValue, newGold, duration)
-                                .WithEase(Ease.OutCubic)
-                                .WithOnComplete(() =>
-                                {
-                                    OnNextProcess();
-                                })
-                                .Bind(x => { goldText.text = x.ToString(); });
-    }
-
-   
 
     private void OnGetResult(int reward)
     {
@@ -102,32 +84,6 @@ public class PopUpWinController : PopupBaseController
 
         return winReward.ContentContent.winReward[rewardLevel].value;
     }
-    
-    private void ActiveBtnNextDecor()
-    {
-        nextLevelBtn.gameObject.SetActive(true);
-    }
-
-    private void ActiveStarDecor()
-    {
-        starDecor.SetActive(true);
-    }
-
-    private void ActiveHeaderDecor()
-    {
-        headerDecor.SetActive(true);
-    }
-
-    private void ActiveNextProcess()
-    {
-        nextProcess.gameObject.SetActive(true);
-    }
-    
-    protected override void ListenerButton()
-    {
-        nextLevelBtn.onClick.AddListener(OnClickNext);
-        nextProcess.onClick.AddListener(OnNextProcess);
-    }
 
     private void OnNextProcess()
     {
@@ -143,6 +99,11 @@ public class PopUpWinController : PopupBaseController
             rewardGauge.gameObject.SetActive(false);
             Invoke("ActiveBtnNextDecor", 0.65f);
         });
+    }
+
+    private void ActiveBtnNextDecor()
+    {
+        nextLevelBtn.gameObject.SetActive(true);
     }
 
     private void OnTryAgain()
