@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 0.0000015497208, y: -16.9}
+  m_SizeDelta: {x: 165.7066, y: 165.7191}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5411324609708680307
 CanvasRenderer:
@@ -65,8 +65,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 89e92be4cddb104458d26f304b3c5b88, type: 3}
+  m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
@@ -109,7 +109,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -68}
+  m_AnchoredPosition: {x: 0, y: -50.4}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3066967808442373782
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SHOP
+  m_text: HOME
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3d71b06015337594cbb2a29041bc89e8, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: cc18bc34069addc46aaef86c8d040549, type: 2}
@@ -206,7 +206,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &9088002136858309972
@@ -348,10 +348,20 @@ MonoBehaviour:
   button: {fileID: 5041529178350385331}
   icon: {fileID: 4973386686490317490}
   label: {fileID: 3680416938202027876}
-  selectedIconScale: 1.5
+  selectedIconScale: 1.4
   unselectedIconScale: 1
-  selectedIconOffset: {x: 0, y: 30}
-  selectedLabelScale: 1.15
+  selectedIconOffset: {x: 0, y: 50}
+  selectedLabelScale: 1.6
   unselectedLabelScale: 0.8
   animDuration: 0.2
   ease: 8
+  useIconBounce: 1
+  bounceDuration: 0.5
+  bounceDecayPower: 1.4
+  useCustomCurve: 0
+  customBounceCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
