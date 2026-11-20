@@ -41,7 +41,6 @@ MonoBehaviour:
     - LitMotion
     - EasyTextEffects
     - MoreMountains.Tools.Editor
-    - PPv2URPConverters
     - Sirenix.OdinInspector.CompatibilityLayer.Editor
     - LitMotion.Extensions
     - Lofelt.NiceVibrations

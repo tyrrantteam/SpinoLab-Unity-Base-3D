@@ -5146,7 +5146,7 @@ MonoBehaviour:
   m_text: NEW MECHANIC
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3d71b06015337594cbb2a29041bc89e8, type: 2}
-  m_sharedMaterial: {fileID: 2462045543079075383, guid: 3d71b06015337594cbb2a29041bc89e8, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: cc18bc34069addc46aaef86c8d040549, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10494,7 +10494,6 @@ MonoBehaviour:
   closeDuration: 0.25
   closeEase: 4
   closeBlockDuration: 0.8
-  keepOtherPopupsOnClose: 0
   TitleTxt: {fileID: 2023434560251769436}
   DescriptionTxt: {fileID: 8648723415011888558}
   previewMechImg: {fileID: 6965682836558031101}
@@ -10533,7 +10532,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -7, y: 50}
-  m_SizeDelta: {x: 447, y: 380}
+  m_SizeDelta: {x: 512, y: 512}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4869829188625875521
 CanvasRenderer:
@@ -10563,7 +10562,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 81ee3f630d639c346b16ef7cf08f3719, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7c1b4be6a1a72d14996d7677f3f35927, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
