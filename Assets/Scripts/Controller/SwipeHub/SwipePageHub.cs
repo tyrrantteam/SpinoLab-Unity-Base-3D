@@ -453,7 +453,7 @@ namespace JinGroup.UI.SwipeHub
             for (var i = 0; i < pages.Length; i++)
             {
                 var target = TryGetActiveTarget(FindTabForPage(i));
-                _activeTargetsByPage[i] = target ?? Vector2.zero;
+                _activeTargetsByPage[i] = target ?? new Vector2(0f, activeIndicator != null ? activeIndicator.anchoredPosition.y : 0f);
             }
         }
 
@@ -495,7 +495,9 @@ namespace JinGroup.UI.SwipeHub
             var worldCenter = tabRect != null
                 ? tabRect.TransformPoint(tabRect.rect.center)
                 : tab.transform.position;
-            return (Vector2)parent.InverseTransformPoint(worldCenter);
+            var local = parent.InverseTransformPoint(worldCenter);
+            // Only follow the tab on X; keep the indicator's own Y.
+            return new Vector2(local.x, activeIndicator.anchoredPosition.y);
         }
 
         private void EnsureActiveIndicator()
