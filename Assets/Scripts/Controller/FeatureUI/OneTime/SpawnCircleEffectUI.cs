@@ -45,13 +45,41 @@ namespace JinGroup.Controller.Feature
                 return;
             }
 
-            var data = LoadResourceController.Instance.DataBoosterController();
-            var boosterIcon = data.GetDataBoosterByType(type).imgIconBooster;
-            PlayBoosterIcons(boosterIcon, spawnCount, destination.GetComponent<RectTransform>(), onComplete);
+            destination.SetReceivingBooster(true);
+
+            Action wrappedOnComplete = () =>
+            {
+                try
+                {
+                    onComplete?.Invoke();
+                }
+                finally
+                {
+                    if (destination != null)
+                        destination.SetReceivingBooster(false);
+                }
+            };
+
+            var data = !LoadResourceController.IsNull ? LoadResourceController.Instance.DataBoosterController() : null;
+            Sprite boosterIcon = null;
+            if (data != null)
+            {
+                var boosterData = data.GetDataBoosterByType(type);
+                boosterIcon = boosterData.imgIconBooster != null ? boosterData.imgIconBooster : boosterData.imgMechanic;
+            }
+
+            PlayBoosterIcons(boosterIcon, spawnCount, destination.GetComponent<RectTransform>(), wrappedOnComplete);
         }
 
         private void PlayBoosterIcons(Sprite boosterIcon, int number, RectTransform destination, Action onComplete = null)
         {
+            if (spawnParent == null)
+            {
+                Canvas canvas = destination != null ? destination.GetComponentInParent<Canvas>() : GetComponentInParent<Canvas>();
+                if (canvas != null)
+                    spawnParent = canvas.GetComponent<RectTransform>();
+            }
+
             if (spawnParent == null || boosterIcon == null)
             {
                 onComplete?.Invoke();
@@ -65,20 +93,41 @@ namespace JinGroup.Controller.Feature
             for (int i = 0; i < number; i++)
             {
                 var objectToView = FactoryDesignPattern.Instance.CreateObjectUI(ItemString.BOOSTER_UI, spawnParent);
-                objectToView.GetComponent<Image>().sprite = boosterIcon;
+                if (objectToView == null)
+                {
+                    flyCompletedCount++;
+                    if (flyCompletedCount >= number)
+                        onComplete?.Invoke();
+                    continue;
+                }
+
+                objectToView.transform.SetAsLastSibling();
+                var img = objectToView.GetComponent<Image>();
+                if (img != null)
+                {
+                    img.sprite = boosterIcon;
+                    var c = img.color;
+                    c.a = 1f;
+                    img.color = c;
+                }
 
                 Vector2 targetPos = GetRandomPositionInCircle(center);
                 RectTransform rt = objectToView.GetComponent<RectTransform>();
+                if (rt != null)
+                {
+                    rt.localScale = Vector3.one;
+                    rt.anchoredPosition = center;
+                    _holderitemSpawned.Add(rt);
+                }
+
                 var effect = objectToView.GetComponent<MoveToTargetEffectUI>();
-                rt.anchoredPosition = center;
-                _holderitemSpawned.Add(rt);
 
                 MotionHandle handle = LMotion.Create(center, targetPos, spreadDuration)
                                              .WithEase(spreadEase)
                                              .WithOnComplete(() =>
                                              {
                                                  if (objectToView == null) return;
-                                                 if (destination != null)
+                                                 if (destination != null && effect != null)
                                                  {
                                                      effect.SetDestination(destination, () =>
                                                      {
@@ -145,12 +194,16 @@ namespace JinGroup.Controller.Feature
         {
             CancelHandles();
             ClearItems();
+            if (!BoosterManager.IsNull)
+                BoosterManager.Instance.ResetAllReceivingBoosterState();
         }
 
         public override void Stop()
         {
             CancelHandles();
             ClearItems();
+            if (!BoosterManager.IsNull)
+                BoosterManager.Instance.ResetAllReceivingBoosterState();
         }
 
         private void CancelHandles()

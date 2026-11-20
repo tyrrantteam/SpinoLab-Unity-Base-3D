@@ -150,7 +150,7 @@ public class PopupBuyBoosterController : PopupBaseController
 
         int rewardCount = mutipleValueAds > 0 ? mutipleValueAds : 1;
 
-        if (!GameController.IsNull)
+        if (GameController.Instance != null)
         {
             int visualCount = Mathf.Clamp(rewardCount, 1, 5);
             GameController.Instance.PlaySpawnIconBoosterItem(boosterType, () =>
@@ -193,7 +193,7 @@ public class PopupBuyBoosterController : PopupBaseController
             if (!AnalyticManager.IsNull)
                 AnalyticManager.Instance.BoosterClaim(boosterType);
 
-            if (!GameController.IsNull)
+            if (GameController.Instance != null)
             {
                 int visualCount = Mathf.Clamp(rewardCount, 1, 5);
                 GameController.Instance.PlaySpawnIconBoosterItem(boosterType, () =>

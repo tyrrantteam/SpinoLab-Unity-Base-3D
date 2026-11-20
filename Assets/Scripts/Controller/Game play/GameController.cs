@@ -28,6 +28,8 @@ public class GameController : SingletonMono<GameController>
     private int _currentLevel;
     protected override void Awake()
     {
+        base.Awake();
+
         if (dataTut == null)
         {
             dataTut = LoadResourceController.Instance.LoadDataProcessMechanic();
@@ -172,7 +174,30 @@ public class GameController : SingletonMono<GameController>
     #region Effect
     public void PlaySpawnIconBoosterItem(BoosterType type, Action onComplete = null, int spawnCount = 1)
     {
-        SpawnCircleEffectUI.OnSpawnBoosterUI(type, onComplete, spawnCount);
+        var button = !BoosterManager.IsNull ? BoosterManager.Instance.GetBoosterButton(type) : null;
+        if (button != null)
+            button.SetReceivingBooster(true);
+
+        Action wrappedOnComplete = () =>
+        {
+            try
+            {
+                onComplete?.Invoke();
+            }
+            finally
+            {
+                if (button != null)
+                    button.SetReceivingBooster(false);
+            }
+        };
+
+        if (SpawnCircleEffectUI == null)
+            SpawnCircleEffectUI = FindObjectOfType<SpawnCircleEffectUI>();
+
+        if (SpawnCircleEffectUI != null)
+            SpawnCircleEffectUI.OnSpawnBoosterUI(type, wrappedOnComplete, spawnCount);
+        else
+            wrappedOnComplete();
     }
     #endregion
 }

@@ -122,6 +122,11 @@ public class BoosterManager : SingletonMono<BoosterManager>
 
     public BoosterButtonController GetBoosterButton(BoosterType boosterType)
     {
+        if (listBoosterBtn == null || listBoosterBtn.Count == 0)
+        {
+            InitBoosterButtons();
+        }
+
         for (int i = 0; i < listBoosterBtn.Count; i++)
         {
             if (listBoosterBtn[i] != null && listBoosterBtn[i].BoosterType == boosterType)
@@ -166,8 +171,35 @@ public class BoosterManager : SingletonMono<BoosterManager>
     }
 
 
+    public bool IsAnyBoosterReceiving
+    {
+        get
+        {
+            if (listBoosterBtn == null) return false;
+            for (int i = 0; i < listBoosterBtn.Count; i++)
+            {
+                if (listBoosterBtn[i] != null && listBoosterBtn[i].IsReceivingBooster)
+                    return true;
+            }
+            return false;
+        }
+    }
+
+    public void ResetAllReceivingBoosterState()
+    {
+        if (listBoosterBtn == null) return;
+        for (int i = 0; i < listBoosterBtn.Count; i++)
+        {
+            if (listBoosterBtn[i] != null)
+                listBoosterBtn[i].SetReceivingBooster(false);
+        }
+    }
+
     public void UseBooster(BoosterType boosterType, bool IsBoosterEmpty = false)
     {
+        if (IsAnyBoosterReceiving)
+            return;
+
         if (IsBoosterEmpty)
         {
             SpecialOfferAdsService.RecordEmptyBoosterAttempt(boosterType);
