@@ -106,8 +106,8 @@ public class RewardGaugeController : MonoBehaviour
         HighlightSegment(segmentIndex);
 
         int multiplier = Multipliers[segmentIndex];
-        OnRewardResult?.Invoke(multiplier);
-        coinFlyEffect?.Play();
+
+        coinFlyEffect?.Play(() => { OnRewardResult?.Invoke(multiplier); });
     }
 
     private void HighlightSegment(int index)

@@ -5,4 +5,5 @@ public static class ItemString
     
     //Booster
     public static readonly string BOOSTER_UI = "BOOSTER_UI";
+    public static readonly string COIN_UI    = "COIN_UI";
 }

@@ -72,6 +72,7 @@ public class PopUpWinController : PopupBaseController
     {
         var value = GetRewardValue() * reward;
         DataAccountPlayer.PlayerResourceData.ChangeGoldValue(value);
+        Transition();
     }
 
     private int GetRewardValue()
@@ -88,6 +89,11 @@ public class PopUpWinController : PopupBaseController
     private void OnNextProcess()
     {
         coinFlyEffect?.Play();
+        Transition();
+    }
+
+    private void Transition()
+    {
         rewardGauge.transform.DOScale(0, 0.5f).OnComplete(() =>
         {
             nextProcess.interactable = false;
@@ -100,7 +106,6 @@ public class PopUpWinController : PopupBaseController
             Invoke("ActiveBtnNextDecor", 0.65f);
         });
     }
-
     private void ActiveBtnNextDecor()
     {
         nextLevelBtn.gameObject.SetActive(true);
