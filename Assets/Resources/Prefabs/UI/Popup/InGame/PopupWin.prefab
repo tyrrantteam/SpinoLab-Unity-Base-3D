@@ -1845,7 +1845,7 @@ MonoBehaviour:
   - {fileID: 6623167928319264052}
   - {fileID: 6762833177615418524}
   btnStop: {fileID: 7140464474538417955}
-  coinFlyEffect: {fileID: 0}
+  coinFlyEffect: {fileID: 3462009135516087950}
 --- !u!1 &3466278776397213459
 GameObject:
   m_ObjectHideFlags: 0
