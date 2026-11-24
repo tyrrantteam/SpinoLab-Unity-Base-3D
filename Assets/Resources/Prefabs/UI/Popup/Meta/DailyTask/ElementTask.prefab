@@ -1294,7 +1294,7 @@ PrefabInstance:
     - target: {fileID: 4417340736360219415, guid: c7671e1821ef51247aab00436909b937, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 2462045543079075383, guid: 3d71b06015337594cbb2a29041bc89e8, type: 2}
+      objectReference: {fileID: 2100000, guid: cc18bc34069addc46aaef86c8d040549, type: 2}
     - target: {fileID: 4592886375440890487, guid: c7671e1821ef51247aab00436909b937, type: 3}
       propertyPath: m_RaycastTarget
       value: 0
