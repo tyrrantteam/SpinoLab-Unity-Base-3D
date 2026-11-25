@@ -1,4 +1,4 @@
-﻿using JinGroup.Common.Effect;
+using JinGroup.Common.Effect;
 using LitMotion;
 using LitMotion.Extensions;
 using Sirenix.OdinInspector;
@@ -37,5 +37,9 @@ namespace JinGroup.Controller.Feature
             _handle.TryCancel();
             transform.localEulerAngles = Vector3.zero;
         }
+
+#if UNITY_EDITOR
+        protected override float GetPreviewDuration() => 3600f;
+#endif
     }
 }

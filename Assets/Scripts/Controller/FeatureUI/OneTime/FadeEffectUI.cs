@@ -33,15 +33,10 @@ namespace JinGroup.Controller.Feature
  
         private CanvasGroup CanvasGroup => _canvasGroup != null ? _canvasGroup : (_canvasGroup = GetComponent<CanvasGroup>());
 
-        protected override void PrepareInitialState()
-        {
-            // Snap về fromAlpha ngay khi enable (trước delay)
-            CanvasGroup.alpha = fromAlpha;
-        }
-
         public override void Play()
         {
             _handle.TryCancel();
+            CanvasGroup.alpha = fromAlpha;
             _handle = LMotion.Create(fromAlpha, toAlpha, duration)
                              .WithEase(ease)
                              .BindToAlpha(CanvasGroup);
@@ -51,6 +46,15 @@ namespace JinGroup.Controller.Feature
         {
             _handle.TryCancel();
             CanvasGroup.alpha = toAlpha;
+        }
+
+        public override void PrepareInitialState()
+        {
+            base.PrepareInitialState();
+            if (CanvasGroup != null)
+            {
+                CanvasGroup.alpha = fromAlpha;
+            }
         }
     }
 }

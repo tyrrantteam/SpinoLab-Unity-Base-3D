@@ -10,7 +10,7 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(fileName = "NotificationSettings", menuName = "Notification/Notification Settings")]
 public class NotificationSettingsSO : ScriptableObject, ISerializationCallbackReceiver
 {
-    public const string ResourcePath = "NotificationSettings";
+    public const string ResourcePath = "Data/NotificationSettings";
 
     [Header("Channel")]
     [Tooltip("Unique channel ID used by Android (do not change at runtime).")]
@@ -27,6 +27,9 @@ public class NotificationSettingsSO : ScriptableObject, ISerializationCallbackRe
 
     [Header("After app close — delay from pause")]
     public List<NotificationAfterCloseData> afterAppClose = new List<NotificationAfterCloseData>();
+
+    [Header("Heart full — trigger when hearts reach limit")]
+    public NotificationHeartFullData heartFullNotification = new NotificationHeartFullData();
 
     [SerializeField, HideInInspector, FormerlySerializedAs("notifications")]
     private List<NotificationEntryData> _legacyNotifications = new List<NotificationEntryData>();
@@ -86,6 +89,21 @@ public class NotificationSettingsSO : ScriptableObject, ISerializationCallbackRe
 
         _legacyNotifications.Clear();
     }
+}
+
+
+[Serializable]
+public class NotificationHeartFullData
+{
+    [Tooltip("When enabled, schedules a notification when heart capacity will be fully recovered.")]
+    public bool enabled = true;
+
+    public string title = "Hearts are full!";
+    [TextArea(2, 4)]
+    public string message = "Your hearts have fully recharged. Jump back into the game!";
+
+    public string smallIcon = "icon_0";
+    public string largeIcon = "";
 }
 
 /// <summary>Legacy schedule mode (only used for deserializing old assets).</summary>

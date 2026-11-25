@@ -12,8 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8e3a2b1c4d5678901234567890abcde, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: 
-  levelRandom: 40
-  levelMin: 6
   usingResourceInGame: 1
   usingMetaSys: 1
-  levelUnlockMetaSystem: 5
+  levelUnlockMetaSystem: 0
+  usingHeart: 1
+  usingGem: 0
+  usingContinuePopup: 1
+  priceContinuePopup: 190
+  usingBooster: 1
+  showPriceUnderBoosterButton: 0
+  normalLevel: {fileID: 21300000, guid: dde2c2a865b73eb4bb6cee683a2e37df, type: 3}
+  hardLevel: {fileID: 21300000, guid: 25ab4cb3241bc3a40826928813a8eda1, type: 3}
+  superHardLevel: {fileID: 21300000, guid: 6b90b859d2c427244bc244fc44c6ecd0, type: 3}
+  normalLevelPreview: {fileID: 21300000, guid: 4e7b61258d079d742b0d96c6670e1cba, type: 3}
+  hardLevelPreview: {fileID: 21300000, guid: 2f956d793b328e845a1625198144132c, type: 3}
+  superHardPreview: {fileID: 21300000, guid: 01efc85310346764ab9435bfddeffe34, type: 3}

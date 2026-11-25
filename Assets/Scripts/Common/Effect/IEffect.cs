@@ -4,5 +4,6 @@ namespace JinGroup.Common.Effect
     {
         void Play();
         void Stop();
+        void PrepareInitialState();
     }
 }

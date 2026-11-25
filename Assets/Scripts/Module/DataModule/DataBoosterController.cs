@@ -170,5 +170,7 @@ public struct ProcessBoosterData
     public string description;
     public string nameBooster;
     public int price;
+    public int mutipleValueGold;
+    public int mutipleValueAds;
 }
 

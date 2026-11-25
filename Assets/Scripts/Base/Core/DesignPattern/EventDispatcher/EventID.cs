@@ -3,8 +3,8 @@ public enum EventID
 
     LevelUp,
     ShowWarning,
-
-
+    
+    updateLevelDifficulty,
     // Settings
     OnSoundChange,
     OnMusicChange,
@@ -24,4 +24,18 @@ public enum EventID
 
     //Booster
     OnUnlockBooster,
+    
+    //Shop
+    ActiveVip,
+    ActiveNoAds,
+    BuySpecialBundle,
+    HideSpecialBundle,
+    
+    // VIP
+    UpdateVipStatus,
+    //ContinueGame,
+    ContinueGame,
+
+    OnPurchaseIAP,
+    luckySpinUpdate,
 }

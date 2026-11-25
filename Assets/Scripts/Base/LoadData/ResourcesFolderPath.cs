@@ -6,7 +6,7 @@ namespace JinGroup.Module.Resources
         //Data
         public const string DataFolder = "data/";
         public const string DataDataLevel = "DataLevel";
-        
+        public const string DataLoopLevel = "DataLoopLevel";
 
         public const string UiFolder = "UI/";
         public const string SpriteFolder = "SpriteLoader/{0}/";

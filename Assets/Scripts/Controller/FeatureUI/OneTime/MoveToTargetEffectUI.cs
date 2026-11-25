@@ -29,9 +29,10 @@ namespace JinGroup.Controller.Feature
         private MotionHandle  _handle;
         private Vector2       _destination;
 
-        private void Awake()
+        protected override void Awake()
         {
             _rt = GetComponent<RectTransform>();
+            base.Awake();
         }
 
         public void SetDestination(RectTransform uiTarget, Action onComplete = null)
@@ -91,7 +92,7 @@ namespace JinGroup.Controller.Feature
                              .WithOnComplete(() =>
                              {
                                  onComplete?.Invoke();
-                                 if (disableOnComplete && this != null)
+                                 if (disableOnComplete && this != null && Application.isPlaying && SmartPool.Instance != null)
                                      SmartPool.Instance.Despawn(gameObject);
                              })
                              .Bind(t =>
@@ -101,6 +102,11 @@ namespace JinGroup.Controller.Feature
                                  pos.y += arcCurve.Evaluate(t) * arcHeight;
                                  rt.anchoredPosition = pos;
                              });
+        }
+
+        public override void CancelMotion()
+        {
+            _handle.TryCancel();
         }
 
         public override void Stop()

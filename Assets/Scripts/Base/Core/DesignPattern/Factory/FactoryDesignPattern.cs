@@ -12,6 +12,15 @@ namespace Core.DesignPattern.Factory
 
         public GameObject CreateObjectUI(string id, RectTransform parent, Vector3? anchoredPosition = null)
         {
+            if (poolData == null)
+                poolData = Resources.Load<FactoryPoolData>("Data/DataPoolFactory");
+
+            if (poolData == null)
+            {
+                Debug.LogError("FactoryDesignPattern: poolData is null and could not be loaded from Resources/Data/DataPoolFactory");
+                return null;
+            }
+
             var dataItem = poolData.GetElementByNameIDUI(id);
             if (dataItem == null)
             {

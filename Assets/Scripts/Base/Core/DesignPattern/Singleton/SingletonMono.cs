@@ -24,7 +24,17 @@ public abstract class SingletonMono<T> : SerializedMonoBehaviour where T : Seria
 
 
 
-    public static bool IsNull => instance == null;
+    public static bool IsNull
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType(typeof(T)) as T;
+            }
+            return instance == null;
+        }
+    }
 
     /// <summary>
     /// When Unity quits, it destroys objects in a random order.

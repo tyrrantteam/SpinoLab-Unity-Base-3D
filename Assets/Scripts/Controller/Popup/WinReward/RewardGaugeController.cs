@@ -13,9 +13,8 @@ public class RewardGaugeController : MonoBehaviour
     [Header("Segments")] [SerializeField] private Image[]       segmentImages;
 
 
-    [Header("Result")] [SerializeField] private Button              btnStop;
-    [SerializeField]                    private CoinRewardFlyEffect coinFlyEffect;
-    private static readonly                     int[]               Multipliers = { 1, 2, 3, 2, 1 };
+    [Header("Result")] [SerializeField] private Button btnStop;
+    private static readonly                     int[]  Multipliers = { 1, 2, 3, 2, 1 };
 
     private bool      _isRunning;
     private float     _direction = 1f;
@@ -45,6 +44,7 @@ public class RewardGaugeController : MonoBehaviour
     {
         _isRunning              = true;
         _direction              = 1f;
+        btnStop.interactable    = true;
         needle.anchoredPosition = new Vector2(0f, needle.anchoredPosition.y);
         _needleRoutine          = StartCoroutine(AnimateNeedle());
     }
@@ -92,10 +92,21 @@ public class RewardGaugeController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Dừng kim mà không trả kết quả (dùng khi người chơi bỏ qua thanh nhân).
+    /// </summary>
+    public void StopWithoutResult()
+    {
+        if (!_isRunning) return;
+        _isRunning           = false;
+        btnStop.interactable = false;
+    }
+
     private void OnTapStop()
     {
         if (!_isRunning) return;
-        _isRunning = false;
+        _isRunning           = false;
+        btnStop.interactable = false;
 
         float currentZ = needle.localEulerAngles.z;
         if (currentZ > 180f) currentZ -= 360f;
@@ -106,8 +117,9 @@ public class RewardGaugeController : MonoBehaviour
         HighlightSegment(segmentIndex);
 
         int multiplier = Multipliers[segmentIndex];
+
+        // Trả kết quả ngay để popup cộng vàng; hiệu ứng xu bay do PopUpWinController tự chạy.
         OnRewardResult?.Invoke(multiplier);
-        coinFlyEffect?.Play();
     }
 
     private void HighlightSegment(int index)

@@ -2,8 +2,6 @@ using Base.Core;
 using DataAccount;
 using JinGroup.Base.LoadData;
 using JinGroup.Common.UIBaseController;
-using System.Collections;
-using System.Collections.Generic;
 using UI.LoadingScene;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +10,6 @@ namespace JinGroup.UI.Common.Setting
 {
     public class SettingController : PopupBaseController
     {
-
         [SerializeField] private SettingElement soundSetting;
 
         [SerializeField] private SettingElement musicSetting;
@@ -30,8 +27,8 @@ namespace JinGroup.UI.Common.Setting
 
             _gameConfig = LoadResourceController.Instance.GameConfig();
 
-            soundSetting.SettingPopupController = this;
-            musicSetting.SettingPopupController = this;
+            soundSetting.SettingPopupController     = this;
+            musicSetting.SettingPopupController     = this;
             vibrationSetting.SettingPopupController = this;
 
             var isActiveHome = _gameConfig.usingMetaSys;
@@ -41,15 +38,15 @@ namespace JinGroup.UI.Common.Setting
             bool isHomeScene = (currentScene == SceneName.HomeScene);
             bool levelUnlockMeta = (currentLv >= lvUnlockMeta);
 
-            HomeBtn.gameObject.SetActive(isActiveHome && !isHomeScene && levelUnlockMeta);
-            ReplayBtn.gameObject.SetActive(!isHomeScene);
+            HomeBtn?.gameObject.SetActive(isActiveHome && !isHomeScene && levelUnlockMeta);
+            ReplayBtn?.gameObject.SetActive(!isHomeScene);
         }
 
         protected override void ListenerButton()
         {
             base.ListenerButton();
-            HomeBtn.onClick.AddListener(Home);
-            ReplayBtn.onClick.AddListener(Replay);
+            HomeBtn?.onClick.AddListener(Home);
+            ReplayBtn?.onClick.AddListener(Replay);
         }
 
         public void CallLockSettings()
@@ -98,7 +95,16 @@ namespace JinGroup.UI.Common.Setting
 
         private void Replay()
         {
-            GameManager.Instance.LoadScene(SceneName.GamePlayScreen);
+            var isUsingHeart = _gameConfig.usingHeart;
+            if (isUsingHeart)
+            {
+                OnClosePopup();
+                PopupManager.Instance.ShowPopup<PopupAreYouSureResetController>();
+            }
+            else
+            {
+                GameManager.Instance.LoadScene(SceneName.GamePlayScreen);
+            }
         }
     }
 }
