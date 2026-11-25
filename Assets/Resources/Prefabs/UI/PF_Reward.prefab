@@ -9884,7 +9884,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: 1000
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3d71b06015337594cbb2a29041bc89e8, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: f6d210e235c4c3349aa3f19619e82281, type: 2}
@@ -9911,8 +9911,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -10223,11 +10223,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3399755011153214663, guid: b810bd8deadd946908640d87a6a01ccf, type: 3}
       propertyPath: m_LocalScale.x
-      value: 22.045502
+      value: 12.71
       objectReference: {fileID: 0}
     - target: {fileID: 3399755011153214663, guid: b810bd8deadd946908640d87a6a01ccf, type: 3}
       propertyPath: m_LocalScale.y
-      value: 22.045502
+      value: 12.71
       objectReference: {fileID: 0}
     - target: {fileID: 3399755011153214663, guid: b810bd8deadd946908640d87a6a01ccf, type: 3}
       propertyPath: m_LocalPosition.x
