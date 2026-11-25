@@ -150,19 +150,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2547397019240193792, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 133
+      value: 165.26
       objectReference: {fileID: 0}
     - target: {fileID: 2547397019240193792, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 154
+      value: 191.36
       objectReference: {fileID: 0}
     - target: {fileID: 2547397019240193792, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 108.8
+      value: 108.32
       objectReference: {fileID: 0}
     - target: {fileID: 2547397019240193792, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.0000038146973
+      value: 0.55001
       objectReference: {fileID: 0}
     - target: {fileID: 3239486306298547782, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
       propertyPath: m_EffectColor.b
@@ -294,19 +294,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7594444615524877247, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
       propertyPath: m_text
-      value: REMOVE ADS
+      value: Remove Ads (30d)
       objectReference: {fileID: 0}
     - target: {fileID: 7594444615524877247, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
       propertyPath: m_fontSize
-      value: 57.85
+      value: 56.15
       objectReference: {fileID: 0}
     - target: {fileID: 7594444615524877247, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
       propertyPath: m_margin.w
-      value: 2.31147
+      value: 4.6007767
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594444615524877247, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
+      propertyPath: m_margin.x
+      value: 9.19455
       objectReference: {fileID: 0}
     - target: {fileID: 7594444615524877247, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
       propertyPath: m_margin.y
-      value: 12.712997
+      value: -1.786026
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594444615524877247, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
+      propertyPath: m_margin.z
+      value: 12.091309
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594444615524877247, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
+      propertyPath: m_enableWordWrapping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594444615524877247, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8243522985912625769, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
       propertyPath: m_Sprite
@@ -318,7 +334,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8553788650392468460, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -563.9523
+      value: -531.86
       objectReference: {fileID: 0}
     - target: {fileID: 8553788650392468460, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
       propertyPath: m_SizeDelta.y
@@ -326,7 +342,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8553788650392468460, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -93.18994
+      value: -77.143
       objectReference: {fileID: 0}
     - target: {fileID: 8553788650392468460, guid: c212094bca0f84f479a4d2f1bea3fde5, type: 3}
       propertyPath: m_AnchoredPosition.y

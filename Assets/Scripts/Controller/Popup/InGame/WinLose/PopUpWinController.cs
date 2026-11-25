@@ -2,12 +2,10 @@
 using DataAccount;
 using DG.Tweening;
 using JinGroup.Common.UIBaseController;
-using LitMotion;
 using TMPro;
 using UI.LoadingScene;
 using UnityEngine;
 using UnityEngine.UI;
-using Ease = LitMotion.Ease;
 
 public class PopUpWinController : PopupBaseController
 {
@@ -26,11 +24,11 @@ public class PopUpWinController : PopupBaseController
     [Header("Gold Text ")] [SerializeField]
     private DataWinReward winReward;
 
-    [SerializeField] private Text         rewardText;
-    [SerializeField] private float        duration;
-    private                  int          lastGoldValue;
-    private                  Tween        goldTextTween;
-    private                  MotionHandle goldTextHandle;
+    [SerializeField] private Text rewardText;
+
+    // Đảm bảo mỗi lần thắng chỉ cộng vàng 1 lần và chỉ chạy Transition 1 lần
+    private bool _rewardClaimed;
+    private bool _isTransitioning;
 
     protected override void Awake()
     {
@@ -46,14 +44,22 @@ public class PopUpWinController : PopupBaseController
         base.OnEnable();
         rewardGauge.OnRewardResult += OnGetResult;
         rewardGauge.OnRewardChange += OnRewardChange;
-        lastGoldValue              =  DataAccountPlayer.PlayerResourceData.gold;
         rewardText.text            =  GetRewardValue().ToString();
+
+        _rewardClaimed           = false;
+        _isTransitioning         = false;
+        nextProcess.interactable = true;
     }
     protected override void OnDisable()
     {
         base.OnDisable();
         rewardGauge.OnRewardResult -= OnGetResult;
         rewardGauge.OnRewardChange -= OnRewardChange;
+
+        CancelInvoke(nameof(ActiveBtnNextDecor));
+        rewardGauge.transform.DOKill();
+        process.transform.DOKill();
+        textNextMechanic.transform.DOKill();
     }
 
     protected override void ListenerButton()
@@ -70,8 +76,23 @@ public class PopUpWinController : PopupBaseController
 
     private void OnGetResult(int reward)
     {
-        var value = GetRewardValue() * reward;
+        ClaimReward(reward);
+    }
+
+    /// <summary>
+    /// Cộng vàng ngay lập tức (đúng 1 lần), hiệu ứng xu bay chỉ để hiển thị.
+    /// </summary>
+    private void ClaimReward(int multiplier)
+    {
+        if (_rewardClaimed) return;
+        _rewardClaimed = true;
+
+        nextProcess.interactable = false;
+
+        var value = GetRewardValue() * multiplier;
         DataAccountPlayer.PlayerResourceData.ChangeGoldValue(value);
+
+        coinFlyEffect?.Play();
         Transition();
     }
 
@@ -88,12 +109,16 @@ public class PopUpWinController : PopupBaseController
 
     private void OnNextProcess()
     {
-        coinFlyEffect?.Play();
-        Transition();
+        // Bỏ qua thanh nhân: dừng gauge và nhận x1 vàng gốc
+        rewardGauge.StopWithoutResult();
+        ClaimReward(1);
     }
 
     private void Transition()
     {
+        if (_isTransitioning) return;
+        _isTransitioning = true;
+
         rewardGauge.transform.DOScale(0, 0.5f).OnComplete(() =>
         {
             nextProcess.interactable = false;
@@ -103,7 +128,7 @@ public class PopUpWinController : PopupBaseController
             process.transform.DOScale(0.8f, 0.5f);
             textNextMechanic.transform.DOScale(1, 0.5f);
             rewardGauge.gameObject.SetActive(false);
-            Invoke("ActiveBtnNextDecor", 0.65f);
+            Invoke(nameof(ActiveBtnNextDecor), 0.65f);
         });
     }
     private void ActiveBtnNextDecor()

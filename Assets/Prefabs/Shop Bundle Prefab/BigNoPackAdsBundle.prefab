@@ -29,8 +29,8 @@ RectTransform:
   m_GameObject: {fileID: 4533125795216942642}
   m_LocalRotation: {x: 0, y: 0, z: 0.021267066, w: 0.99977386}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.68181, y: 0.68181, z: 0.68181}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.44, y: 0.44, z: 0.44}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 876547971812763149}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.6868741, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -469,7 +469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ec478d837a2f724689348de4eb6a8dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canPlayWhenEnable: 1
+  canPlayWhenEnable: 0
   delayStart: 0
   infiniteLoop: 1
   loopCount: 3
