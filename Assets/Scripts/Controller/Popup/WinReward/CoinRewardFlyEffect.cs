@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Base.Core.Debug;
 using Core.DesignPattern.Factory;
 using Core.Pool;
 using Sirenix.OdinInspector;
@@ -120,13 +121,16 @@ public class CoinRewardFlyEffect : MonoBehaviour
                 mover.Play(flyDuration, () =>
                 {
                     if (coin != null)
-                    {
+                    { 
                         coin.SetActive(false);
                     }
                     SmartPool.Instance.Despawn(coin);
                     arrivedCount++;
                     if (allDispatched && arrivedCount >= count)
+                    {
+                        GameDebug.Log($"[CoinRewardFlyEffect] All {count} coins arrived at target.");
                         onAllArrived?.Invoke();
+                    }
                 });
             });
 

@@ -2,8 +2,6 @@ using Base.Core.Sound;
 using JinGroup.Module.Resources;
 using System.Collections.Generic;
 using System.IO;
-using Unity.Burst.Intrinsics;
-using UnityEditor.UI;
 using UnityEngine;
 
 namespace JinGroup.Base.LoadData
@@ -13,6 +11,7 @@ namespace JinGroup.Base.LoadData
         private Dictionary<string, Object> _resourceCache = new Dictionary<string, Object>();
 
         #region LoadMethod
+
         public MapManager LevelGame(int level)
         {
             var path = string.Format(ResourcesFolderPath.Level);
@@ -41,24 +40,39 @@ namespace JinGroup.Base.LoadData
 
         #region Public Load Method
 
-        public Sprite LoadItemIcon( TypeResources moneyType)
+    
+    
+        public Sprite LoadItemIcon(TypeResources moneyType)
         {
             var path = string.Format(ResourcesFolderPath.SpriteFolder, ResourcesFolderPath.MONEYTYPE);
             return Load<Sprite>(path, moneyType.ToString());
         }
+        
+        public Sprite LoadItemIcon(string moneyType)
+        {
+            var path = string.Format(ResourcesFolderPath.SpriteFolder, ResourcesFolderPath.MONEYTYPE);
+            return Load<Sprite>(path, moneyType);
+        }
 
-        public TypeRarity loadRarityStaticByType( TypeResources rarityType)
+        public TypeRarity loadRarityStaticByType(TypeResources rarityType)
         {
             switch (rarityType)
             {
                 case TypeResources.gold:
                     return TypeRarity.good;
-               case TypeResources.diamond:
-                   return TypeRarity.excellent;
+                case TypeResources.diamond:
+                    return TypeRarity.excellent;
                 default:
                     return TypeRarity.normal;
             }
         }
+
+        public DataLoopLevelController LoadDataLoopLevel()
+        {
+            var path = string.Format(ResourcesFolderPath.DataLoopLevel);
+            return Load<DataLoopLevelController>(path, "DataCurveLevel");
+        }
+        
         public DataProcessMechanic LoadDataProcessMechanic()
         {
             var path = string.Format(ResourcesFolderPath.DataFolder);
@@ -94,29 +108,16 @@ namespace JinGroup.Base.LoadData
             return Load<AudioClip>(ResourcesFolderPath.SoundFolder, soundType.ToString());
         }
 
-        //public string loadpathdatacharacter(skintype skin)
-        //{
-        //    var path = path.combine(resourcesfolderpath.herofolder, "character/");
-        //    return (path + skin.tostring());
-        //}
-
-
         #endregion
 
         #region LoadDataAsset
-
-
-        //public StatUpgradeDataAsset LoadStatUpgradeData()
-        //{
-        //    var path = string.Format(ResourcesFolderPath.DataFolder, ResourcesFolderPath.DataFolderStatUpgrade);
-        //    return Load<StatUpgradeDataAsset>(path, "StatUpgradeData");
-        //}
 
         public DataItemController DataItemController()
         {
             var path = string.Format(ResourcesFolderPath.DataFolder);
             return Load<DataItemController>(path, "DataItem");
         }
+
         public DataImageHand DataImageHand()
         {
             var path = string.Format(ResourcesFolderPath.DataFolder);
@@ -146,6 +147,7 @@ namespace JinGroup.Base.LoadData
             var path = string.Format(ResourcesFolderPath.DataFolder);
             return Load<DataRankingController>(path, "DataRanking");
         }
+
         public DataBoosterController DataBoosterController()
         {
             var path = string.Format(ResourcesFolderPath.DataFolder);
@@ -180,6 +182,36 @@ namespace JinGroup.Base.LoadData
         {
             var path = string.Format(ResourcesFolderPath.DataFolder);
             return Load<DataHeartController>(path, "DataHeart");
+        }
+
+        public DataLoopLevelController DataLoopLevelController()
+        {
+            var path = string.Format(ResourcesFolderPath.DataFolder);
+            return Load<DataLoopLevelController>(path, "DataCurveLevel");
+        }
+
+        public DataAdsController DataAdsController()
+        {
+            var path = string.Format(ResourcesFolderPath.DataFolder);
+            return Load<DataAdsController>(path, "DataAds");
+        }
+
+        public DataLuckySpinController DataLuckySpinController()
+        {
+            var path = string.Format(ResourcesFolderPath.DataFolder);
+            return Load<DataLuckySpinController>(path, "DataLuckySpin");
+        }
+
+        public DataDailyTaskController DataDailyTaskController()
+        {
+            var path = string.Format(ResourcesFolderPath.DataFolder);
+            return Load<DataDailyTaskController>(path, "DataDailyTask");
+        }
+
+        public DataHiddenHatController DataHiddenHatController()
+        {
+            var path = string.Format(ResourcesFolderPath.DataFolder);
+            return Load<DataHiddenHatController>(path, "DataHiddenHat");
         }
 
         #endregion

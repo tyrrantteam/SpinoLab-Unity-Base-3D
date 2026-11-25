@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f75bff2d093a7494da2a3818b813b10f, type: 3}
+  m_Name: DataDailyTask
+  m_EditorClassIdentifier: 
+  foldoutImportGUI: 1
+  documentId: 1DfD6W3fyWQ_7sOn2Pqnt_RvTFfgKCbjfc21GTNfJ9h8
+  selectedTogglesIds:
+  - listDailyTask
+  foldoutSerializationGUI: 0
+  serializationOutputPath: ../../Configs
+  serializationFileName: Configs.v0.1
+  serializationFormat: 0
+  content:
+    listDailyTask:
+    - typeTask: 0
+      valueTask: 1
+      typeResources: gold
+      value: 5
+      describeText: Login {0} time
+    - typeTask: 1
+      valueTask: 5
+      typeResources: gold
+      value: 20
+      describeText: Play {0} games
+    - typeTask: 2
+      valueTask: 1
+      typeResources: gold
+      value: 10
+      describeText: Use {0} booster
+    - typeTask: 3
+      valueTask: 1
+      typeResources: gold
+      value: 15
+      describeText: Watch {0} Ads
+    - typeTask: 4
+      valueTask: 2
+      typeResources: gold
+      value: 20
+      describeText: Play {0} LuckySpin

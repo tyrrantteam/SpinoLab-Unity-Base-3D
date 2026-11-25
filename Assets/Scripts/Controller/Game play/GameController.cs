@@ -1,4 +1,5 @@
-﻿using Base.Core.Sound;
+using Base.Core.Debug;
+using Base.Core.Sound;
 using DataAccount;
 using DG.Tweening;
 using JinGroup.Base.LoadData;
@@ -18,13 +19,17 @@ public class GameController : SingletonMono<GameController>
     [SerializeField] private GameObject confetiStartWin;
     [SerializeField] private GameObject fireWorkEffect;
     [SerializeField] private UIGameController uIGameController;
+    [SerializeField] private BoosterManager boosterManager;
     [SerializeField] private SpawnCircleEffectUI SpawnCircleEffectUI;
     private MapManager _mapManager;
     private DataProcessMechanic dataTut;
     private GameConfig _gameConfig;
+    private DataLoopLevelController _dataLoopLevelController;
     private int _currentLevel;
     protected override void Awake()
     {
+        base.Awake();
+
         if (dataTut == null)
         {
             dataTut = LoadResourceController.Instance.LoadDataProcessMechanic();
@@ -33,6 +38,11 @@ public class GameController : SingletonMono<GameController>
         if (_gameConfig == null)
         {
             _gameConfig = LoadResourceController.Instance.GameConfig();
+        }
+
+        if (_dataLoopLevelController == null)
+        {
+            _dataLoopLevelController = LoadResourceController.Instance.DataLoopLevelController();
         }
     }
     void Start()
@@ -58,7 +68,7 @@ public class GameController : SingletonMono<GameController>
         var levelNumber = playerPointProcessData.currentlevelShowScreen;
         _currentLevel = playerPointProcessData.currentlevel;
         uIGameController.SetLevelText(levelNumber);
-
+        boosterManager.gameObject.SetActive(_gameConfig.usingBooster);
         var sampleLv = LoadResourceController.Instance.LevelGame(_currentLevel);
         //_mapManager = Instantiate(sampleLv, sampleLv.transform.position, sampleLv.transform.rotation);
         AnalyticManager.instance.LogEventLevelStart();
@@ -119,43 +129,30 @@ public class GameController : SingletonMono<GameController>
         playerPointProcessData.WinLevel();
         DailyStreakService.OnLevelWon();
         var levelNumber = playerPointProcessData.currentlevelShowScreen;
-        if (levelNumber >= _gameConfig.levelRandom)
+
+
+        if (levelNumber >= _dataLoopLevelController.levelStartRandom)
         {
-            int id = -1;
-            int attempts = 0;
-            int min = _gameConfig.levelMin;
-            int max = _gameConfig.levelRandom; // exclusive trong Random.Range cho int
-                          // nếu tất cả đều trùng thì sẽ clear
-            if (playerPointProcessData.listLvLoop.Count >= (max - min))
-            {
-                playerPointProcessData.listLvLoop.Clear();
-            }
-
-            // random đến khi nào ra số chưa trùng
-            do
-            {
-                id = Random.Range(min, max);
-                attempts++;
-            } while (DataAccountPlayer.PlayerPointProcessData.listLvLoop.Contains(id) && attempts < 1000);
-
-            // add vào list
-            playerPointProcessData.listLvLoop.Add(id);
-            playerPointProcessData.SetCurrentLevel(id);
+            var newID = _dataLoopLevelController.levelRandom(levelNumber);
+            GameDebug.Log($"Level {levelNumber} is greater than or equal to levelStartRandom {_dataLoopLevelController.levelStartRandom}. New level ID: {newID}");
+            playerPointProcessData.SetCurrentLevel(newID);
             playerPointProcessData.ChangeprogressConfigId();
-
         }
     }
 
     public void SetWinGame()
     {
+        DataAccountPlayer.PlayerLuckySpinData.IncreasecurrentLevelProcess();
         AnalyticManager.instance.LogEventLevelComplete();
         HapticManager.Instance.PlayHapticSuccess();
         confetiStartWin.SetActive(true);
-
+        DataAccountPlayer.PlayerDailyTashkData.UpdateTask(TypeTaskDaily.WinGame);
         DOVirtual.DelayedCall(1f, () =>
         {
+            uIGameController.SetPanelActive();
             confetiStartWin.SetActive(false);
             confetiRainWin.SetActive(true);
+            fireWorkEffect.SetActive(true);
             SoundManager.Instance.PlaySound(SoundType.LevelCompleted);
             PopupManager.Instance.ShowPopup<PopUpWinController>();
         });
@@ -164,6 +161,7 @@ public class GameController : SingletonMono<GameController>
 
     public void SetLoseGame()
     {
+        uIGameController.SetPanelActive();
         AnalyticManager.instance.LogEventLevelFailed();
         HapticManager.Instance.PlayHapticFailure();
         SoundManager.Instance.PlaySound(SoundType.LevelFail);
@@ -176,7 +174,30 @@ public class GameController : SingletonMono<GameController>
     #region Effect
     public void PlaySpawnIconBoosterItem(BoosterType type, Action onComplete = null, int spawnCount = 1)
     {
-        SpawnCircleEffectUI.OnSpawnBoosterUI(type, onComplete, spawnCount);
+        var button = !BoosterManager.IsNull ? BoosterManager.Instance.GetBoosterButton(type) : null;
+        if (button != null)
+            button.SetReceivingBooster(true);
+
+        Action wrappedOnComplete = () =>
+        {
+            try
+            {
+                onComplete?.Invoke();
+            }
+            finally
+            {
+                if (button != null)
+                    button.SetReceivingBooster(false);
+            }
+        };
+
+        if (SpawnCircleEffectUI == null)
+            SpawnCircleEffectUI = FindObjectOfType<SpawnCircleEffectUI>();
+
+        if (SpawnCircleEffectUI != null)
+            SpawnCircleEffectUI.OnSpawnBoosterUI(type, wrappedOnComplete, spawnCount);
+        else
+            wrappedOnComplete();
     }
     #endregion
 }

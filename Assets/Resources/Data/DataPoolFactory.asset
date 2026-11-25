@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: DataPoolFactory
   m_EditorClassIdentifier: 
   listFactoryPoolData:
-  - typeObject: {fileID: 0}
+  - typeObject: {fileID: 3551816345334212881, guid: 8d9df549c3b4aec47a9a5f7c12017bd7, type: 3}
     isPreSpawn: 0
     valuePreSpawn: 0
-    idObject: 
+    idObject: 13
   listFactoryPoolDataUI:
   - typeObject: {fileID: 4733213690693915657, guid: eb55415ddc66a224eb7d5d5737417078, type: 3}
     isPreSpawn: 0
@@ -30,3 +30,7 @@ MonoBehaviour:
     isPreSpawn: 0
     valuePreSpawn: 0
     idObject: BOOSTER_UI
+  - typeObject: {fileID: 1124235617419919562, guid: 16d6576f4c84b6543bf741b48b244f68, type: 3}
+    isPreSpawn: 0
+    valuePreSpawn: 13
+    idObject: COIN_UI

@@ -18,6 +18,7 @@ namespace Base.Core
         private float timeLimit;
         public DataAdsController DataAds;
         public GameConfig gameConfig;
+        public float timeCountAds => timeCount;
         private bool hasInternet = true;
 
         private void Start()
@@ -79,7 +80,7 @@ namespace Base.Core
             canShowAds = false;
             canCount = true;
             timeCount = 0;
-            // timeLimit = DataAds.TimeShow();
+            timeLimit = DataAds.TimeShow();
         }
 
         public void LoadScene(SceneName sceneName, bool asyncLoad = true)

@@ -1,18 +1,178 @@
 using System.Collections;
 using System.Collections.Generic;
+using DataAccount;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.UI;
+using Base.Core.Debug;
 
 public class ShopManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public DataBundleController      dataBundle;
+    public GameDebugSettings         settings;
+    public List<ShopBundleContainer> shopBundles;
+    
+    [SerializeField] private float  spawnDelay;
+    
+    private bool spawnComplete;
+
+    private bool hasNoAds;
+    private bool specialAdsAvailable;
+
+    protected virtual void Awake()
     {
+        InitBundles();
+    }
+
+    private void OnEnable()
+    {
+        var playerData = DataAccountPlayer.PlayerResourceData;
+        if (playerData != null)
+        {
+            // playerData.CheckUpdateHeartRecover();
+        }
+
+        if (spawnComplete)
+        {
+            StartCoroutine(DelayLayout());
+        }
+        
+        
+        this.RegisterListener(EventID.ActiveNoAds, (component, o) => DisableBundleType(BundleType.NoAds));
+        this.RegisterListener(EventID.HideSpecialBundle, (component, o) => DisableBundleType(BundleType.SpecialOffer));
         
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator DelayLayout()
     {
-        
+        yield return null;
+        RebuildAllLayouts();
     }
+
+    private void CheckBundleStatus()
+    {
+        var playerData = DataAccountPlayer.PlayerResourceData;
+        var playerShopData = DataAccountPlayer.PlayerShopData;
+        hasNoAds = playerData.CheckNoAdsAvailable();
+    }
+
+    private void InitBundles()
+    {
+        CheckBundleStatus();
+        dataBundle.BuildCacheData();
+
+        if (shopBundles == null)
+        {
+            shopBundles = new List<ShopBundleContainer>();
+        }
+
+        var childContainers = GetComponentsInChildren<ShopBundleContainer>(true);
+        for (int i = 0; i < childContainers.Length; i++)
+        {
+            if (childContainers[i] != null && !shopBundles.Contains(childContainers[i]))
+            {
+                shopBundles.Add(childContainers[i]);
+            }
+        }
+
+        foreach (var bundle in shopBundles)
+        {
+            if (bundle == null)
+            {
+                continue;
+            }
+
+            // check bundle co available
+            var isBundleAvailable = dataBundle.IsBundleAvailable(bundle.bundleType);
+            if (!isBundleAvailable)
+            {
+                bundle.gameObject.SetActive(false);
+                continue;
+            }
+
+            // check noads de hien bundle nodads
+            if (bundle.bundleType == BundleType.NoAds && hasNoAds)
+            {
+                bundle.gameObject.SetActive(false);
+                continue;
+            }
+            
+            // check special offer de hien bundle special offer
+
+            bundle.InitData(dataBundle, settings);
+        }
+
+        spawnComplete = true;
+        RebuildAllLayouts();
+    }
+
+    public void DisableBundleType(BundleType type)
+    {
+        GameDebug.Log("Disable pack");
+        foreach (var bundle in shopBundles)
+        {
+            if (bundle.bundleType == type)
+            {
+                bundle.gameObject.SetActive(false);
+            }
+        }
+
+        RebuildAllLayouts();
+    }
+
+
+    [Button]
+    private void RebuildAllLayouts()
+    {
+        Canvas.ForceUpdateCanvases();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(transform as RectTransform);
+        ShopLayout.RebuildSections(GetActiveSections());
+    }
+
+    private IEnumerable<RectTransform> GetActiveSections()
+    {
+        foreach (var bundle in shopBundles)
+        {
+            if (bundle != null)
+            {
+                yield return bundle.transform as RectTransform;
+            }
+        }
+    }
+
+#if UNITY_EDITOR
+
+    [Button]
+    public void ForceSpawn()
+    {
+        dataBundle.BuildCacheData();
+
+        if (shopBundles == null)
+        {
+            shopBundles = new List<ShopBundleContainer>();
+        }
+
+        var childContainers = GetComponentsInChildren<ShopBundleContainer>(true);
+        for (int i = 0; i < childContainers.Length; i++)
+        {
+            if (childContainers[i] != null && !shopBundles.Contains(childContainers[i]))
+            {
+                shopBundles.Add(childContainers[i]);
+            }
+        }
+
+        foreach (var bundle in shopBundles)
+        {
+            if (bundle == null)
+            {
+                continue;
+            }
+
+            bundle.InitData(dataBundle, settings);
+        }
+
+        spawnComplete = true;
+        RebuildAllLayouts();
+    }
+#endif
 }

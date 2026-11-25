@@ -14,6 +14,7 @@ public class HeaderUIController : MonoBehaviour
     [SerializeField] private Button retryBtn;
     [SerializeField] private Button settingBtn;
     [SerializeField] private GameObject levelHodler;
+    [SerializeField] private GameObject hardLevel;
     private GameConfig _gameConfig;
     private bool _usingResourceInGame;
 
@@ -51,7 +52,7 @@ public class HeaderUIController : MonoBehaviour
         levelHodler.gameObject.SetActive(false);
         settingBtn.gameObject.SetActive(false);
         retryBtn.gameObject.SetActive(false);
-
+        hardLevel.gameObject.SetActive(false);
         if (_usingResourceInGame)
         {
             goldHeader.gameObject.SetActive(true);

@@ -5,7 +5,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using MoreMountains.Feedbacks;
-using Mono.Cecil.Cil;
 
 public class BoosterButtonController : MonoBehaviour
 {
@@ -15,7 +14,8 @@ public class BoosterButtonController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI valueBoosterTxt;
     [SerializeField] private TextMeshProUGUI priceTxt;
     [SerializeField] private GameObject valueBooster;
-    [SerializeField] private GameObject adsBooster;
+
+    [SerializeField] private GameObject getMore;
     [SerializeField] private GameObject priceHolder;
     [SerializeField] private Image boosterIcon;
     [SerializeField] private Image lockIcon;
@@ -23,30 +23,32 @@ public class BoosterButtonController : MonoBehaviour
     [SerializeField] private ScaleEffectSquashAndStretch effect;
 
     [Header("Receive Reward")]
-    [SerializeField] private float countUpDuration = 1.5f;
-    [SerializeField] private Ease countUpEase = Ease.OutQuad;
     [SerializeField] private MMF_Player _myPlayer;
 
     private int currentValueBooster;
     private ProcessBoosterData _data;
     private bool _isUnlocked;
     private BoosterManager _boosterManager;
-    private MotionHandle _countUpHandle;
-    private bool _isCountingUp;
     private int _price;
     private GameConfig _gameConfig;
     public BoosterType BoosterType => _data.boosterType;
     private bool _isBoosterEmpty;
+    private bool _isReceivingBooster;
+    public bool IsReceivingBooster => _isReceivingBooster;
 
-    private void Awake()
+    public void SetReceivingBooster(bool isReceiving)
     {
-        boosterBtn.onClick.AddListener(OnBoosterUsingClicked);
+        _isReceivingBooster = isReceiving;
     }
 
     private void OnDisable()
     {
-        _countUpHandle.TryCancel();
-        _isCountingUp = false;
+        _isReceivingBooster = false;
+    }
+
+    private void Awake()
+    {
+        boosterBtn.onClick.AddListener(OnBoosterUsingClicked);
     }
 
     public void Init(BoosterManager boosterManager, ProcessBoosterData data, int currentLevel, GameConfig gameConfig)
@@ -56,8 +58,8 @@ public class BoosterButtonController : MonoBehaviour
         _gameConfig = gameConfig;
         boosterIcon.sprite = _data.imgIconBooster;
         SetStatus(currentLevel);
-        _price = _data.price;
-        priceTxt.text = _data.price.ToString();
+        _price = _data.price * data.mutipleValueGold;
+        priceTxt.text = _price.ToString();
     }
 
     public void PlayValueGainEffect(int remainingMoves)
@@ -75,9 +77,6 @@ public class BoosterButtonController : MonoBehaviour
 
     public void SetStatus(int currentLevel)
     {
-        if (_isCountingUp)
-            return;
-
         int amount = DataAccountPlayer.PlayerResourceData.GetBoosterCount(_data.boosterType);
         currentValueBooster = Mathf.Max(0, amount);
         _isUnlocked = DataAccountPlayer.PlayerPointProcessData.cheatUnlockAllBoosters || currentLevel >= _data.level;
@@ -86,69 +85,29 @@ public class BoosterButtonController : MonoBehaviour
 
     public void PlayReceiveBoosterEffect(int addedAmount)
     {
+        _isReceivingBooster = false;
+
+        if (!_isUnlocked)
+        {
+            int currentLevel = DataAccountPlayer.PlayerPointProcessData.currentlevelShowScreen;
+            _isUnlocked = DataAccountPlayer.PlayerPointProcessData.cheatUnlockAllBoosters || currentLevel >= _data.level;
+        }
+
         if (!_isUnlocked || addedAmount <= 0)
             return;
 
         int toValue = DataAccountPlayer.PlayerResourceData.GetBoosterCount(_data.boosterType);
-        int fromValue = Mathf.Max(0, toValue - addedAmount);
 
-        if (_countUpHandle.IsActive())
-            _countUpHandle.TryCancel();
+        currentValueBooster = toValue;
+        _isBoosterEmpty = toValue <= 0;
 
-        PrepareValueUiForReceive(fromValue);
-        PlayCountUp(fromValue, toValue);
-    }
-
-    private void PrepareValueUiForReceive(int fromValue)
-    {
-        lockIcon.gameObject.SetActive(false);
-        unlockTxt.gameObject.SetActive(false);
-        boosterIcon.gameObject.SetActive(true);
-
-        valueBooster.SetActive(true);
-        adsBooster.SetActive(false);
-        valueBoosterTxt.gameObject.SetActive(true);
-        valueBoosterTxt.text = fromValue.ToString();
-        currentValueBooster = fromValue;
-        _isBoosterEmpty = fromValue <= 0;
-    }
-
-    private void PlayCountUp(int fromValue, int toValue)
-    {
-        _isCountingUp = true;
+        // Cập nhật ngay lập tức giao diện và giá trị số khi booster bay xuống chạm đích
+        RefreshVisuals();
 
         if (effect != null)
             effect.Play();
 
-        if (fromValue >= toValue)
-        {
-            FinishCountUp(toValue);
-            return;
-        }
-
-        _countUpHandle = LMotion.Create((float)fromValue, (float)toValue, countUpDuration)
-            .WithEase(countUpEase)
-            .WithOnComplete(() => FinishCountUp(toValue))
-            .Bind(v =>
-            {
-                int display = Mathf.RoundToInt(v);
-                if (display == currentValueBooster)
-                    return;
-
-                currentValueBooster = display;
-                valueBoosterTxt.text = display.ToString();
-            });
-
         PlayValueGainEffect(toValue);
-    }
-
-    private void FinishCountUp(int toValue)
-    {
-        currentValueBooster = toValue;
-        valueBoosterTxt.text = toValue.ToString();
-        _isBoosterEmpty = toValue <= 0;
-        _isCountingUp = false;
-        RefreshVisuals();
     }
 
     private void RefreshVisuals()
@@ -164,7 +123,6 @@ public class BoosterButtonController : MonoBehaviour
 
             _isBoosterEmpty = false;
             valueBooster.SetActive(false);
-            adsBooster.SetActive(false);
             valueBoosterTxt.gameObject.SetActive(false);
             return;
         }
@@ -175,12 +133,13 @@ public class BoosterButtonController : MonoBehaviour
 
         _isBoosterEmpty = currentValueBooster <= 0;
         bool hasStock = !_isBoosterEmpty;
-
+ 
         valueBooster.SetActive(hasStock);
-        var isIAA = !_gameConfig.usingResourceInGame;
+        var isIAA = _gameConfig != null ? !_gameConfig.usingResourceInGame : true;
+        var showPrice = _gameConfig != null ? _gameConfig.showPriceUnderBoosterButton : false;
 
-        adsBooster.SetActive(!hasStock && isIAA);
-        priceHolder.SetActive(!hasStock && !isIAA);
+        priceHolder.SetActive(!hasStock && !isIAA && showPrice);
+        getMore.SetActive(!hasStock);
 
         valueBoosterTxt.gameObject.SetActive(hasStock);
 
@@ -190,6 +149,10 @@ public class BoosterButtonController : MonoBehaviour
 
     private void OnBoosterUsingClicked()
     {
+        // Chặn bấm logic trong quá trình booster đang bay xuống cộng số lượng (vẫn giữ interactable)
+        if (_isReceivingBooster || (_boosterManager != null && _boosterManager.IsAnyBoosterReceiving))
+            return;
+
         if (!_isUnlocked)
         {
             ToastManager.Instance.Show("Unlock At Level : " + _data.level);

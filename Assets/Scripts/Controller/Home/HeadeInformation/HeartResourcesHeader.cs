@@ -1,121 +1,211 @@
+using System;
 using DataAccount;
+using JinGroup.Base.LoadData;
 using JinGroup.Common.ResourcesHeader;
-using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HeartResourcesHeader : BaseResourcesHeader
 {
-    private Coroutine _countdownCoroutine;
+    [SerializeField] private TMP_Text   cooldownTxt;
+    [SerializeField] private TMP_Text   heartTxt;
+    [SerializeField] private GameObject heartImg;
+    [SerializeField] private GameObject heartFree;
+   
+    private const float TickInterval    = 1f; // cooldown text only shows whole seconds
+    private const int   DefaultMaxHeart = 5;
+    private const long  ShownFull       = -1;
+    private const long  ShownFree       = -2;
+    private const long  ShownNone       = long.MinValue;
+
+    private DataHeartController _datagame;
+    private int                 _maxHeart = DefaultMaxHeart;
+
+    // Cached UI state to avoid redundant text/SetActive updates
+    private long _shownCooldownSecs = ShownNone;
+    private int  _shownHeart        = int.MinValue;
+
+    // Polling state: only tick while a countdown is running or infinite hearts may expire
+    private bool  _needsTick;
+    private bool  _isInfinite;
+    private float _nextTickTime;
+
+    private Action<Component, object> _onUpdateHeart;
+
+    public static HeartResourcesHeader Instance { get; private set; }
+
+    /// <summary>
+    /// Lấy chuỗi cooldown toàn cục từ PlayerResourceData.
+    /// Hoạt động đúng ở mọi nơi (Home, Shop, Gameplay, Popups) ngay cả khi instance này bị deactivate.
+    /// </summary>
+    public static string GetCooldownStringGlobal()
+    {
+        var data = DataAccountPlayer.PlayerResourceData;
+        return data != null ? data.GetHeartCooldownString() : "Full";
+    }
+
+    public string CurrentCooldownString => GetCooldownStringGlobal();
 
     protected override void Awake()
     {
-        base.Awake();
-        this.RegisterListener(EventID.UpdateHeart, (sender, param) => UpdateValue());
+        _onUpdateHeart = (sender, param) => UpdateValue();
+        
+        base.Awake(); // calls UpdateValue(), which is null-safe
+    }
+
+    protected override void OnClickClaimMore()
+    {
+        base.OnClickClaimMore();
+        PopupManager.Instance.ShowPopup<PopupGetMoreHeartController>();
     }
 
     private void OnEnable()
     {
-        DataAccountPlayer.PlayerResourceData.UpdateHeartRecovery();
+        Instance = this;
+
+        if (EventDispatcher.Instance != null)
+        {
+            EventDispatcher.Instance.RegisterListener(EventID.UpdateHeart, _onUpdateHeart);
+        }
+
+        ResetShownState();
+
+        var data = DataAccountPlayer.PlayerResourceData;
+        if (data != null)
+        {
+            data.UpdateHeartRecovery();
+        }
+
         UpdateValue();
-        UpdateCountdownDisplay();
-        StartCountdown();
     }
 
     private void OnDisable()
     {
-        StopCountdown();
-    }
+        if (Instance == this)
+            Instance = null;
 
-    private void OnApplicationPause(bool pauseStatus)
-    {
-        if (!pauseStatus)
+        if (EventDispatcher.Instance != null)
         {
-            DataAccountPlayer.PlayerResourceData.UpdateHeartRecovery();
-            UpdateValue();
-            UpdateCountdownDisplay();
+            EventDispatcher.Instance.RemoveListener(EventID.UpdateHeart, _onUpdateHeart);
         }
     }
 
-    private void OnApplicationFocus(bool hasFocus)
+    private void Update()
     {
-        if (hasFocus)
+        if (!_needsTick || Time.unscaledTime < _nextTickTime)
+            return;
+
+        _nextTickTime = Time.unscaledTime + TickInterval;
+
+        var data = DataAccountPlayer.PlayerResourceData;
+        if (data == null)
+            return;
+
+        if (_isInfinite)
         {
-            DataAccountPlayer.PlayerResourceData.UpdateHeartRecovery();
-            UpdateValue();
-            UpdateCountdownDisplay();
+            // No event fires when infinite hearts expire, so detect it here
+            if (!data.IsInfiniteHeartActive())
+                UpdateValue();
+            return;
         }
+
+        // GetRemainingRecoverySeconds() runs UpdateHeartRecovery() internally.
+        // If a heart was recovered it posts UpdateHeart, which already refreshed the whole UI.
+        long secs = data.GetRemainingRecoverySeconds();
+        if (data.heart != _shownHeart)
+        {
+            UpdateValue();
+            return;
+        }
+
+        SetCooldownSeconds(secs);
     }
 
     protected override void UpdateValue()
     {
-        valueInformation = DataAccountPlayer.PlayerResourceData.heart;
-        ChangeValueWithAnimation();
-        UpdateCountdownDisplay();
-    }
+        var data = DataAccountPlayer.PlayerResourceData;
+        if (data == null)
+            return;
 
-    private void StartCountdown()
-    {
-        StopCountdown();
-        if (gameObject.activeInHierarchy)
+        RefreshConfig();
+
+        _isInfinite = data.IsInfiniteHeartActive();
+        int heart = data.heart;
+        bool isFull = heart >= _maxHeart;
+
+        SetActiveIfChanged(claimMore != null ? claimMore.gameObject : null, !_isInfinite && !isFull);
+        SetActiveIfChanged(heartImg, !_isInfinite);
+        SetActiveIfChanged(heartFree, _isInfinite);
+        if (heartTxt != null && heartTxt != valueTxt)
+            SetActiveIfChanged(heartTxt.gameObject, !_isInfinite);
+
+        if (_isInfinite)
         {
-            _countdownCoroutine = StartCoroutine(CountdownRoutine());
-        }
-    }
-
-    private void StopCountdown()
-    {
-        if (_countdownCoroutine != null)
-        {
-            StopCoroutine(_countdownCoroutine);
-            _countdownCoroutine = null;
-        }
-    }
-
-    private IEnumerator CountdownRoutine()
-    {
-        var waitOneSecond = new WaitForSecondsRealtime(1f);
-        while (true)
-        {
-            yield return waitOneSecond;
-            UpdateCountdownDisplay();
-        }
-    }
-
-    private void UpdateCountdownDisplay()
-    {
-        if (timeCountTxt == null) return;
-
-        var resourceData = DataAccountPlayer.PlayerResourceData;
-        int limit = resourceData.GetHeartLimit();
-
-        if (resourceData.heart >= limit)
-        {
-            timeCountTxt.text = "full";
+            SetCooldownState(ShownFree, "Free");
+            _needsTick = true; // watch for expiry
             return;
         }
 
-        resourceData.UpdateHeartRecovery();
-
-        if (resourceData.heart >= limit)
+        valueInformation = heart;
+        if (heart != _shownHeart)
         {
-            timeCountTxt.text = "full";
+            _shownHeart = heart;
+            string heartStr = heart.ToString();
+            if (heartTxt != null) heartTxt.text = heartStr;
+            if (valueTxt != null) valueTxt.text = heartStr;
+        }
+
+        if (isFull)
+        {
+            SetCooldownState(ShownFull, "Full");
+            _needsTick = false; // nothing changes until an UpdateHeart event
             return;
         }
 
-        long remaining = resourceData.GetRemainingRecoverySeconds();
-        if (remaining >= 3600)
+        SetCooldownSeconds(data.GetRemainingRecoverySeconds());
+        _needsTick    = true;
+        _nextTickTime = Time.unscaledTime + TickInterval;
+    }
+
+    private void RefreshConfig()
+    {
+        if (_datagame == null && LoadResourceController.Instance != null)
         {
-            long hours = remaining / 3600;
-            long minutes = (remaining % 3600) / 60;
-            long seconds = remaining % 60;
-            timeCountTxt.text = $"{hours:D2}:{minutes:D2}:{seconds:D2}";
+            _datagame = LoadResourceController.Instance.DataHeartController();
         }
-        else
-        {
-            long minutes = remaining / 60;
-            long seconds = remaining % 60;
-            timeCountTxt.text = $"{minutes:D2}:{seconds:D2}";
-        }
+
+        _maxHeart = _datagame != null ? _datagame.Limit : DefaultMaxHeart;
+    }
+
+    private void ResetShownState()
+    {
+        _shownCooldownSecs = ShownNone;
+        _shownHeart        = int.MinValue;
+        _nextTickTime      = 0f;
+    }
+
+    private void SetCooldownSeconds(long secs)
+    {
+        if (cooldownTxt == null || secs == _shownCooldownSecs)
+            return;
+
+        _shownCooldownSecs = secs;
+        cooldownTxt.text   = $"{secs / 60:D2}:{secs % 60:D2}";
+    }
+
+    private void SetCooldownState(long state, string text)
+    {
+        if (cooldownTxt == null || _shownCooldownSecs == state)
+            return;
+
+        _shownCooldownSecs = state;
+        cooldownTxt.text   = text;
+    }
+
+    private static void SetActiveIfChanged(GameObject go, bool active)
+    {
+        if (go != null && go.activeSelf != active)
+            go.SetActive(active);
     }
 }

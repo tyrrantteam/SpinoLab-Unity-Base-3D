@@ -25,6 +25,5 @@ MonoBehaviour:
       time: 600
       limit: 5
       unlimitday: 30
-    time: 600
-    limit: 5
-    unlimitday: 30
+      priceHeart: 190
+      valueHeart: 5

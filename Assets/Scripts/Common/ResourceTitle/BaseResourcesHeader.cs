@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using LitMotion;
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,13 +11,11 @@ namespace JinGroup.Common.ResourcesHeader
 {
     public class BaseResourcesHeader : MonoBehaviour
     {
-        public                    Text   valueTxt;
-        public                    Text   timeCountTxt;
-        [SerializeField]  private Button claimMore;
-        [HideInInspector] public  int    valueInformation;
-
-        private                  MotionHandle _countUpHandle;
-        [SerializeField] private float        countUpDuration = 0.5f;
+        public                      TMP_Text     valueTxt;
+        [SerializeField]  protected Button       claimMore;
+        [HideInInspector] public    int          valueInformation;
+        [SerializeField]  private   float        countUpDuration = 0.5f;
+        private                     MotionHandle _countUpHandle;
 
         protected virtual void Awake()
         {
@@ -28,8 +27,8 @@ namespace JinGroup.Common.ResourcesHeader
         {
             valueTxt.text = valueInformation.ToString();
         }
-        
-        
+
+
         [Button]
         protected void ChangeValueWithAnimation()
         {
@@ -51,8 +50,8 @@ namespace JinGroup.Common.ResourcesHeader
         {
             _countUpHandle.TryCancel();
         }
-        
-        #if UNITY_EDITOR
+
+#if UNITY_EDITOR
 
         [Button]
         public void TestAnimationGold(int value)
@@ -60,7 +59,7 @@ namespace JinGroup.Common.ResourcesHeader
             valueInformation = value;
             ChangeValueWithAnimation();
         }
-        
-        #endif
+
+#endif
     }
 }

@@ -7,5 +7,7 @@ namespace JinGroup.Common.Effect
         BreathAlpha,
         Rotate,
         RotatePingPong,
+        ScaleSquashAndStretch,
+        MirrorShine,
     }
 }

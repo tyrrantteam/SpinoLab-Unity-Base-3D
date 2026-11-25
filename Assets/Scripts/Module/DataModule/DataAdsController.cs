@@ -15,6 +15,7 @@ public class DataAdsController : ScriptableObject
     public float timeShowInterAds3;
 
     [Header("Inter Ads Active after breakpointLevelShowInterAds1")]
+    public int levelCanShowAdsInter;
     public int breakpointLevelShowInterAds1;
     public int breakpointLevelShowInterAds2;
     public int breakpointLevelShowInterAds3;
@@ -28,7 +29,11 @@ public class DataAdsController : ScriptableObject
     public bool CanShowInterAds()
     {
         var level = DataAccountPlayer.PlayerPointProcessData.currentlevelShowScreen;
-        if (level >= breakpointLevelShowInterAds1)
+        if (level >= levelCanShowAdsInter)
+        {
+            return true;
+        }
+        else if (level >= breakpointLevelShowInterAds1)
         {
             return true;
         }

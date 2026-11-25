@@ -21,15 +21,23 @@ namespace JinGroup.Controller.Feature
 
         private MotionHandle _handle;
 
-        protected override void PrepareInitialState()
+        public override bool IsCloseEffect => toScale == Vector3.zero && fromScale != Vector3.zero;
+
+        public override void CancelMotion()
         {
-            // Snap về fromScale ngay khi enable (trước delay)
+            _handle.TryCancel();
+        }
+
+        public override void PrepareInitialState()
+        {
+            // Snap về fromScale ngay lập tức (trước khi render frame đầu tiên)
             transform.localScale = fromScale;
         }
 
         public override void Play()
         {
             _handle.TryCancel();
+            transform.localScale = fromScale;
             _handle = LMotion.Create(0f, 1f, duration)
                 .WithEase(scaleCurve)
                 .Bind(t => transform.localScale = Vector3.LerpUnclamped(fromScale, toScale, t));

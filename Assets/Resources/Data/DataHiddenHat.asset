@@ -1,0 +1,204 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70ac590ae1c7fae47a7b6d97a247a87f, type: 3}
+  m_Name: DataHiddenHat
+  m_EditorClassIdentifier: 
+  foldoutImportGUI: 1
+  documentId: 1DfD6W3fyWQ_7sOn2Pqnt_RvTFfgKCbjfc21GTNfJ9h8
+  selectedTogglesIds:
+  - listItemHiddenHatElement
+  foldoutSerializationGUI: 0
+  serializationOutputPath: ../../Configs
+  serializationFileName: Configs.v0.1
+  serializationFormat: 0
+  content:
+    listItemHiddenHatElement:
+    - id: 1
+      typeResources: gold
+      value: 500
+      priceClaimAll: 1900
+      time: 24
+    - id: 1
+      typeResources: gold
+      value: 300
+      priceClaimAll: 0
+      time: 0
+    - id: 1
+      typeResources: gold
+      value: 200
+      priceClaimAll: 0
+      time: 0
+    - id: 1
+      typeResources: gold
+      value: 100
+      priceClaimAll: 0
+      time: 0
+    - id: 1
+      typeResources: gold
+      value: 10
+      priceClaimAll: 0
+      time: 0
+    - id: 1
+      typeResources: gold
+      value: 11
+      priceClaimAll: 0
+      time: 0
+    - id: 1
+      typeResources: gold
+      value: 15
+      priceClaimAll: 0
+      time: 0
+    - id: 1
+      typeResources: gold
+      value: 20
+      priceClaimAll: 0
+      time: 0
+    - id: 1
+      typeResources: gold
+      value: 35
+      priceClaimAll: 0
+      time: 0
+    - id: 2
+      typeResources: gold
+      value: 500
+      priceClaimAll: 1500
+      time: 24
+    - id: 2
+      typeResources: gold
+      value: 300
+      priceClaimAll: 0
+      time: 0
+    - id: 2
+      typeResources: gold
+      value: 200
+      priceClaimAll: 0
+      time: 0
+    - id: 2
+      typeResources: gold
+      value: 100
+      priceClaimAll: 0
+      time: 0
+    - id: 2
+      typeResources: gold
+      value: 10
+      priceClaimAll: 0
+      time: 0
+    - id: 2
+      typeResources: gold
+      value: 11
+      priceClaimAll: 0
+      time: 0
+    - id: 2
+      typeResources: gold
+      value: 15
+      priceClaimAll: 0
+      time: 0
+    - id: 2
+      typeResources: gold
+      value: 20
+      priceClaimAll: 0
+      time: 0
+    - id: 2
+      typeResources: gold
+      value: 35
+      priceClaimAll: 0
+      time: 0
+    - id: 3
+      typeResources: gold
+      value: 500
+      priceClaimAll: 1800
+      time: 24
+    - id: 3
+      typeResources: gold
+      value: 300
+      priceClaimAll: 0
+      time: 0
+    - id: 3
+      typeResources: gold
+      value: 200
+      priceClaimAll: 0
+      time: 0
+    - id: 3
+      typeResources: gold
+      value: 100
+      priceClaimAll: 0
+      time: 0
+    - id: 3
+      typeResources: gold
+      value: 10
+      priceClaimAll: 0
+      time: 0
+    - id: 3
+      typeResources: gold
+      value: 11
+      priceClaimAll: 0
+      time: 0
+    - id: 3
+      typeResources: gold
+      value: 15
+      priceClaimAll: 0
+      time: 0
+    - id: 3
+      typeResources: gold
+      value: 20
+      priceClaimAll: 0
+      time: 0
+    - id: 3
+      typeResources: gold
+      value: 35
+      priceClaimAll: 0
+      time: 0
+    - id: 4
+      typeResources: gold
+      value: 500
+      priceClaimAll: 1900
+      time: 24
+    - id: 4
+      typeResources: gold
+      value: 300
+      priceClaimAll: 0
+      time: 0
+    - id: 4
+      typeResources: gold
+      value: 200
+      priceClaimAll: 0
+      time: 0
+    - id: 4
+      typeResources: gold
+      value: 100
+      priceClaimAll: 0
+      time: 0
+    - id: 4
+      typeResources: gold
+      value: 10
+      priceClaimAll: 0
+      time: 0
+    - id: 4
+      typeResources: gold
+      value: 11
+      priceClaimAll: 0
+      time: 0
+    - id: 4
+      typeResources: gold
+      value: 15
+      priceClaimAll: 0
+      time: 0
+    - id: 4
+      typeResources: gold
+      value: 20
+      priceClaimAll: 0
+      time: 0
+    - id: 4
+      typeResources: gold
+      value: 35
+      priceClaimAll: 0
+      time: 0

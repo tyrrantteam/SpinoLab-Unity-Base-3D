@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SpecialOfferAds
   m_EditorClassIdentifier: 
   isActive: 0
-  activeAfterLevel: 3
+  activeAfterLevel: 8
   entries:
   - boosterType: 1
     value: 3
@@ -27,7 +27,3 @@ MonoBehaviour:
     value: 3
     name: finger
     description: point breaker
-  - boosterType: 4
-    value: 3
-    name: BeamMagNum
-    description: beam nay manh vkl
